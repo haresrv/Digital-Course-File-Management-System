@@ -6,7 +6,7 @@ import { slide as Menu } from 'react-burger-menu';
 import ReactCardFlip from 'react-card-flip';
 import {courses} from './courses';
 import tachyons from 'tachyons';
-
+import TickTock from './Components/TickTock/TickTock';
 
 class App extends Component {
 
@@ -15,7 +15,8 @@ constructor() {
       this.state = {
       isFlipped: false,
       courses:courses,
-      role:'faculty'
+      role:'faculty',
+      route:"home"
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -39,7 +40,7 @@ constructor() {
                       <h4>Semester: {course.semester}</h4>
                       <h3 className="">{course.name}</h3>
                     </div>          
-                    <input className="bg-black white pointer" type='button' onClick={()=>{alert("OOOOOO")}} value='View Course' style={{marginLeft:'10px'}}  />
+                    <input className="bg-black white pointer" type='button' onClick={()=>{this.setState({route:"chnage"})}} value='View Course' style={{marginLeft:'10px'}}  />
                   </div>
 
                   )
@@ -59,41 +60,46 @@ constructor() {
   } 
 
   render(){
-  return (
-    <div className="App outer-container">
-      
-       <Menu noOverlay isOpen={ true } customBurgerIcon={ <img src={logo}/>} pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } >
-        <p className="red ma2 pa3" href="#" style={{fontSize:"2em"}}><i className="bg-gold red fa-lg fa fa-fw fa-user"></i><span>Faculty</span></p>
-        <a href="#" ><i className="fa fa-fw fa-star-o"></i><span>Favorites</span></a>
-        <a href="#" ><i className="fa fa-fw fa-bell-o"></i><span>Notification</span></a>
-        <a href="#" ><i className="fa fa-fw fa-envelope-o"></i><span>Contact</span></a>
-        <a href="#" ><i className="fa fa-fw fa-comment-o"></i><span>Comments</span></a>
-        <a href="#" ><i className="fa fa-fw fa-bar-chart-o"></i><span>Analytics</span></a>
-        <a href="#" ><i className="fa fa-fw fa-newspaper-o"></i><span>Personal Space</span></a>
-      
-      </Menu>
-      
-      <main id="page-wrap" style={{marginLeft:"300px"}}>
+  return (   <div className="App outer-container">
+              {this.state.route=="home"?
+              
+  (          <div>   <Menu noOverlay isOpen={ true } customBurgerIcon={ <img src={logo}/>} pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } >
+                  <p className="red ma2 pa3" href="#" style={{fontSize:"2em"}}><i className="bg-gold red fa-lg fa fa-fw fa-user"></i><span>Faculty</span></p>
+                  <a href="#" ><i className="fa fa-fw fa-star-o"></i><span>Favorites</span></a>
+                  <a href="#" ><i className="fa fa-fw fa-bell-o"></i><span>Notification</span></a>
+                  <a href="#" ><i className="fa fa-fw fa-envelope-o"></i><span>Contact</span></a>
+                  <a href="#" ><i className="fa fa-fw fa-comment-o"></i><span>Comments</span></a>
+                  <a href="#" ><i className="fa fa-fw fa-bar-chart-o"></i><span>Analytics</span></a>
+                  <a href="#" ><i className="fa fa-fw fa-newspaper-o"></i><span>Personal Space</span></a>
+                
+                </Menu>
+                
+                <main id="page-wrap" style={{marginLeft:"300px"}}>
 
-           <h1>Enrolled Courses </h1>
-           <div className="bg-black ma2 pa3 gold topcorner">
-           <span className="bg-red fa fa-fw fa-star-o"></span>- Previous Semesters<br/>
-           <span className="bg-green fa fa-fw fa-star-o"></span>- Current* Semester
-           
-           </div>
-           <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="vertical">
-              <div >
-                  {this.renderCourses()}
-              </div>
-       
-              <div>
-                This is the back of the card.
-                <button className="bg-black white pointer" onClick={this.handleClick}>Click to flip</button>
-              </div>
-           </ReactCardFlip>
-      </main>
-
-    </div>
+                     <h1>Enrolled Courses </h1>
+                     <div className="bg-black ma2 pa3 gold topcorner">
+                     <span className="bg-red fa fa-fw fa-star-o"></span>- Previous Semesters<br/>
+                     <span className="bg-green fa fa-fw fa-star-o"></span>- Current* Semester
+                     
+                     </div>
+                     <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="vertical">
+                        <div >
+                            {this.renderCourses()}
+                        </div>
+                 
+                        <div>
+                          This is the back of the card.
+                          <button className="bg-black white pointer" onClick={this.handleClick}>Click to flip</button>
+                        </div>
+                     </ReactCardFlip>
+                </main>
+               </div> 
+)
+                :
+                <TickTock />
+            }
+             </div>
+             
   );
 }
 }

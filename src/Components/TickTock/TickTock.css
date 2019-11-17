@@ -7,6 +7,16 @@
     color: #fff;
 }
 
+.blink_me {
+  animation: blinker 1s linear 20;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 .topcorner{
    marginTop:20px;
    position:absolute;

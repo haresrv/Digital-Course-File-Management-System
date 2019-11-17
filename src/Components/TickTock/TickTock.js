@@ -29,7 +29,7 @@ i=i*10;
       return (
         
                   <ul name={((i+index)/10).toFixed(1)}>
-                    <li><h5 className="fa-star-o">{ex}</h5></li>            
+                    <li><h5 className="fa  fa-star-o">{ex}</h5></li>            
                   </ul>                
         )
      })
@@ -84,7 +84,7 @@ renderCourseTree = () => {
                 <span className="bg-black">Digital C</span>
                 <span className="bg-black" style={{color:"#f24330"}} >ourse File</span>
                 <a className="pencil bg-black grow" href="#" onClick={this.toggle}>
-                  <span className="glyphicon glyphicon-pencil" ></span>
+                  <span className="glyphicon glyphicon-pencil green blink_me" ></span>
                 </a><br/>
                 <span className="bg-black"  style={{color:"#f24330"}}>Lecture P</span>
                 <span className="bg-black" >lan</span>
