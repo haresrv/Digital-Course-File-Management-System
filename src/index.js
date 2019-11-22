@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import TickTock from './Components/TickTock/TickTock';
-
+import Tracker from './Components/Tracker/Tracker';
 import * as serviceWorker from './serviceWorker';
 
 
+
+// ReactDOM.render(<Tracker />, document.getElementById('root'));
 ReactDOM.render(<App />, document.getElementById('root'));
 // ReactDOM.render(<TickTock />, document.getElementById('root'));
 

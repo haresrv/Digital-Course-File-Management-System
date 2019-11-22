@@ -7,6 +7,12 @@
     color: #fff;
 }
 
+.tmie
+{
+  border: 2px solid red;
+  border-radius: 4px;
+}
+
 .blink_me {
   animation: blinker 1s linear 20;
 }
