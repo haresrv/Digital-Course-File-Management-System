@@ -1,5 +1,8 @@
 15CSE313 Software Engineering
 
+
+![alt text](https://robohash.org/1?200x200)
+
 <<<<<<--  Digital Course File -->>>>>>>
 
 Packages Used till now
@@ -14,5 +17,6 @@ Packages Used till now
 
 -----Comments----
 
-Components/CheckboxTrees/epics.js & src/courses.js are just used as a local database
-src/Template.js --> Template for a new React Component
+* Components/CheckboxTrees/epics.js & src/courses.js are just used as a local database.
+
+* src/Template.js --> Template for a new React Component.
