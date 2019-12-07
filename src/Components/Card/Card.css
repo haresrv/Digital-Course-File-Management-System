@@ -1,0 +1,21 @@
+.open-now {
+    color: #3fb083;
+}
+
+.shop-list-item-container-wrap {    
+    display: block;
+}
+
+.shop-list-bottom-row {
+    padding-top: .25em;
+}
+
+.shop-list-item-container {
+    
+    text-align: left;
+}
+
+#artiststhumbnail a img {
+    display:block;
+    margin:auto;
+}

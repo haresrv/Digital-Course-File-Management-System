@@ -35,8 +35,10 @@ constructor() {
         'settings/policies': ['Settings', 'Policies'],
         'settings/network': ['Settings', 'Network']
     };
+
   navigate = (pathname) => () => {
         this.setState({ selected: pathname });
+        this.props.changeRoute(pathname)
     };
 
 
