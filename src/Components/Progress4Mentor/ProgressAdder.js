@@ -1,8 +1,8 @@
 import React,{Component} from 'react';
 import tachyons from 'tachyons';
 import './ProgressAdder.css';
-import tick from '../../img/tick.png';
-import cross from '../../img/cross.png';
+import tick from '../../Images/tick.png';
+import cross from '../../Images/cross.png';
 import { Line,Circle} from 'rc-progress';
 
 class ProgressAdder extends Component {
