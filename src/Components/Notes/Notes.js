@@ -1,6 +1,7 @@
 import ReactStickies from 'react-stickies'; //ES6
 import React,{Component} from 'react';
 import tachyons from 'tachyons';
+import Iframe from 'react-iframe';
 
 class Notes extends Component {
 
@@ -29,12 +30,23 @@ onSave () {
     }
     
 render(){
-  return (   <div className="App outer-container">
-             <ReactStickies
-		        notes={this.state.notes}
-		        onChange={this.onChange}
-		      />
-             </div>
+  return (   
+              <div className="App">
+           
+                  <Iframe url="https://www.amrita.edu/faculty/ni-ganesh"
+                      width="1000px"
+                      height="450px"
+                      id="myId"
+                      className="myClassname"
+                      display="initial"
+                      />
+
+                  <ReactStickies
+                    notes={this.state.notes}
+                    onChange={this.onChange}
+                  />
+
+              </div>
              
          );
   }

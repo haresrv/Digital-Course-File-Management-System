@@ -7,6 +7,9 @@ import Tracker from './Components/Tracker/Tracker';
 import ProgressMentor from './Components/Progress4Mentor/ProgressMentor';
 import * as serviceWorker from './serviceWorker';
 import ProgressAdder from './Components/Progress4Mentor/ProgressAdder';
+import CourseDashboard from './Components/CourseDashboard/CourseDashboard';
+// import TickTock from './Components/TickTock/TickTock';
+import Notes from './Components/Notes/Notes';
 
 
 

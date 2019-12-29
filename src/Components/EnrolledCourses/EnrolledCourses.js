@@ -24,7 +24,7 @@ constructor() {
                       <h4>Semester: {course.semester}</h4>
                       <h3 className="">{course.name}</h3>
                     </div>          
-                    <input className="bg-black white pointer" type='button' onClick={()=>{this.props.change("coursedashboard")}} value='View Course' style={{marginLeft:'10px'}}  />
+                    <input className="bg-black white pointer" type='button' onClick={()=>{this.props.history.push("coursedashboard")}} value='View Course' style={{marginLeft:'10px'}}  />
                   </div>
 
                   )

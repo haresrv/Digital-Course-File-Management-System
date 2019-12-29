@@ -7,6 +7,7 @@ import Dropdown, { MenuItem } from '@trendmicro/react-dropdown';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import '@trendmicro/react-buttons/dist/react-buttons.css';
 import '@trendmicro/react-dropdown/dist/react-dropdown.css';
+import { withRouter } from 'react-router-dom';
 
 class Tracker extends Component {
 
@@ -19,8 +20,11 @@ constructor() {
   }
 
  onSelect = (selected) => {
-        this.setState({ selected: selected });
-    	this.props.change(selected,2)
+        this.setState({ selected: selected },function(){
+            this.props.history.push(this.state.selected)
+        });
+        this.props.change(selected,2)
+        
     };
  
  onToggle = (expanded) => {
@@ -37,14 +41,14 @@ constructor() {
     };
 
   navigate = (pathname) => () => {
-        this.setState({ selected: pathname });
+        this.onSelect(pathname)
         this.props.changeRoute(pathname)
     };
 
 
 render(){
 	const { expanded, selected } = this.state;
-
+    {console.log(this.props)}
   return (   
              <div className="App outer-container"  style={{marginLeft: expanded ? 240 : 64,padding: '15px 20px 0 20px'}}>
 					<ButtonGroup>
@@ -142,4 +146,4 @@ render(){
   }
 }
 
-export default Tracker;
+export default withRouter(Tracker);

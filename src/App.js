@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import logo from './logo.svg';
+import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
 import './App.css';
 import './Card.css';
 // import { slide as Menu } from 'react-burger-menu';
@@ -12,86 +12,179 @@ import EnrolledCourses from './Components/EnrolledCourses/EnrolledCourses';
 import Notes from './Components/Notes/Notes';
 import CheckboxTrees from './Components/CheckboxTrees/CheckboxTrees';
 import ProgressAdder from './Components/Progress4Mentor/ProgressAdder';
-
-class App extends Component {
-
-constructor() {
-    super();
-      this.state = {
-      isFlipped: false,      
-      role:'faculty',
-      route:"enter",
-      expanded:false,
-      selected:"home",
-  
-    };
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(e) {
-    e.preventDefault();
-    this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
-
-  }
-
-   showSettings (event) {
-    event.preventDefault();
-  }
+import Loading from './Components/Loading'
 
 
-  change=(ex,i)=>{
-    if(i==1)
-      this.setState({expanded:ex})
-    else
-      this.setState({selected:ex})
-    console.log(this.state)
-  }
-  
-  changeRoute=(ex)=>{
-      this.setState({route:ex},function(){
-        console.log("CHANGEDD"+this.state.route)
-      })
+class Home extends Component {
     
-  }
+    render()
+    {
+        
+        return (
+            <div className="App outer-container">
+                    <div>         
+                        <main id={"page-wrapper"} style={{marginLeft: this.props.expanded ? 240 : 64}}>
+                            <EnrolledCourses {...this.props}/>
+                        </main>
+                    </div>
+            </div>
+                )
+    }
 
-
-  render(){
-    const {expanded}=this.state
-  return (   <div className="App outer-container">
-              <Tracker change={this.change} changeRoute={this.changeRoute}/>
-              {this.state.selected=="home"&&this.state.route=="enter"?
-   (           <div>
-                <main id={"page-wrapper"} style={{marginLeft: expanded ? 240 : 64}}>
-                  <EnrolledCourses change={this.changeRoute}/>
-                </main>
-               </div> 
-   )      
-          :this.state.selected=="home"&&this.state.route=="coursedashboard"?
-              <main id={"page-wrapper"} style={{marginLeft: expanded ? 240 : 64}}>
-                  <CourseDashboard change={this.changeRoute}/>
-              </main>    
-          :this.state.selected=="timetable"?
-              (
-               <div>
-                <main id={"page-wrapper"} style={{marginLeft: expanded ? 240 : 64}}>
-                <CheckboxTrees />
-                </main>
-               </div> 
-
-              )
-              :this.state.selected=="notes"?
-                <Notes/>
-              :this.state.route=="prog"?
-              <main id={"page-wrapper"} style={{marginLeft: expanded ? 180 : 64}}>
-                <ProgressAdder/>
-               </main> 
-              : <p>HI  </p>  
-
-            }
-             </div>
-             
-  );
 }
+
+class CourseSelect extends Component
+{
+    render()
+    {
+        return(
+            
+            <div className="App outer-container">
+                    <div>         
+                        <main id={"page-wrapper"} style={{marginLeft: this.props.expanded ? 240 : 64}}>
+                            <CourseDashboard {...this.props}/>
+                        </main>
+                    </div>
+            </div>
+        )
+    }
 }
-// <TickTock />
-export default App;
+
+class ProgressChange extends Component
+{
+
+    render()
+    {
+        return(
+            
+            <div className="App outer-container">
+                    <div>         
+                        <main id={"page-wrapper"} style={{marginLeft: this.props.expanded ? 180 : 64}}>
+                            <ProgressAdder  {...this.props}/>
+                        </main> 
+                    </div>
+            </div>
+        )
+    }
+}
+
+class PersonalSpace extends Component
+{
+    render()
+    {
+        return(
+            
+            <div className="App outer-container">
+                    <div>         
+                        <main id={"page-wrapper"} style={{marginLeft: this.props.expanded ? 210 : 64}}>
+                            <Notes/>
+                        </main> 
+                    </div>
+            </div>
+        )
+    }
+}
+const routes = [
+    {
+        path: '/',
+        component:Home,
+        fetchInitialData:true
+    },
+    {
+        path: '/home',
+        component:Home,
+        fetchInitialData:true
+    },
+    {
+        path: '/coursedashboard',
+        component:CourseSelect,
+        fetchInitialData:true
+    },
+    {
+        path: '/prog',
+        component:ProgressChange,
+        fetchInitialData:true
+    },
+    {
+        path: '/notes',
+        component:PersonalSpace,
+        fetchInitialData:true
+    }
+]
+
+
+class Ap extends Component
+{
+    
+    constructor() {
+        super();
+        this.state = {
+        isFlipped: false,      
+        role:'faculty',
+        route:"enter",
+        expanded:false,
+        selected:"home",
+    
+        };
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(e) {
+        e.preventDefault();
+        this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+
+    }
+
+    showSettings (event) {
+        event.preventDefault();
+    }
+
+
+    change=(ex,i)=>{
+        if(i==1)
+        this.setState({expanded:ex})
+        else
+        this.setState({selected:ex})
+        console.log(this.state)
+    }
+    
+    changeRoute=(ex)=>{
+        this.setState({route:ex},function(){
+            console.log("CHANGEDD"+this.state.route)
+        })
+        
+    }
+
+
+
+    render()
+    {
+        return (
+            <Router>
+                <div>
+                <Tracker {...this.props} change={this.change} changeRoute={this.changeRoute}/>
+                
+                    <React.Suspense fallback={<Loading />} >
+                        <Switch>
+                            {
+                                  
+                                routes.map(({path,component:C, fetchInitialData})=>(
+                                    <Route 
+                                        key={path}
+                                        path={path} 
+                                        exact={true}
+                                        render={(props)=><C {...props} expanded={this.state.expanded} fetchInitialData={fetchInitialData}/>} 
+                                    />
+                                ))
+                            }
+
+                        </Switch>
+                    </React.Suspense>
+                </div>
+            </Router>
+        )
+    }
+}
+
+
+export default Ap;
