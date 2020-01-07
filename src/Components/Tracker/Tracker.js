@@ -51,6 +51,7 @@ handleLogOut = async event => {
         Auth.signOut()
         this.props.authProps.setAuthStatus(false)
         this.props.authProps.setUser(null)
+        this.props.history.push("/login")
     }
     catch(error)
     {
