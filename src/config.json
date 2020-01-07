@@ -1,0 +1,13 @@
+{
+  "api": { 
+    "invokeUrl": "https://5bltcq602h.execute-api.us-west-2.amazonaws.com/prod"
+  },
+  "cognito":{
+    "REGION":"us-east-1",
+    "USER_POOL_ID":"us-east-1_2KUwW6T46",
+    "APP_CLIENT_ID":"1qmb8bq9m49o6a4q5c0n212q2e"
+  },
+  "ACCESS_KEY":"ASIAX62GXFY3XZEXGDW4",
+  "SECRET_KEY":"0NUv0iNMXjj9ulcKNw8ry2ubWsM2cBKr/V4ngb/d",
+  "SESSION_TOKEN":"FwoGZXIvYXdzEMn//////////wEaDK5hp/pkZqXdaUv2CyLWAWaRj0dzhgeiytK0MY8z7m2SUju3+TwVET94c2Sy5P4jFnNvBeXqKoM+P9QrhGzTL/L8fghSLe4SUqVvOYMI/MCVmXq07GU4/Nj+2KyLVJ8aw0anXOqFK9RqcSJjZpzQ+8Mz/SAYCcoGh3Eb3/alrFE8Nmx+gnvkoSCaKOCxHTaTJIbpiyVn0GZ96WqOnJhdTS6MSeQkFbjjr7FNOvtHKnW+titmTuijbzRTkGuYE4ovymPL8rdYGdxpItbxGAvbG/YBvtTm6KTH0IKxVEpfbSL2J/2pDUoor4648AUyLfTPPGuMGJL+smtNVkRNkVl3aiAt6JBXjrkfK74TmgOWrOQ1gLjTtOcLMdlj0A=="
+}

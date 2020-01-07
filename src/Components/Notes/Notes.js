@@ -32,14 +32,7 @@ onSave () {
 render(){
   return (   
               <div className="App">
-           
-                  <Iframe url="https://www.amrita.edu/faculty/ni-ganesh"
-                      width="1000px"
-                      height="450px"
-                      id="myId"
-                      className="myClassname"
-                      display="initial"
-                      />
+                  <img src="https://www.amrita.edu/sites/default/files/styles/260x160/adaptive-image/public/faculty_images/ganesh-neelakanta-iyer_0.jpg?itok=EGoI0stw" />
 
                   <ReactStickies
                     notes={this.state.notes}

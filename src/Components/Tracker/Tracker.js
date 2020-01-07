@@ -8,6 +8,8 @@ import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import '@trendmicro/react-buttons/dist/react-buttons.css';
 import '@trendmicro/react-dropdown/dist/react-dropdown.css';
 import { withRouter } from 'react-router-dom';
+import {Auth} from 'aws-amplify';
+
 
 class Tracker extends Component {
 
@@ -35,9 +37,7 @@ constructor() {
  pageTitle = {
         'home': 'Home',
         'devices': ['Devices'],
-        'reports': ['Reports'],
-        'settings/policies': ['Settings', 'Policies'],
-        'settings/network': ['Settings', 'Network']
+        'reports': ['Reports']            
     };
 
   navigate = (pathname) => () => {
@@ -45,13 +45,27 @@ constructor() {
         this.props.changeRoute(pathname)
     };
 
+handleLogOut = async event => {
+    event.preventDefault();
+    try{
+        Auth.signOut()
+        this.props.authProps.setAuthStatus(false)
+        this.props.authProps.setUser(null)
+    }
+    catch(error)
+    {
+
+    }
+}
+
 
 render(){
-	const { expanded, selected } = this.state;
-    {console.log(this.props)}
+    const { expanded, selected } = this.state;
+    console.log(this.props)
   return (   
-             <div className="App outer-container"  style={{marginLeft: expanded ? 240 : 64,padding: '15px 20px 0 20px'}}>
-					<ButtonGroup>
+             <div className="App outer-container"  style={{width:"1200px",marginLeft: expanded ? 240 : 64,padding: '15px 20px 0 20px',display:"flex"}}>
+                    
+                    <ButtonGroup style={{width:"500px"}}>
                         <Button btnStyle="flat" onClick={this.navigate('home')}>
                             Home
                         </Button>
@@ -61,21 +75,29 @@ render(){
                         <Button btnStyle="flat" onClick={this.navigate('reports')}>
                             Reports
                         </Button>
-                        <Dropdown>
-                            <Dropdown.Toggle>
-                                Settings
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <MenuItem onClick={this.navigate('settings/policies')}>
-                                    Policies
-                                </MenuItem>
-                                <MenuItem onClick={this.navigate('settings/network')}>
-                                    Network
-                                </MenuItem>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </ButtonGroup>
 
+                    </ButtonGroup>
+                    
+                            
+                    {!this.props.authProps.isAuthenticated?
+                            <div className="ma2 link" style={{position:"absolute",right:"0"}}>
+                            
+                            <Button btnStyle="flat" onClick={this.navigate("login")}>
+                              <strong>  Sign In</strong>
+                            </Button>
+                            <Button btnStyle="flat" onClick={this.navigate("register")}>
+                                <strong>Register</strong>
+                            </Button>
+                            </div>
+                            :
+                            <div className="ma2 bg-gold" style={{position:"absolute",right:"0"}}>
+                                
+                                <Button onClick={this.handleLogOut} className="ma2 pa3 link" btnStyle="flat">
+                                <h4>{this.props.authProps.user==null?"":this.props.authProps.user.username}</h4>
+                                <strong> Sign Out</strong>
+                                </Button>
+                            </div>
+                        }
     <SideNav className="bg-gold" onSelect={this.onSelect} onToggle={this.onToggle}>
                     <SideNav.Toggle />
                     <SideNav.Nav selected={selected}>

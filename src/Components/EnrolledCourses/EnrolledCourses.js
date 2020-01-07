@@ -18,7 +18,7 @@ constructor() {
 
             return  this.state.courses.map((course, index) => {
               return  (course.current=="True")? 
-                  (<div className="bg-white b--dashed green dib br3 pa3 ma2 fa fa-fw fa-book" style={{width:'280px',height:'180px'}}>
+                  (<div key={index} className="bg-white b--dashed green dib br3 pa3 ma2 fa fa-fw fa-book" style={{width:'280px',height:'180px'}}>
                     <div>
                       <h4>Year: {course.year}</h4>
                       <h4>Semester: {course.semester}</h4>
@@ -30,7 +30,7 @@ constructor() {
                   )
                   :
                   
-                  (<div className="bg-white b--dashed red dib br3 pa3 ma2 fa fa-fw fa-book" style={{width:'280px',height:'180px'}}>
+                  (<div key={index}          className="bg-white b--dashed red dib br3 pa3 ma2 fa fa-fw fa-book" style={{width:'280px',height:'180px'}}>
                     <div>
                       <h4>Year: {course.year}</h4>
                       <h4>Semester: {course.semester}</h4>
