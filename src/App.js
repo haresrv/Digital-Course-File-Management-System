@@ -24,6 +24,7 @@ import Welcome from './Components/auth/Welcome';
 import Footer from './Components/Footer';
 import LogIn from './Components/auth/LogIn';
 import Register from './Components/auth/Register';
+import Uploader from './Components/S3Upload/Uploader';
 
 Amplify.configure({
     Auth:{
@@ -31,11 +32,21 @@ Amplify.configure({
         region:config.cognito.REGION,
         userPoolId:config.cognito.USER_POOL_ID,
         userPoolWebClientId:config.cognito.APP_CLIENT_ID,
-    }
+        identityPoolId: config.cognito.IDENTITY_POOL_ID
+    },Storage: {
+		region: config.s3.REGION,
+		bucket: config.s3.BUCKET,
+		
+	}
 })
 
 class Home extends Component 
 {
+    componentDidMount()
+    {
+        if(!this.props.authProps.isAuthenticated)
+        this.props.history.push("/login")
+    }
     render()
     {
         return (
@@ -55,6 +66,7 @@ class CourseSelect extends Component
     render()
     {
         return(
+            
             <div className="App outer-container">
                     <div>         
                         <main id={"page-wrapper"} style={{marginLeft: this.props.expanded ? 240 : 64}}>
@@ -102,6 +114,7 @@ class PersonalSpace extends Component
 }
 
 var todoItems = [];
+
 const routes = [
     {
         path: '/',
@@ -167,8 +180,15 @@ const routes = [
         path:'/welcome',
         component:Welcome,
         fetchInitialData:true
+    },
+    {
+        path:'/upload',
+        component:Uploader,
+        fetchInitialData:true
+    
     }
 ]
+
 
 class App extends Component
 {
@@ -189,7 +209,7 @@ class App extends Component
 
     async componentDidMount()
     {
-        window.LOG_LEVEL='DEBUG'
+        // window.LOG_LEVEL='DEBUG'
         try
         {
             const session = await Auth.currentSession();
@@ -262,10 +282,11 @@ class App extends Component
     }
 
     render()
-    {   {
-         if(!this.state.isAuthenticating)
-        this.comp()
-        }
+    {  
+        //  {
+        //  if(!this.state.isAuthenticating)
+        // this.comp()
+        // }
         const authProps = {
             isAuthenticated :this.state.isAuthenticated,
             user: this.state.user,

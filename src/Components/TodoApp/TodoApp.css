@@ -11,6 +11,12 @@
     margin-left: 80px;
   }
   
+  li {
+  background: #cce5ff;
+  margin: 5px;
+  list-style: none;
+}
+
   .done {
     color: red;
     text-decoration: line-through;
@@ -25,3 +31,12 @@
     margin: 6px 10px 6px 0;
   }
   
+  .noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+}

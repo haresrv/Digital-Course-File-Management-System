@@ -27,7 +27,7 @@ return (
 					         	 <div style={{display:"flex",justifyContent:"center"}}>
 					         	 <img src={this.props.img} className="artiststhumbnail" style={{width:"150px",height:"120px"}}/>
 					         	 </div>
-					      <h2 className="tc">{this.props.words}</h2>
+					      <h5 className="tc ma2 pa3">{this.props.words}</h5>
 					      </div>
 					      
 					   </a>

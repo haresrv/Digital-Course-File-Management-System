@@ -10,9 +10,11 @@ import ProgressAdder from './Components/Progress4Mentor/ProgressAdder';
 import CourseDashboard from './Components/CourseDashboard/CourseDashboard';
 // import TickTock from './Components/TickTock/TickTock';
 import Notes from './Components/Notes/Notes';
+import FileExplore from './Components/FileExplore/FileExplore';
 
 
 
+// ReactDOM.render(<Home />, document.getElementById('root'));
 // ReactDOM.render(<Tracker />, document.getElementById('root'));
 ReactDOM.render(<App />, document.getElementById('root'));
 // ReactDOM.render(<ProgressMentor />, document.getElementById('root'));
