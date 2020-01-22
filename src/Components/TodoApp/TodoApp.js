@@ -6,6 +6,7 @@ import {Calendar} from 'primereact/calendar';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import moment from 'moment';
 
 class TodoList extends React.Component {
   render () {
@@ -25,6 +26,9 @@ class TodoListItem extends React.Component {
     super(props);
     this.onClickClose = this.onClickClose.bind(this);
     this.onClickDone = this.onClickDone.bind(this);
+    this.state={
+    	done:false
+    }
   }
   onClickClose() {
     var index = parseInt(this.props.index);
@@ -33,20 +37,34 @@ class TodoListItem extends React.Component {
   onClickDone() {
     var index = parseInt(this.props.index);
     this.props.markTodoDone(index);
+    this.setState({done:!this.state.done})
   }
+
+
   render () {
+  	var x=moment(this.props.item.date, 'YYYY-MM-DD');
+  	var y=x.format('DD-MM-YYYY'); 
+
     var todoClass = this.props.item.done ? 
         "done" : "undone";
     return(
-      <li className=" ">
-        <div className={todoClass+" noselect"}>
-          <span className="glyphicon fa fa-check icon" onClick={this.onClickDone}>
-
-          </span>
-                {this.props.item.value}
-          <button type="button" className="close" onClick={this.onClickClose}>&times;</button>
-        </div>
-      </li>     
+      <div>
+     
+        <div className="reminder-tasks">
+        	<span className="" onClick={this.onClickDone}></span>
+        	<li className="list-group-item reminder-items">
+        	<div className="list-item delete-button ma2 pa1" style={{float:"right",cursor:"pointer"}} onClick={this.onClickClose}>✕</div>
+        	<div className="bg-gold white ma2 pa1" style={{float:"right"}}>{y}</div>
+        		<div className={todoClass+" noselect"+" glyphicon fa fa-check icon list-item"} onClick={this.onClickDone}>
+        			<h7 style={{marginLeft:"10px"}}>{this.props.item.value}</h7>
+        		</div>
+        		<br/>
+        			{!this.state.done && <em>To be done {moment(new Date(this.props.item.date)).fromNow()}</em>}
+        			{this.state.done && <em>Done</em>}
+			</li>
+		</div>
+		</div>
+         
     );
   }
 }
@@ -72,37 +90,71 @@ class TodoForm extends React.Component {
     }
   }
   componentDidMount() {
-    this.refs.itemName.focus();
+    // this.refs.itemName.focus();
   }
   onSubmit(event) {
     event.preventDefault();
     var newItemValue = this.refs.itemName.value;
-      
-    if(newItemValue) {
-      this.props.addItem({newItemValue});
+    var dates= this.refs.itemDue.value; 
+
+    if(newItemValue&&dates) {
+      this.props.addItem({newItemValue,dates});
       this.refs.form.reset();
+    }
+    else
+    {
+    	alert("Fill all columns!!")
     }
   }
   render () {
+  	let today = new Date();
+  	today.setDate(today.getDate()+1)
+    var day = today.getDate()
+    var month = today.getMonth()+1
+    var year = today.getFullYear();
+         if(day<10){
+                day='0'+day
+            } 
+        if(month<10){
+            month='0'+month
+        }
+        today = year+'-'+month+'-'+day;
     return (
-      <form ref="form" onSubmit={this.onSubmit} className="form-inline dib">
-        <div>
-        <label htmlFor="Deadline">Pick Topic</label>
-        <input type="text" ref="itemName" className="form-control" placeholder="Add a new todo..."/>
-        </div>
-        <div>
-        <label htmlFor="Deadline">Pick Deadline</label>
-        <Calendar 
-            dateFormat="dd/mm/yy" 
-            value={this.state.sdate}
-            minDate={this.state.minDate} 
-            onChange={(e) => this.setState({sdate: e.value},function(){console.log(this.state)})} 
-            showIcon={true} />
-        </div>
-        <div>
-        <button type="submit" className="btn btn-default">Add</button> 
-        </div>
+      <form ref="form" onSubmit={this.onSubmit} className="">
+		<div className="form-inline reminder-form">
+		          <div className="form-group ma2 pa3">
+		            <input
+		              ref="itemName" 
+		              placeholder="I have to..."
+		           	  style={{width:"400px",height:"40px"}}
+		            />
+
+		            <input
+		              style={{marginLeft:"2px"}}
+		              ref="itemDue" 
+		              type="date"
+		           	  min={today}
+		            />
+		          </div>
+		          <button
+		            type="submit"
+		            className="btn btn-success"
+		            // onClick={() => this.addReminder()}
+		          >
+		            Add Reminder
+		          </button>
+		          <div
+		            className="btn btn-danger"
+		            // onClick={() => this.props.clearReminders()}
+		          >
+		            Clear reminders
+		          </div>
+		         
+		        </div>
+
       </form>
+
+
     );   
   }
 }
@@ -116,7 +168,7 @@ class TodoHeader extends React.Component {
   }
 
     render () {
-    return <input type="text" style={{marginLeft:"5%"}} className="ma2 b f2 pa3 b-- black gold tc" value={this.state.header} placeholder="--Edit title--" onChange={(e)=>{this.setState({header:e.target.value})}} />;
+    return <div class="sandbox sandbox-correct-pronounciation"><h6 class="heading heading-correct-pronounciation"><var>Todo List</var></h6></div>
   }
 }
   
@@ -127,13 +179,14 @@ class TodoApp extends React.Component {
     this.removeItem = this.removeItem.bind(this);
     this.markTodoDone = this.markTodoDone.bind(this);
     this.state = {
-      todoItems: this.props.fetchInitialData,
+      // todoItems: this.props.fetchInitialData,
+      todoItems: [{index: "1",value: "Schedule a new quiz",date: "2020-01-24",done: false}],
     };
   }
 
   componentDidMount()
   {
-      this.setState({todoItems:this.props.fetchInitialData})
+      // this.setState({todoItems:this.props.fetchInitialData})
   }
 
   addItem(todoItem) {
@@ -142,6 +195,7 @@ class TodoApp extends React.Component {
     todoItems.push({
       index: todoItems.length+1, 
       value: todoItem.newItemValue, 
+      date:  todoItem.dates,
       done: false
     });
     this.setState({todoItems: todoItems});
