@@ -83,17 +83,17 @@ render(){
                     {!this.props.authProps.isAuthenticated?
                             <div className="ma2 link" style={{position:"absolute",right:"0"}}>
                             
-                            <Button btnStyle="flat" onClick={this.navigate("login")}>
+                            <Button btnStyle="flat" id="signin" onClick={this.navigate("login")}>
                               <strong>  Sign In</strong>
                             </Button>
                             </div>
                             :
                             <div className="ma2" style={{position:"absolute",right:"0"}}>
                                 
-                                <Button btnStyle="flat" className="ma2 pa3 link" onClick={this.navigate("register")}>
+                                <Button btnStyle="flat" id="register" className="ma2 pa3 link" onClick={this.navigate("register")}>
                                     <strong>Register</strong>
                                  </Button>
-                                <Button onClick={this.handleLogOut} className="ma2 pa3 link" btnStyle="flat">
+                                <Button onClick={this.handleLogOut} id="signout" className="ma2 pa3 link" btnStyle="flat">
                                 <h4>{this.props.authProps.user==null?"":this.props.authProps.user.username}</h4>
                                 <strong> Sign Out</strong>
                                  
