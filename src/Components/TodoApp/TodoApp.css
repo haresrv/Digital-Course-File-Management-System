@@ -1,0 +1,97 @@
+  .sandbox-correct-pronounciation {
+  padding: 3em 0 3em 0;
+}
+
+.heading-correct-pronounciation {
+  margin: auto;
+  text-align: center;
+  position: relative;
+}
+
+var {
+  font-family: 'EB Garamond', serif;
+  font-size: 2.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  font-style: normal;
+  padding-top: 0.1em;
+  text-shadow: 0.07em 0.07em 0 rgba(0, 0, 0, 0.1);
+}
+
+.Calendar
+{
+     font-size: 11px; 
+}
+
+
+var::before,
+var::after {
+  content: "§";
+  display: inline-block;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  opacity: 0.2;
+  margin: 0 0.6em;
+  font-size: 0.5em;
+}
+
+.bottom {
+  font-size: 1.5em;
+  letter-spacing: 0.07em;
+  font-size: 1em;
+  display: block;
+}
+
+.reminder-form {
+  padding: 5;
+}
+.delete-button {
+  float: right;
+  padding-left: 5px;
+}
+.reminder-tasks {
+  background: #cce5ff;
+  justify-content: center;
+}
+
+  #main {
+    width: 1000px;
+    margin: 0 auto;
+    text-align: left;
+    margin-top: 5%;
+  }
+  
+  
+  .form-inline .form-control {
+    /*width: 50%;*/
+    /*margin-left: 50px;*/
+  }
+  
+  li {
+  background: #cce5ff;
+  list-style: none;
+}
+
+  .done {
+    color: red;
+    text-decoration: line-through;
+  }
+  
+  .undone {
+    color: #514454;
+
+  }
+  
+  .noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+}
