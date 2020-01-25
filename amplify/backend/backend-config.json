@@ -1,0 +1,15 @@
+{
+	"auth": {
+		"vigilantes1e98bc67": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	},
+	"storage": {
+		"s355df10e5": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

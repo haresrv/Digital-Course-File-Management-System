@@ -1,0 +1,42 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "vigilantes-csedcf-20191230121309-authRole",
+			"UnauthRoleArn": "arn:aws:iam::547219779127:role/vigilantes-csedcf-20191230121309-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::547219779127:role/vigilantes-csedcf-20191230121309-authRole",
+			"Region": "us-east-1",
+			"DeploymentBucketName": "vigilantes-csedcf-20191230121309-deployment",
+			"UnauthRoleName": "vigilantes-csedcf-20191230121309-unauthRole",
+			"StackName": "vigilantes-csedcf-20191230121309",
+			"StackId": "arn:aws:cloudformation:us-east-1:547219779127:stack/vigilantes-csedcf-20191230121309/f5212b50-2acf-11ea-a6e3-12c270bd7978"
+		}
+	},
+	"auth": {
+		"vigilantes1e98bc67": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/vigilantes-csedcf-20191230121309-deployment/amplify-cfn-templates/auth/vigilantes1e98bc67-cloudformation-template.yml",
+				"logicalId": "authvigilantes1e98bc67"
+			},
+			"lastPushTimeStamp": "2019-12-30T07:26:13.061Z",
+			"output": {
+				"AppClientSecret": "3i89buh9nn5tqu3k9a52o58pv6tfos4q9n8agnuj0qvjtu9q4dm",
+				"UserPoolId": "us-east-1_tZyQqbBiu",
+				"AppClientIDWeb": "2uol5r4ppfeqnolb0qhjv0s978",
+				"AppClientID": "49eptr5cmhc8agnn9v83i7hga",
+				"IdentityPoolId": "us-east-1:6c4fe75e-5a5a-4404-8775-383bc12257ad",
+				"IdentityPoolName": "vigilantes1e98bc67_identitypool_1e98bc67__csedcf",
+				"UserPoolName": "vigilantes1e98bc67_userpool_1e98bc67"
+			},
+			"lastPushDirHash": "BRvGnv9ttWciWkx7Wd/iFN6KA0U="
+		}
+	},
+	"storage": {
+		"s355df10e5": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

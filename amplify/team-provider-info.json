@@ -1,0 +1,19 @@
+{
+    "csedcf": {
+        "awscloudformation": {
+            "AuthRoleName": "vigilantes-csedcf-20191230121309-authRole",
+            "UnauthRoleArn": "arn:aws:iam::547219779127:role/vigilantes-csedcf-20191230121309-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::547219779127:role/vigilantes-csedcf-20191230121309-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "vigilantes-csedcf-20191230121309-deployment",
+            "UnauthRoleName": "vigilantes-csedcf-20191230121309-unauthRole",
+            "StackName": "vigilantes-csedcf-20191230121309",
+            "StackId": "arn:aws:cloudformation:us-east-1:547219779127:stack/vigilantes-csedcf-20191230121309/f5212b50-2acf-11ea-a6e3-12c270bd7978"
+        },
+        "categories": {
+            "auth": {
+                "vigilantes1e98bc67": {}
+            }
+        }
+    }
+}
