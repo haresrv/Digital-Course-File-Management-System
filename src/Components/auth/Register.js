@@ -94,41 +94,41 @@ class Register extends Component {
     // }
 try{
   console.log(username)
-     fetch('https://4y1lmnfnnh.execute-api.us-east-1.amazonaws.com/prod/adminCreate',{
-          method:'post',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({
-            UserPoolId:config.cognito.USER_POOL_ID,
-            username:username,
-            email:email
-          })
-          }).then(res=> res.json())
-          .then(data => console.log(data))
+     // fetch('https://4y1lmnfnnh.execute-api.us-east-1.amazonaws.com/prod/adminCreate',{
+     //      method:'post',
+     //      headers:{'Content-Type':'application/json'},
+     //      body:JSON.stringify({
+     //        UserPoolId:config.cognito.USER_POOL_ID,
+     //        username:username,
+     //        email:email
+     //      })
+     //      }).then(res=> res.json())
+     //      .then(data => console.log(data))
 
-    // var params = {
-    //   UserPoolId: config.cognito.USER_POOL_ID, /* required */
-    //   Username: username, /* required */
+    var params = {
+      UserPoolId: config.cognito.USER_POOL_ID, /* required */
+      Username: username, /* required */
 
-    //   DesiredDeliveryMediums: ["EMAIL"],
-    //   ForceAliasCreation: false,
-    //   TemporaryPassword: 'Faculty@amrita2000',
-    //   UserAttributes: [
-    //       { Name: "email", Value: email },
-    //       { Name: "preferred_username", Value: "nick" }
-    //   ] 
-    // };
+      DesiredDeliveryMediums: ["EMAIL"],
+      ForceAliasCreation: false,
+      TemporaryPassword: 'Faculty@amrita2000',
+      UserAttributes: [
+          { Name: "email", Value: email },
+          { Name: "preferred_username", Value: "nick" }
+      ] 
+    };
     
-    // var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider(
-    //                                                                            {region: config.cognito.REGION,
-    //                                                                             accessKeyId: config.ACCESS_KEY,
-    //                                                                             secretAccessKey:config.SECRET_KEY,
-    //                                                                             sessionToken:config.SESSION_TOKEN
-    //                                                                           });
+    var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider(
+                                                                               {region: config.cognito.REGION,
+                                                                                accessKeyId: config.ACCESS_KEY,
+                                                                                secretAccessKey:config.SECRET_KEY,
+                                                                                sessionToken:config.SESSION_TOKEN
+                                                                              });
   
-    // cognitoidentityserviceprovider.adminCreateUser(params, function(err, data) {
-    //   if (err) console.log(err, err.stack); // an error occurred
-    //   else     console.log(data);           // successful response
-    // });
+    cognitoidentityserviceprovider.adminCreateUser(params, function(err, data) {
+      if (err) console.log(err, err.stack); // an error occurred
+      else     console.log(data);           // successful response
+    });
   }
   catch(error)
   {
