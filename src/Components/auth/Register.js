@@ -112,36 +112,21 @@ try{
       TemporaryPassword: 'Faculty@amrita2000',
       UserAttributes: [
           { Name: "email", Value: email },
-<<<<<<< HEAD
       ] 
     };
-    console.log(params)
-=======
-          { Name: "preferred_username", Value: "nick" }
-      ] 
-    };
-    
->>>>>>> 956212766dcee089b2b850c58d89a7dec2867165
     var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider(
                                                                                {region: config.cognito.REGION,
                                                                                 accessKeyId: config.ACCESS_KEY,
                                                                                 secretAccessKey:config.SECRET_KEY,
                                                                                 sessionToken:config.SESSION_TOKEN
                                                                               });
-<<<<<<< HEAD
   console.log(cognitoidentityserviceprovider)
 
 
     cognitoidentityserviceprovider.adminCreateUser(params, function(err, data) {
       if (err) console.log(err, err.stack); // an error occurred
       else     {console.log(data); alert("User Created!!")}          // successful response
-=======
-  
-    cognitoidentityserviceprovider.adminCreateUser(params, function(err, data) {
-      if (err) console.log(err, err.stack); // an error occurred
-      else     console.log(data);           // successful response
->>>>>>> 956212766dcee089b2b850c58d89a7dec2867165
-    });
+});
   }
   catch(error)
   {
@@ -203,35 +188,6 @@ try{
                   />
                 </div>
 
-<<<<<<< HEAD
-
-=======
-                <div className="form-group">
-                  <input 
-                    className="form-control" 
-                    type="password"
-                    id="password"
-                    placeholder="Password"
-                    value={this.state.password}
-                    onChange={this.onInputChange}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <input 
-                    className="form-control" 
-                    type="password"
-                    id="confirmpassword"
-                    placeholder="Confirm password"
-                    value={this.state.confirmpassword}
-                    onChange={this.onInputChange}
-                  />  
-                </div>
-
-                <div className="form-group">
-                    <a href="/forgotpassword">Forgot password?</a>
-                </div>
->>>>>>> 956212766dcee089b2b850c58d89a7dec2867165
                 <div>
                     <button type="submit" id="registerbutton" className="btn btn-primary">Register</button>
                     <button type="reset" id="resetbutton" className="btn btn-default" onClick={()=>{this.setState({username:"",password:""});this.clearErrorState()}}>Reset</button>
@@ -246,37 +202,5 @@ try{
   }
 }
 
-<<<<<<< HEAD
 export default Register;
 
-
-
-
-
-
-
-
-                // <div className="form-group">
-                //   <input 
-                //     className="form-control" 
-                //     type="password"
-                //     id="password"
-                //     placeholder="Password"
-                //     value={this.state.password}
-                //     onChange={this.onInputChange}
-                //   />
-                // </div>
-
-                // <div className="form-group">
-                //   <input 
-                //     className="form-control" 
-                //     type="password"
-                //     id="confirmpassword"
-                //     placeholder="Confirm password"
-                //     value={this.state.confirmpassword}
-                //     onChange={this.onInputChange}
-                //   />  
-                // </div>
-=======
-export default Register;
->>>>>>> 956212766dcee089b2b850c58d89a7dec2867165
