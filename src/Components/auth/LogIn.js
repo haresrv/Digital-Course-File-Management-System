@@ -160,8 +160,8 @@ class LogIn extends Component {
                     <a href="/forgotpassword" className="text-muted" >Having trouble logging in ?</a>
                 </div>
                 <div>
-                    <button type="submit" className="btn btn-primary">Login</button>
-                    <button type="reset" className="btn btn-default" onClick={()=>{this.setState({username:"",password:""});this.clearErrorState()}}>Reset</button>
+                    <button type="submit" id="submitbutton" className="btn btn-primary">Login</button>
+                    <button type="reset" id="resetbutton" className="btn btn-default" onClick={()=>{this.setState({username:"",password:""});this.clearErrorState()}}>Reset</button>
                 </div>
             </form>
             </div>

@@ -216,8 +216,8 @@ try{
                     <a href="/forgotpassword">Forgot password?</a>
                 </div>
                 <div>
-                    <button type="submit" className="btn btn-primary">Register</button>
-                    <button type="reset" className="btn btn-default" onClick={()=>{this.setState({username:"",password:""});this.clearErrorState()}}>Reset</button>
+                    <button type="submit" id="registerbutton" className="btn btn-primary">Register</button>
+                    <button type="reset" id="resetbutton" className="btn btn-default" onClick={()=>{this.setState({username:"",password:""});this.clearErrorState()}}>Reset</button>
                 </div>
             </form>
             </div>
