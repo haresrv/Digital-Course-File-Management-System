@@ -12,7 +12,7 @@ import Notes from './Components/Notes/Notes';
 import CheckboxTrees from './Components/CheckboxTrees/CheckboxTrees';
 import ProgressAdder from './Components/Progress4Mentor/ProgressAdder';
 import Loading from './Components/Loading';
-import TodoApp from './Components/TodoApp/TodoApp';
+import {TodoApp} from './Components/TodoApp/TodoApp';
 import Amplify from 'aws-amplify';
 import {Auth} from 'aws-amplify';
 import config from './config';
@@ -40,77 +40,60 @@ Amplify.configure({
 	}
 })
 
-class Home extends Component 
+const Home =(props) =>
 {
-    componentDidMount()
-    {
-        if(!this.props.authProps.isAuthenticated)
-        this.props.history.push("/login")
-    }
-    render()
-    {
+    if(!props.authProps.isAuthenticated)
+        props.history.push("/login")
+    
         return (
             <div className="App outer-container">
                     <div>         
-                        <main id={"page-wrapper"} style={{marginLeft: this.props.expanded ? 240 : 64}}>
-                            <EnrolledCourses {...this.props}/>
+                        <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 240 : 64}}>
+                            <EnrolledCourses {...props}/>
                         </main>
                     </div>
             </div>
                 )
-    }
 }
 
-class CourseSelect extends Component
-{
-    render()
-    {
+const CourseSelect =(props) =>{
         return(
-            
             <div className="App outer-container">
                     <div>         
-                        <main id={"page-wrapper"} style={{marginLeft: this.props.expanded ? 240 : 64}}>
-                            <CourseDashboard {...this.props}/>
+                        <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 240 : 64}}>
+                            <CourseDashboard {...props}/>
                         </main>
                     </div>
             </div>
         )
     }
-}
 
-class ProgressChange extends Component
+const ProgressChange = (props) =>
 {
-    render()
-    {
-        return(
+    return(
             
             <div className="App outer-container">
                     <div>         
-                        <main id={"page-wrapper"} style={{marginLeft: this.props.expanded ? 180 : 64}}>
-                            <ProgressAdder  {...this.props}/>
+                        <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 180 : 64}}>
+                            <ProgressAdder  {...props}/>
                         </main> 
                     </div>
             </div>
         )
-    }
 }
 
-class PersonalSpace extends Component
+const PersonalSpace = (props) =>
 {
-    
-    render()
-    {
         return(
             
             <div className="App outer-container">
                     <div>         
-                        <main id={"page-wrapper"} style={{marginLeft: this.props.expanded ? 210 : 64}}>
+                        <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 210 : 64}}>
                             <Notes/>
                         </main> 
                     </div>
             </div>
         )
-    }
 }
 
 var todoItems = [];

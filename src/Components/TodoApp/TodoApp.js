@@ -12,7 +12,9 @@ class TodoList extends React.Component {
   render () {
     var items = this.props.items.map((item, index) => {
       return (
-        <TodoListItem key={index} item={item} index={index} removeItem={this.props.removeItem} markTodoDone={this.props.markTodoDone} />
+        <TodoListItem key={index} item={item} index={index} 
+              removeItem={this.props.removeItem} 
+              markTodoDone={this.props.markTodoDone} />
       );
     });
     return (
@@ -44,7 +46,7 @@ class TodoListItem extends React.Component {
   render () {
   	var x=moment(this.props.item.date, 'YYYY-MM-DD');
   	var y=x.format('DD-MM-YYYY'); 
-
+    
     var todoClass = this.props.item.done ? 
         "done" : "undone";
     return(
@@ -56,7 +58,7 @@ class TodoListItem extends React.Component {
         	<div className="list-item delete-button ma2 pa1" style={{float:"right",cursor:"pointer"}} onClick={this.onClickClose}>✕</div>
         	<div className="bg-gold white ma2 pa1" style={{float:"right"}}>{y}</div>
         		<div className={todoClass+" noselect"+" glyphicon fa fa-check icon list-item"} onClick={this.onClickDone}>
-        			<h7 style={{marginLeft:"10px"}}>{this.props.item.value}</h7>
+        			<h7 id={this.props.index} style={{marginLeft:"10px"}}>{this.props.item.value}</h7>
         		</div>
         		<br/>
         			{!this.state.done && <em>To be done {moment(new Date(this.props.item.date)).fromNow()}</em>}
@@ -86,7 +88,8 @@ class TodoForm extends React.Component {
         
     this.state={
        minDate:minDate,
-       sdate:minDate
+       sdate:minDate,
+       errorMessage:''
     }
   }
   componentDidMount() {
@@ -100,10 +103,14 @@ class TodoForm extends React.Component {
     if(newItemValue&&dates) {
       this.props.addItem({newItemValue,dates});
       this.refs.form.reset();
+      // console.log("SJSJSK")
+      return this.setState({errorMessage:""})
     }
     else
     {
     	alert("Fill all columns!!")
+      // console.log("Fill all columns!!")
+      return this.setState({errorMessage:"Fill all columns"})
     }
   }
   render () {
@@ -125,6 +132,7 @@ class TodoForm extends React.Component {
 		          <div className="form-group ma2 pa3">
 		            <input
 		              ref="itemName" 
+                  id="newItem"
 		              placeholder="I have to..."
 		           	  style={{width:"400px",height:"40px"}}
 		            />
@@ -132,14 +140,16 @@ class TodoForm extends React.Component {
 		            <input
 		              style={{marginLeft:"2px"}}
 		              ref="itemDue" 
+                  id="newDue"
 		              type="date"
 		           	  min={today}
 		            />
 		          </div>
 		          <button
 		            type="submit"
-		            className="btn btn-success"
-		            // onClick={() => this.addReminder()}
+                id="remindersubmit"
+		            className=" btn btn-success"
+		            onClick={this.onSubmit}
 		          >
 		            Add Reminder
 		          </button>
@@ -159,17 +169,14 @@ class TodoForm extends React.Component {
   }
 }
   
-class TodoHeader extends React.Component {
-  constructor(props){
-      super(props)
-      this.state={
-          header:""
-      }
-  }
-
-    render () {
-    return <div class="sandbox sandbox-correct-pronounciation"><h6 class="heading heading-correct-pronounciation"><var>Todo List</var></h6></div>
-  }
+const TodoHeader =(header)=> {
+    return (
+          <div class="sandbox sandbox-correct-pronounciation">
+              <h6 class="heading heading-correct-pronounciation">
+                  <var>Todo List</var>
+              </h6>
+          </div>
+          )
 }
   
 class TodoApp extends React.Component {
@@ -199,7 +206,7 @@ class TodoApp extends React.Component {
       done: false
     });
     this.setState({todoItems: todoItems});
-    console.log(this.state)
+    // console.log(this.state)
   }
   removeItem (itemIndex) {
     var {todoItems} = this.state
@@ -215,9 +222,9 @@ class TodoApp extends React.Component {
     this.setState({todoItems: todoItems});  
   }
   render() {
-      console.log(this.state)
+      // console.log(this.state)
     return (
-      <div id="main" className="ba solid black pa3 ma2">
+      <div id="main" className="todomain ba solid black pa3 ma2">
         <TodoHeader />
         <TodoList items={this.state.todoItems} removeItem={this.removeItem} markTodoDone={this.markTodoDone}/>
         <TodoForm addItem={this.addItem} />
@@ -228,4 +235,4 @@ class TodoApp extends React.Component {
   }
 }
 
-export default TodoApp;
+export {TodoApp,TodoForm,TodoList,TodoListItem,TodoHeader};

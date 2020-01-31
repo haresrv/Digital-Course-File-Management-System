@@ -32,7 +32,7 @@ onSave () {
 render(){
   return (   
               <div className="App">
-                  <img src="https://www.amrita.edu/sites/default/files/styles/260x160/adaptive-image/public/faculty_images/ganesh-neelakanta-iyer_0.jpg?itok=EGoI0stw" />
+                  
 
                   <ReactStickies
                     notes={this.state.notes}
@@ -46,3 +46,5 @@ render(){
 }
 
 export default Notes;
+
+// <img src="https://www.amrita.edu/sites/default/files/styles/260x160/adaptive-image/public/faculty_images/ganesh-neelakanta-iyer_0.jpg?itok=EGoI0stw" />
