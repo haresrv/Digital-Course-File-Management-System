@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import tachyons from 'tachyons';
 
-class  extends Component {
+class Template extends Component {
 
 constructor() {
     super();
