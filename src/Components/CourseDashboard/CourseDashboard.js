@@ -46,7 +46,7 @@ render(){
 
       			<Card img={i5} words="TODO List"  {...this.props} alt='todo'/>
       			<Card img={i6} words="Question Bank"  {...this.props} alt='qnbank'/>
-      			<Card img={i4} words="Report Uploads"  {...this.props} alt='report'/>
+      			<Card img={i4} words="Report Uploads"  {...this.props} alt='upload'/>
             
             </div>
 

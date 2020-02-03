@@ -1,6 +1,35 @@
 import { Storage } from "aws-amplify";
 import config from '../config';
 
+
+export async function s3UploadDigitalRep(file,prefix) {
+
+
+const customPrefix = {
+    public: prefix+'/'
+};
+
+  Storage.configure({
+    AWSS3: {
+        bucket: config.s3.BUCKET,//Your bucket name;
+        region: config.s3.REGION,//Specify the region your bucket was created in;
+    }
+  });
+
+  const filename = `${Date.now()}-${file.name}`;
+  const stored = await Storage.put(filename, file, {
+    contentType: file.type,
+    customPrefix: customPrefix,
+  });
+
+  console.log(stored)
+  
+  return stored.key;
+}
+
+
+
+
 export async function s3privateUpload(file) {
 
   Storage.configure({

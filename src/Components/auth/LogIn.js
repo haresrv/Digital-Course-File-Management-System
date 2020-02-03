@@ -18,10 +18,13 @@ class LogIn extends Component {
 
   componentDidMount()
   {
+    console.log("HERE1")
     if(this.props.authProps.isAuthenticated)
     {
+      console.log("HERE2")
       this.props.history.push("/")
     }
+    console.log("HERE3")
   }
 
   clearErrorState = () => {
@@ -35,14 +38,18 @@ class LogIn extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-    
     // Form validation
+    
     this.clearErrorState();
     const error = Validate(event, this.state);
+    console.log("HANDLING")
     if (error) {
+      console.log("HANDLING")
       this.setState({
         errors: { ...this.state.errors, ...error }
       });
+      console.log("ERROR111")
+      return
     }
 
     // AWS Cognito integration here
@@ -60,6 +67,7 @@ class LogIn extends Component {
     // }
 
     try {
+      console.log("ERROR121")
       const user = await Auth.signIn(username, password);
       if (user.challengeName === 'SMS_MFA' ||
           user.challengeName === 'SOFTWARE_TOKEN_MFA') {
@@ -116,6 +124,7 @@ class LogIn extends Component {
 
     catch(error)
     {
+      console.log("ERROR131")
         let err= null;
         !error.message? err={"message":error} : err = error
         this.setState({
@@ -124,11 +133,13 @@ class LogIn extends Component {
             cognito:err
           }
         })
+
     }
 
   };
 
   onInputChange = event => {
+    console.log(event.target.id)
     this.setState({
       [event.target.id]: event.target.value
     });
@@ -138,7 +149,7 @@ class LogIn extends Component {
   render() {
     return (
       <section className="section auth">
-        <div className="container">
+        <div id="login" className="container">
           <h1>Log in</h1>
 
           <div className="row">
@@ -160,7 +171,7 @@ class LogIn extends Component {
                     <a href="/forgotpassword" className="text-muted" >Having trouble logging in ?</a>
                 </div>
                 <div>
-                    <button type="submit" id="submitbutton" className="btn btn-primary">Login</button>
+                    <button type="submit" onClick={this.handleSubmit} id="submitbutton" className="btn btn-primary">Login</button>
                     <button type="reset" id="resetbutton" className="btn btn-default" onClick={()=>{this.setState({username:"",password:""});this.clearErrorState()}}>Reset</button>
                 </div>
             </form>

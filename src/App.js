@@ -3,7 +3,6 @@ import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
 import './App.css';
 import './Card.css';
 import tachyons from 'tachyons';
-import Navbar from './Components/Navbar';
 import CourseDashboard from './Components/CourseDashboard/CourseDashboard';
 // import TickTock from './Components/TickTock/TickTock';
 import Tracker from './Components/Tracker/Tracker';
@@ -25,6 +24,7 @@ import Footer from './Components/Footer';
 import LogIn from './Components/auth/LogIn';
 import Register from './Components/auth/Register';
 import Uploader from './Components/S3Upload/Uploader';
+import changer from './Components/S3Upload/change';
 
 Amplify.configure({
     Auth:{
@@ -40,25 +40,39 @@ Amplify.configure({
 	}
 })
 
+const Admin =(props) =>
+{
+    if(!props.authProps.isAuthenticated)
+        props.history.push("/login")
+    
+        return (
+            <div id="home" className="App outer-container">
+                    <div>         
+                        <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 240 : 64}}>
+                            <EnrolledCourses {...props}/>
+                        </main>
+                    </div>
+            </div>)
+}
+
 const Home =(props) =>
 {
     if(!props.authProps.isAuthenticated)
         props.history.push("/login")
     
         return (
-            <div className="App outer-container">
+            <div id="home" className="App outer-container">
                     <div>         
                         <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 240 : 64}}>
                             <EnrolledCourses {...props}/>
                         </main>
                     </div>
-            </div>
-                )
+            </div>)
 }
 
 const CourseSelect =(props) =>{
         return(
-            <div className="App outer-container">
+            <div id="course-select" className="App outer-container">
                     <div>         
                         <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 240 : 64}}>
                             <CourseDashboard {...props}/>
@@ -72,7 +86,7 @@ const ProgressChange = (props) =>
 {
     return(
             
-            <div className="App outer-container">
+            <div id='progress-change' className="App outer-container">
                     <div>         
                         <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 180 : 64}}>
                             <ProgressAdder  {...props}/>
@@ -86,7 +100,7 @@ const PersonalSpace = (props) =>
 {
         return(
             
-            <div className="App outer-container">
+            <div id="personal-space" className="App outer-container">
                     <div>         
                         <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 210 : 64}}>
                             <Notes/>
@@ -95,7 +109,19 @@ const PersonalSpace = (props) =>
             </div>
         )
 }
-
+const PersonalSpacx = (props) =>
+{
+        return(
+            
+            <div id="personal-spacx" className="App outer-container">
+                    <div>         
+                        
+                            <changer/>
+                        
+                    </div>
+            </div>
+        )
+}
 var todoItems = [];
 
 const routes = [
@@ -105,8 +131,19 @@ const routes = [
         fetchInitialData:true
     },
     {
+        path:'/pathupload',
+        component:changer,
+        fetchInitialData:true
+    
+    },
+    {
         path: '/home',
         component:Home,
+        fetchInitialData:true
+    },
+    {
+        path: '/admin',
+        component:Admin,
         fetchInitialData:true
     },
     {
@@ -187,7 +224,6 @@ class App extends Component
         user:null
 
         };
-        this.handleClick = this.handleClick.bind(this);
     }
 
     async componentDidMount()
@@ -199,7 +235,8 @@ class App extends Component
             const user = await Auth.currentAuthenticatedUser();
             this.setAuthStatus(true)
             this.setUser(user);
-            console.log(session)
+            // console.log(session)
+            // console.log(user)
             if(session.idToken.payload['cognito:groups'].includes("Admin"))
             {
                 this.setRole("Admin")
@@ -208,12 +245,13 @@ class App extends Component
             {
                 this.setRole("Faculty")
             }
-            console.log("COMPONENT PERSISTED")
-            console.log(this.state)
+            // console.log("COMPONENT PERSISTED")
+            // console.log(this.state)
         }   
         catch(error)
-        {   console.log("COMPONENT PERSIST ERROR")
-            console.log(error)
+        {   
+            // console.log("COMPONENT PERSIST ERROR")
+            // console.log(error)
             this.setRole("");
         }
         this.setState({isAuthenticating:false})
@@ -223,9 +261,10 @@ class App extends Component
         if(!this.state.isAuthenticated&&(!window.location.href.includes("login"))&&(!window.location.href.includes("register"))&&(!window.location.href.includes("password")))
         if(this.state.role=="")
         {   window.location.href=window.location.origin+"/login"
-            console.log("Manually Redirected to /login")    
+            // console.log("Manually Redirected to /login")    
         }
     }
+
     setAuthStatus=(authenticated)=>{
         this.setState({isAuthenticated:authenticated})
     }
@@ -237,33 +276,15 @@ class App extends Component
     setRole=(role)=>{
         this.setState({role:role})
     }
-    
-    handleClick(e) {
-        e.preventDefault();
-        this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
-
-    }
-
-    showSettings (event) {
-        event.preventDefault();
-    }
-
 
     change=(ex,i)=>{
         if(i==1)
         this.setState({expanded:ex})
         else
         this.setState({selected:ex})
-        console.log(this.state)
+        // console.log(this.state)
     }
     
-    changeRoute=(ex)=>{
-        this.setState({route:ex},function(){
-            console.log("CHANGED Route to "+this.state.route)
-        })
-        
-    }
-
     render()
     {  
         //  {
@@ -276,13 +297,14 @@ class App extends Component
             role:this.state.role,
             setAuthStatus:this.setAuthStatus,
             setUser:this.setUser,
-            setRole:this.setRole
+            setRole:this.setRole,
+            expanded:this.state.expanded
         }
 
         return ( !this.state.isAuthenticating &&
             <Router>
                 <div>
-                <Tracker {...this.props} authProps={authProps} change={this.change} changeRoute={this.changeRoute}/>
+                {this.state.isAuthenticated &&<Tracker {...this.props} authProps={authProps} change={this.change} changeRoute={this.changeRoute}/>}
                     
                     <React.Suspense fallback={<Loading />} >
                         <Switch>
@@ -306,4 +328,4 @@ class App extends Component
     }
 }
 
-export default App;
+export {App,Home,CourseSelect,ProgressChange,PersonalSpace};

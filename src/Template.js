@@ -1,22 +1,22 @@
-import React,{Component} from 'react';
-import tachyons from 'tachyons';
+// import React,{Component} from 'react';
+// import tachyons from 'tachyons';
 
-class  extends Component {
+// class  extends Component {
 
-constructor() {
-    super();
-      this.state = {
-    };
-  }
+// constructor() {
+//     super();
+//       this.state = {
+//     };
+//   }
 
 
-render(){
-  return (   <div className="App outer-container">
+// render(){
+//   return (   <div className="App outer-container">
              
-             </div>
+//              </div>
              
-         );
-  }
-}
+//          );
+//   }
+// }
 
-export default ;
+// export default ;

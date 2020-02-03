@@ -12,8 +12,7 @@ class Register extends Component {
     email: "",
     errors: {
       cognito: null,
-      blankfield: false,
-      passwordmatch: false
+      blankfield: false
     }
   }
 
@@ -21,46 +20,54 @@ class Register extends Component {
     this.setState({
       errors: {
         cognito: null,
-        blankfield: false,
-        passwordmatch: false
+        blankfield: false
       }
     });
   }
 
   async componentDidMount()
   {
+
     try
     {
     const session = await Auth.currentSession();
+    
     console.log(session)
+    
     if(!session.idToken.payload['cognito:groups'].includes("Admin"))
       {
         alert("You don't have permission to create user")
         this.props.history.push("/login")
+      console.log("ERORO1")
       }
     }
     catch(error)
     {
       alert("You don't have permission to create user")
       this.props.history.push("/login")
-     
+    console.log("ERORO2") 
     }
+
   }
 
   
 
   handleSubmit = async event => {
     event.preventDefault();
-
+console.log("HERROR1")
     // Form validation
     this.clearErrorState();
     const error = Validate(event, this.state);
+    console.log("RERROR"+error)
     if (error) {
+      console.log("ERROR")
       this.setState({
         errors: { ...this.state.errors, ...error }
       });
+      console.log(this.state)
+      return
     }
-
+console.log("ERROR00")
     // AWS Cognito integration here
 
     const {username,email,password} = this.state
@@ -189,7 +196,7 @@ try{
                 </div>
 
                 <div>
-                    <button type="submit" id="registerbutton" className="btn btn-primary">Register</button>
+                    <button type="submit" onClick={this.handleSubmit} id="registerbutton" className="btn btn-primary">Register</button>
                     <button type="reset" id="resetbutton" className="btn btn-default" onClick={()=>{this.setState({username:"",password:""});this.clearErrorState()}}>Reset</button>
                 </div>
             </form>

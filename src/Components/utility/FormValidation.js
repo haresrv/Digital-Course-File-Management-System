@@ -11,14 +11,14 @@ function validateForm(event, state) {
     document.getElementById("username").classList.add("is-danger");
     return { blankfield: true };
   }
-  if (state.hasOwnProperty("firstname") && state.firstname === "") {
-    document.getElementById("firstname").classList.add("is-danger");
-    return { blankfield: true };
-  }
-  if (state.hasOwnProperty("lastname") && state.lastname === "") {
-    document.getElementById("lastname").classList.add("is-danger");
-    return { blankfield: true };
-  }
+  // if (state.hasOwnProperty("firstname") && state.firstname === "") {
+  //   document.getElementById("firstname").classList.add("is-danger");
+  //   return { blankfield: true };
+  // }
+  // if (state.hasOwnProperty("lastname") && state.lastname === "") {
+  //   document.getElementById("lastname").classList.add("is-danger");
+  //   return { blankfield: true };
+  // }
   if (state.hasOwnProperty("email") && state.email === "") {
     document.getElementById("email").classList.add("is-danger");
     return { blankfield: true };
@@ -42,28 +42,28 @@ function validateForm(event, state) {
     document.getElementById("newpassword").classList.add("is-danger");
     return { blankfield: true };
   }
-  if (state.hasOwnProperty("confirmpassword") && state.confirmpassword === "") {
-    document.getElementById("confirmpassword").classList.add("is-danger");
-    return { blankfield: true };
-  }
-  if (
-    state.hasOwnProperty("password") &&
-    state.hasOwnProperty("confirmpassword") &&
-    state.password !== state.confirmpassword
-  ) {
-    document.getElementById("password").classList.add("is-danger");
-    document.getElementById("confirmpassword").classList.add("is-danger");
-    return { passwordmatch: true };
-  }
-  if (
-    state.hasOwnProperty("newpassword") &&
-    state.hasOwnProperty("confirmpassword") &&
-    state.newpassword !== state.confirmpassword
-  ) {
-    document.getElementById("newpassword").classList.add("is-danger");
-    document.getElementById("confirmpassword").classList.add("is-danger");
-    return { passwordmatch: true };
-  }
+  // if (state.hasOwnProperty("confirmpassword") && state.confirmpassword === "") {
+  //   document.getElementById("confirmpassword").classList.add("is-danger");
+  //   return { blankfield: true };
+  // }
+  // if (
+  //   state.hasOwnProperty("password") &&
+  //   state.hasOwnProperty("confirmpassword") &&
+  //   state.password !== state.confirmpassword
+  // ) {
+  //   document.getElementById("password").classList.add("is-danger");
+  //   document.getElementById("confirmpassword").classList.add("is-danger");
+  //   return { passwordmatch: true };
+  // }
+  // if (
+  //   state.hasOwnProperty("newpassword") &&
+  //   state.hasOwnProperty("confirmpassword") &&
+  //   state.newpassword !== state.confirmpassword
+  // ) {
+  //   document.getElementById("newpassword").classList.add("is-danger");
+  //   document.getElementById("confirmpassword").classList.add("is-danger");
+  //   return { passwordmatch: true };
+  // }
   return;
 }
 

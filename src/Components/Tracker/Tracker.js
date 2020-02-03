@@ -36,13 +36,13 @@ constructor() {
 
  pageTitle = {
         'home': 'Home',
-        'devices': ['Devices'],
-        'reports': ['Reports']            
+        // // 'devices': ['Devices'],
+        // 'reports': ['Reports']            
     };
 
   navigate = (pathname) => () => {
         this.onSelect(pathname)
-        this.props.changeRoute(pathname)
+        // this.props.changeRoute(pathname)
     };
 
 handleLogOut = async event => {
@@ -70,12 +70,12 @@ render(){
                         <Button btnStyle="flat" onClick={this.navigate('home')}>
                             Home
                         </Button>
-                        <Button btnStyle="flat" onClick={this.navigate('devices')}>
+                      {/*  <Button btnStyle="flat" onClick={this.navigate('devices')}>
                             Devices
                         </Button>
                         <Button btnStyle="flat" onClick={this.navigate('reports')}>
                             Reports
-                        </Button>
+                        </Button>  */}
 
                     </ButtonGroup>
                     
@@ -91,7 +91,7 @@ render(){
                             <div className="ma2" style={{position:"absolute",right:"0"}}>
                                 
                                 <Button btnStyle="flat" id="register" className="ma2 pa3 link" onClick={this.navigate("register")}>
-                                    <strong>Register</strong>
+                                    <strong>Register a new faculty</strong>
                                  </Button>
                                 <Button onClick={this.handleLogOut} id="signout" className="ma2 pa3 link" btnStyle="flat">
                                 <h4>{this.props.authProps.user==null?"":this.props.authProps.user.username}</h4>
@@ -122,7 +122,7 @@ render(){
                         </NavItem>
                         <NavItem eventKey="notifications">
                             <NavIcon>
-                                <i className="fa fa-fw fa-bell-o" style={{ fontSize: '1.75em', verticalAlign: 'middle' }} />
+                                <i className="fa fa-fw fa-star" style={{ fontSize: '1.75em', verticalAlign: 'middle' }} />
                             </NavIcon>
                             <NavText style={{ paddingRight: 32 }} title="notifications" >
                                  Notifications

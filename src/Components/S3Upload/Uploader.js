@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import config from "../../config";
-import { s3privateUpload,s3publicUpload ,s3getUpload,s3pgetUpload} from "../../libs/awsLib";
+import { s3privateUpload,s3publicUpload ,s3getUpload,s3pgetUpload,s3UploadDigitalRep} from "../../libs/awsLib";
 import './Uploader.css';
 import tachyons from 'tachyons';
 import Dropdown from 'react-dropdown';
@@ -105,7 +105,7 @@ export default class Uploader extends Component {
 		this.setState({ isLoading: true });
 		try {
 
-	  			 const attachment=this.state.isprivate? await s3privateUpload(this.file) :await s3publicUpload(this.file)
+	  			 const attachment=this.state.isprivate? await s3UploadDigitalRep(this.file,"ppt") :await s3publicUpload(this.file)
 		  	
 		  		 const user = await Auth.currentAuthenticatedUser();
 		  		 console.log(user.attributes.sub)
