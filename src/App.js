@@ -25,6 +25,7 @@ import LogIn from './Components/auth/LogIn';
 import Register from './Components/auth/Register';
 import Uploader from './Components/S3Upload/Uploader';
 import changer from './Components/S3Upload/change';
+import digitalRep from './Components/S3Upload/digitalRep';
 
 Amplify.configure({
     Auth:{
@@ -206,6 +207,11 @@ const routes = [
         component:Uploader,
         fetchInitialData:true
     
+    },
+    {
+        path:'/digrep',
+        component:digitalRep,
+        fetchInitialData:true
     }
 ]
 
