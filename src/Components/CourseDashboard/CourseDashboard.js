@@ -16,6 +16,13 @@ constructor() {
     };
   }
 
+componentDidMount()
+{
+  
+    if(this.props.authProps.role=="Admin")
+        this.props.history.push("/admin")
+
+}
 handleClick=()=>{
 	this.props.change("home")
 }

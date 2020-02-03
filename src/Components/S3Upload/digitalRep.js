@@ -41,7 +41,11 @@ export default class digitalRep extends Component {
         this.setState({[name]:value});
     }
 
-    componentDidMount() {
+    componentDidMount() {    
+    if(this.props.authProps.role=="Admin")
+        this.props.history.push("/admin")
+
+
         this.fetchRest();
     }
 

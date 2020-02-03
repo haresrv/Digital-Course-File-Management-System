@@ -304,12 +304,12 @@ render(){
                                         <nav>
                                         <div style={{display:"flex"}}>
                                         
-                                        <p style={{width:"13%"}} onClick={() => this.setState({mode:"update"})} className="f3 b blue hover-black bg-animate bg-white hover-bg-gold dim pa3 pointer">Update progress </p>
-                                        <p style={{width:"13%"}} onClick={() => this.setState({mode:"insert"})} className="f3 b blue hover-black bg-animate bg-white hover-bg-gold dim pa3 pointer">Insert topic </p>
-                                        <p style={{width:"13%"}} onClick={() => this.setState({mode:"delete"})} className="f3 b blue hover-black bg-animate bg-white hover-bg-gold dim pa3 pointer">Delete topic </p>
+                                        <p style={{width:"13%"}} onClick={() => this.setState({mode:"update"})} className="f5 b blue hover-black bg-animate bg-white hover-bg-gold dim pa3 pointer">Update progress </p>
+                                        <p style={{width:"13%"}} onClick={() => this.setState({mode:"insert"})} className="f5 b blue hover-black bg-animate bg-white hover-bg-gold dim pa3 pointer">Insert topic </p>
+                                        <p style={{width:"13%"}} onClick={() => this.setState({mode:"delete"})} className="f5 b blue hover-black bg-animate bg-white hover-bg-gold dim pa3 pointer">Delete topic </p>
                                         </div>
                                         </nav>
-                                        <p style={{width:"25%"}} className="f3 b green bg-animate bg-black pa3">&lt;&lt; PROGRESS TRACKER &gt;&gt;</p>
+                                        <p style={{width:"25%"}} className="f4 b green bg-animate bg-black pa3">&lt;&lt; PROGRESS TRACKER &gt;&gt;</p>
                                             {
                                               
                                               ((this.state.mode==="home")?

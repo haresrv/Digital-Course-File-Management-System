@@ -13,7 +13,6 @@ constructor() {
     };
   }
 
-
   renderCourses = () => {
 
             return  this.state.courses.map((course, index) => {

@@ -42,13 +42,13 @@ class LogIn extends Component {
     
     this.clearErrorState();
     const error = Validate(event, this.state);
-    console.log("HANDLING")
+    
     if (error) {
-      console.log("HANDLING")
+      
       this.setState({
         errors: { ...this.state.errors, ...error }
       });
-      console.log("ERROR111")
+    
       return
     }
 
@@ -67,7 +67,7 @@ class LogIn extends Component {
     // }
 
     try {
-      console.log("ERROR121")
+      
       const user = await Auth.signIn(username, password);
       if (user.challengeName === 'SMS_MFA' ||
           user.challengeName === 'SOFTWARE_TOKEN_MFA') {
@@ -87,15 +87,12 @@ class LogIn extends Component {
           // and then trigger the following function with a button click
           // For example, the email and phone_number are required attributes
           // const {username, email, phone_number} = getInfoFromUserInput();
-          const newPassword = prompt("Enter new password:")
-          const loggedUser = await Auth.completeNewPassword(
-              user,              // the Cognito User Object
-              newPassword,       // the new password
-              // OPTIONAL, the required attributes
-              {
-                  email,
-              }
-          );
+          // console.log(user)
+          this.props.authProps.setTUser(user)
+          this.props.authProps.setTUsername(username)
+          
+          this.props.history.push('/setpass')
+          return
       } else if (user.challengeName === 'MFA_SETUP') {
           // This happens when the MFA method is TOTP
           // The user needs to setup the TOTP before using it
@@ -106,20 +103,23 @@ class LogIn extends Component {
           console.log(user);
       }
       
-        this.props.authProps.setAuthStatus(true)
-        this.props.authProps.setUser(user)
         const session = await Auth.currentSession();
-       console.log(session)
-        if(session.idToken.payload['cognito:groups'].includes("Admin"))
+        console.log(session)
+
+        this.props.authProps.setAuthStatus(true)
+        this.props.authProps.setUser(this.state.username)
+      
+        if(session.idToken.payload&&session.idToken.payload['cognito:groups'].includes("Admin"))
         {
             this.props.authProps.setRole("Admin")
+            this.props.history.push("/admin")
         }
         else
         {
             this.props.authProps.setRole("Faculty")
+            this.props.history.push("/")
         }
-       
-        this.props.history.push("/")
+
   }
 
     catch(error)

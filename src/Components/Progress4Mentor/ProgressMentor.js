@@ -41,10 +41,17 @@ constructor() {
     };
   }
 
+componentDidMount()
+{
+	
+    if(this.props.authProps.role=="Admin")
+        this.props.history.push("/admin")
+
+}
 
 render(){
   return ( <div className="">
-  	<h1>Progress Tracker</h1>
+  	<h5>Progress Tracker</h5>
     <Expandable className="bg-white b--solid black"
 				    headers={[
 				      ({ isOpened }) => (

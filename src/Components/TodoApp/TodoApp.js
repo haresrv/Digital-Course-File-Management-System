@@ -205,6 +205,9 @@ class TodoApp extends React.Component {
 
   componentDidMount()
   {
+    if(this.props.authProps.role=="Admin")
+        this.props.history.push("/admin")
+
       this.setState({todoItems:this.props.fetchInitialData})
   }
 

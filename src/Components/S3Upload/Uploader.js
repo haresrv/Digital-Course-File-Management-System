@@ -33,6 +33,10 @@ export default class Uploader extends Component {
 	}
 
 	 componentDidMount() {
+    if(this.props.authProps.role=="Admin")
+        this.props.history.push("/admin")
+
+
 	  this.fetchRest();
     }
 

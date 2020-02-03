@@ -54,20 +54,18 @@ class Register extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-console.log("HERROR1")
+    this.props.history.push('/welcome')
+
     // Form validation
     this.clearErrorState();
     const error = Validate(event, this.state);
-    console.log("RERROR"+error)
     if (error) {
-      console.log("ERROR")
       this.setState({
         errors: { ...this.state.errors, ...error }
       });
       console.log(this.state)
       return
     }
-console.log("ERROR00")
     // AWS Cognito integration here
 
     const {username,email,password} = this.state
@@ -130,13 +128,18 @@ try{
   console.log(cognitoidentityserviceprovider)
 
 
-    cognitoidentityserviceprovider.adminCreateUser(params, function(err, data) {
+    cognitoidentityserviceprovider.adminCreateUser(params, (err, data)=> {
       if (err) console.log(err, err.stack); // an error occurred
-      else     {console.log(data); alert("User Created!!")}          // successful response
+      else     {
+      console.log(data);       
+      this.props.history.push('/welcome')
+      }          // successful response
+
 });
   }
   catch(error)
   {
+
       let err= null;
       !error.message? err={"message":error} : err = error
       this.setState({
@@ -146,7 +149,6 @@ try{
         }
       })
   }
-
   };
 
   onInputChange = event => {

@@ -24,7 +24,13 @@ constructor() {
             expanded: [],
     };
   }
+componentDidMount()
+{
+  
+    if(this.props.authProps.role=="Admin")
+        this.props.history.push("/admin")
 
+}
 
 render(){
   return (   <div className="App outer-container">

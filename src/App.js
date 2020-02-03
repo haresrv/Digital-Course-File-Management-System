@@ -18,6 +18,7 @@ import config from './config';
 import ForgotPassword from './Components/auth/ForgotPassword';
 import ForgotPasswordVerification from './Components/auth/ForgotPasswordVerification';
 import ChangePassword from './Components/auth/ChangePassword';
+import SetPass from './Components/auth/setpass';
 import ChangePasswordConfirm from './Components/auth/ChangePasswordConfirm';
 import Welcome from './Components/auth/Welcome';
 import Footer from './Components/Footer';
@@ -25,6 +26,7 @@ import LogIn from './Components/auth/LogIn';
 import Register from './Components/auth/Register';
 import Uploader from './Components/S3Upload/Uploader';
 import changer from './Components/S3Upload/change';
+import AdminLog from './Components/Admin/AdminLog';
 import digitalRep from './Components/S3Upload/digitalRep';
 
 Amplify.configure({
@@ -50,7 +52,7 @@ const Admin =(props) =>
             <div id="home" className="App outer-container">
                     <div>         
                         <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 240 : 64}}>
-                            <EnrolledCourses {...props}/>
+                            <AdminLog {...props}/>
                         </main>
                     </div>
             </div>)
@@ -58,6 +60,9 @@ const Admin =(props) =>
 
 const Home =(props) =>
 {
+    if(props.authProps.role=="Admin")
+        props.history.push("/admin")
+
     if(!props.authProps.isAuthenticated)
         props.history.push("/login")
     
@@ -72,6 +77,10 @@ const Home =(props) =>
 }
 
 const CourseSelect =(props) =>{
+
+    if(props.authProps.role=="Admin")
+        props.history.push("/admin")
+
         return(
             <div id="course-select" className="App outer-container">
                     <div>         
@@ -85,6 +94,10 @@ const CourseSelect =(props) =>{
 
 const ProgressChange = (props) =>
 {
+
+    if(props.authProps.role=="Admin")
+        props.history.push("/admin")
+
     return(
             
             <div id='progress-change' className="App outer-container">
@@ -99,6 +112,10 @@ const ProgressChange = (props) =>
 
 const PersonalSpace = (props) =>
 {
+
+    if(props.authProps.role=="Admin")
+        props.history.push("/admin")
+
         return(
             
             <div id="personal-space" className="App outer-container">
@@ -110,19 +127,7 @@ const PersonalSpace = (props) =>
             </div>
         )
 }
-const PersonalSpacx = (props) =>
-{
-        return(
-            
-            <div id="personal-spacx" className="App outer-container">
-                    <div>         
-                        
-                            <changer/>
-                        
-                    </div>
-            </div>
-        )
-}
+
 var todoItems = [];
 
 const routes = [
@@ -212,6 +217,11 @@ const routes = [
         path:'/digrep',
         component:digitalRep,
         fetchInitialData:true
+    },
+    {
+        path:'/setpass',
+        component:SetPass,
+        fetchInitialData:true    
     }
 ]
 
@@ -227,7 +237,9 @@ class App extends Component
         selected:"home",
         isAuthenticated:false,
         isAuthenticating:true,
-        user:null
+        user:null,
+        Tempuser:null,
+        Tempusername:''
 
         };
     }
@@ -283,6 +295,16 @@ class App extends Component
         this.setState({role:role})
     }
 
+
+    setTUser=(role)=>{
+        this.setState({Tempuser:role})
+    }
+
+
+    setTUsername=(role)=>{
+        this.setState({Tempusername:role})
+    }
+
     change=(ex,i)=>{
         if(i==1)
         this.setState({expanded:ex})
@@ -301,17 +323,21 @@ class App extends Component
             isAuthenticated :this.state.isAuthenticated,
             user: this.state.user,
             role:this.state.role,
+            Tempuser:this.state.Tempuser,
+            Tempusername:this.state.Tempusername,
             setAuthStatus:this.setAuthStatus,
             setUser:this.setUser,
             setRole:this.setRole,
+            setTUsername:this.setTUsername,
+            setTUser:this.setTUser,
             expanded:this.state.expanded
         }
 
         return ( !this.state.isAuthenticating &&
             <Router>
                 <div>
-                {this.state.isAuthenticated &&<Tracker {...this.props} authProps={authProps} change={this.change} changeRoute={this.changeRoute}/>}
-                    
+                        {<Tracker {...this.props} authProps={authProps} change={this.change} changeRoute={this.changeRoute}/>}
+            
                     <React.Suspense fallback={<Loading />} >
                         <Switch>
                             {

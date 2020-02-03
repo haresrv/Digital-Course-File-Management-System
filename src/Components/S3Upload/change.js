@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Auth} from 'aws-amplify';
 var StyleDiv =
 {
     border: '2px solid grey',
@@ -18,7 +18,13 @@ var styleDiv1 =
     align: 'center',
 };
 class changer extends React.Component {
+componentDidMount()
+{
+    
+    if(this.props.authProps.role=="Admin")
+        this.props.history.push("/admin")
 
+}
     render() {
         const btnStyle = {
             backgroundColor: '#0e8675',
