@@ -60,7 +60,7 @@ class ForgotPassword extends Component {
             Please enter the email address associated with your account and we'll
             email you a password reset link.
           </p>
-          <FormErrors formerrors={this.state.errors} />
+          <FormErrors id="forgotpasswordpageerror" formerrors={this.state.errors} />
 
           <form onSubmit={this.forgotPasswordHandler}>
             <div className="field">
@@ -79,7 +79,7 @@ class ForgotPassword extends Component {
 
             <div className="field">
               <p className="control">
-                <button className="button is-success">
+                <button id="confirmemail" className="button is-success">
                   Confirm email
                 </button>
               </p>
