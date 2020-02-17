@@ -166,8 +166,8 @@ class LogIn extends Component {
             <img className="pull-right" src="https://cms.cb.amrita.edu/images/amrita_round_2019.png" style={{width:"44%", marginTop:"40px",pointerEvents: "none"}} alt="Amrita Vishwa Vidyapeetham Logo"/>
           </div>
           <div className="col-md-4 col-md-push-1">
-           <h3><span className="weight-700">Digital Course File</span> | <span className="weight-300"> Login</span></h3>
-           <FormErrors className="red blink" formerrors={this.state.errors} />
+           <h3><span id="mainappname" className="weight-700">Digital Course File</span> | <span className="weight-300"> Login</span></h3>
+           <FormErrors id="loginerror" className="red blink" formerrors={this.state.errors} />
              <form  onSubmit={this.handleSubmit} style={{marginTop:"20px",padding:"40px"}} className="pa3 ma2" autoComplete="new-password">
                 
                 <div className="form-group">
@@ -177,7 +177,7 @@ class LogIn extends Component {
                     <input type="password" id="password"  value={this.state.password} onChange={this.onInputChange} className="form-control" name="password" placeholder="Enter your password" autoComplete="new-password" />
                 </div>
                 <div className="form-group">
-                    <a href="/forgotpassword" className="text-muted" >Having trouble logging in ?</a>
+                    <a href="/forgotpassword" id="forgotpasswordlink" className="text-muted" >Having trouble logging in ?</a>
                 </div>
                 <div>
                     <button type="submit" onClick={this.handleSubmit} id="submitbutton" className="btn btn-primary">Login</button>
