@@ -253,11 +253,14 @@ class App extends Component
             const user = await Auth.currentAuthenticatedUser();
             this.setAuthStatus(true)
             this.setUser(user);
-            // console.log(session)
+            console.log(session.idToken.payload['cognito:groups'])
             // console.log(user)
-            if(session.idToken.payload['cognito:groups'].includes("Admin"))
+            if(session.idToken.payload['cognito:groups']!=null)
             {
-                this.setRole("Admin")
+                if(session.idToken.payload['cognito:groups'].includes("Admin"))
+                    this.setRole("Admin")
+                else
+                    this.setRole("Faculty")
             }
             else
             {

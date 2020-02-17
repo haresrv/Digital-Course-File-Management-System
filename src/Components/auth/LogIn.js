@@ -107,13 +107,22 @@ class LogIn extends Component {
         console.log(session)
 
         this.props.authProps.setAuthStatus(true)
-        this.props.authProps.setUser(this.state.username)
+        this.props.authProps.setUser(user)
       
-        if(session.idToken.payload&&session.idToken.payload['cognito:groups'].includes("Admin"))
-        {
-            this.props.authProps.setRole("Admin")
-            this.props.history.push("/admin")
-        }
+           if(session.idToken.payload['cognito:groups']!=null)
+            {
+                if(session.idToken.payload['cognito:groups'].includes("Admin"))
+                    { 
+                      this.props.authProps.setRole("Admin")
+                      this.props.history.push("/admin")  
+                    }
+                else
+                    {
+                      this.props.authProps.setRole("Faculty")
+                      this.props.history.push("/")
+                    }
+            }
+        
         else
         {
             this.props.authProps.setRole("Faculty")
