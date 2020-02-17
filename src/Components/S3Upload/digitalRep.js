@@ -150,7 +150,7 @@ export default class digitalRep extends Component {
         ]
 
         return (
-            <div className="Uploader" >
+            <div className="Uploader">
                 <div >
                     <Form className="middleDiv ma2 pa3" onSubmit={this.handleSubmit}>
 
@@ -158,13 +158,13 @@ export default class digitalRep extends Component {
                             <Form.Row style={{marginLeft:"3%"}}>
                             <Form.Group  className="form-group" >
                                 <Form.Label htmlFor="State">Select Type</Form.Label>
-                                <Dropdown style={{width:"360px"}} options={options} onChange={(e)=>{this.setState({type:e.value})}} value={this.state.type} placeholder="Select Type" />
+                                <Dropdown id="dropdown" style={{width:"360px"}} options={options} onChange={(e)=>{this.setState({type:e.value})}} value={this.state.type} placeholder="Select Type" />
                             </Form.Group>
 
                             <Form.Group className="form-group" style={{marginLeft:"40px"}}>
                                 <Form.Label htmlFor="State" >Select Files</Form.Label>
                                 <Form.Group controlId="file" style={{marginLeft:"5px"}}>
-                                    <input onChange={this.handleFileChange} type="file" style={{backgroundColor: bgColors.Blue, color: bgColors.White}}/>
+                                    <input id="selectfiles" onChange={this.handleFileChange} type="file" style={{backgroundColor: bgColors.Blue, color: bgColors.White}}/>
                                 </Form.Group>
                             </Form.Group>
                             </Form.Row>
@@ -172,6 +172,7 @@ export default class digitalRep extends Component {
                     <Form.Row>
                         <Form.Group style={{marginLeft:"5%"}}>
                             <Form.Check
+                                id="check"
                                 type='switch'
                                 defaultChecked={this.state.isprivate}
                                 onChange={()=>{this.setState({isprivate:!this.state.isprivate})}}
@@ -182,13 +183,13 @@ export default class digitalRep extends Component {
 
                         <InputGroup onChange={(e)=>{this.setState({description:e.target.value})}} className="ma2 pa3" style={{width:"600px",height:"150px",marginTop:"20px"}}>
                             <InputGroup.Prepend >
-                                <InputGroup.Text style={{color: bgColors.Black}} >Description</InputGroup.Text>
+                                <InputGroup.Text id="description" style={{color: bgColors.Black}} >Description</InputGroup.Text>
                             </InputGroup.Prepend>
                             <Form.Control as="textarea" aria-label="With textarea"/>
                         </InputGroup>
 
 
-                        <button type="submit" className="btn btn-info ma2" style={{marginLeft:"5%"}}>Upload</button>
+                        <button type="submit"  id="button" className="btn btn-info ma2" style={{marginLeft:"5%"}}>Upload</button>
                     </Form>
                 </div>
             </div>
@@ -239,7 +240,7 @@ export default class digitalRep extends Component {
     render() {
         // return <div className="Uploader">{this.renderTest()}{this.renderButton()}</div>
         return <div className="Uploader">
-            <button onClick={()=>{this.setState({toggle:!this.state.toggle},function(){this.fetchRest()})}} style={{marginLeft:"50%"}} className="btn btn-danger">{this.state.toggle ? "View Uploads" : "Upload"}</button>
+            <button id="viewUploads" onClick={()=>{this.setState({toggle:!this.state.toggle},function(){this.fetchRest()})}} style={{marginLeft:"50%"}} className="btn btn-danger">{this.state.toggle ? "View Uploads" : "Upload"}</button>
             {this.state.toggle ? this.renderTest() : this.renderButton()}
 
         </div>;
