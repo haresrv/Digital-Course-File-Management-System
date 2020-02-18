@@ -1,10 +1,10 @@
 import React,{Component} from 'react';
 import tachyons from 'tachyons';
-import i1 from '../../Images/assignments.png';
+import i1 from '../../Images/assignments1.png';
 import i2 from '../../Images/assignments.jpg';
-import i3 from '../../Images/repo.jpg';
+import i3 from '../../Images/repo.png';
 import i4 from '../../Images/upload.jpg';
-import i5 from '../../Images/todo.png';
+import i5 from '../../Images/todo.jpg';
 import i6 from '../../Images/qnbank.jpg';
 import Card from '../Card/Card';
 
@@ -31,7 +31,7 @@ handleClick=()=>{
 render(){
   return (   
 
- <div className="Appx">
+ <div className="Appx container">
                               
       <div className="dashboard-container ma2" >
 

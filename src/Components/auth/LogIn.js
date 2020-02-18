@@ -39,7 +39,7 @@ class LogIn extends Component {
   handleSubmit = async event => {
     event.preventDefault();
     // Form validation
-    
+    console.log(this.state)
     this.clearErrorState();
     const error = Validate(event, this.state);
     

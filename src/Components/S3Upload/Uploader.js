@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import config from "../../config";
-import { s3privateUpload,s3publicUpload ,s3getUpload,s3pgetUpload,s3UploadDigitalRep} from "../../libs/awsLib";
+import { privateUpload,publicUpload,s3getUpload,s3pgetUpload} from "../../libs/awsLib";
 import './Uploader.css';
 import tachyons from 'tachyons';
 import Dropdown from 'react-dropdown';
@@ -51,14 +51,14 @@ export default class Uploader extends Component {
 
 	renderTableData() {
 	  return this.state.uploads.map((upload, index) => {
-	     const {description,type,attachment,isprivate} = upload //destructuring
+	     const {description,type,attachment,isprivate,prefix} = upload //destructuring
 	     return (
 	        <tr key={index}>
 	           <td>{index+1}</td>
 	           <td>{attachment.split("-")[1]}</td>
 	           <td>{description}</td>
 	           <td>{type}</td>
-	           <td><button onClick={()=>console.log(isprivate?s3pgetUpload(attachment).then(res=>window.open(res)):s3getUpload(attachment).then(res=>window.open(res)))} className="btn btn-primary">Download</button>
+	           <td><button onClick={()=>console.log(isprivate?s3pgetUpload(attachment,prefix).then(res=>window.open(res)):s3getUpload(attachment,prefix).then(res=>window.open(res)))} className="btn btn-primary">Download</button>
 	           
 	           </td>
 	        </tr>
@@ -82,7 +82,7 @@ export default class Uploader extends Component {
 
 	handleSubmit = async event => {
 		event.preventDefault();
-
+console.log(this.props)
 	  	if(this.file==null)
 	  	{
 	  		alert("You have to pick a file to continue!!")
@@ -92,6 +92,11 @@ export default class Uploader extends Component {
 	  	if(this.state.type==null)
 	  	{
 	  		alert("Please select type of file to continue!!")
+	  		return
+	  	}
+	  	if(this.state.section==null)
+	  	{
+	  		alert("Please fill all columns to continue!!")
 	  		return
 	  	}
 	  	var k=this.state.isprivate?"private":"public"
@@ -108,9 +113,18 @@ export default class Uploader extends Component {
 	  
 		this.setState({ isLoading: true });
 		try {
-
-	  			 const attachment=this.state.isprivate? await s3UploadDigitalRep(this.file,"ppt") :await s3publicUpload(this.file)
-		  	
+			var prefix=""
+				if(this.state.isprivate)
+				 {prefix="reports/"+this.props.authProps.currentSelectedYear+"/"+this.props.authProps.currentSelectedSemester+"/"+this.props.authProps.currentSelectedCourse+"/"
+					this.setState({prefix:prefix})
+				}
+				else
+				 {prefix="reports/"+this.props.authProps.currentSelectedYear+"/"+this.props.authProps.currentSelectedSemester+"/"+this.props.authProps.currentSelectedCourse+"/"
+					this.setState({prefix:prefix})
+			}
+				 console.log(prefix)
+  				 const attachment=this.state.isprivate? await privateUpload(this.file,prefix) :await publicUpload(this.file,prefix)
+		  		
 		  		 const user = await Auth.currentAuthenticatedUser();
 		  		 console.log(user.attributes.sub)
 		  		 const userid=user.attributes.sub
@@ -123,7 +137,9 @@ export default class Uploader extends Component {
 						attachment:attachment,
 						description:this.state.description,
 						type:this.state.type,
-						isprivate:this.state.isprivate
+						isprivate:this.state.isprivate,
+						section:this.state.section,
+						prefix:this.state.prefix
 				  })
 				  }).then(res=> res.json())
 				 	.then(data => console.log(data))
@@ -134,9 +150,10 @@ export default class Uploader extends Component {
 
 		 catch (e) {
 		  alert(e);
-		  
+		  return
 		}
 		this.setState({ isLoading: false });
+		alert("Files have been Saved Successfully")
 	}
 
 	renderLoggedIn() {
@@ -152,7 +169,7 @@ export default class Uploader extends Component {
 			<div style={{display:"flex",width:"700px"}}>
 				<div className="form-group">
 				<label htmlFor="State">Select Type</label>
-				<Dropdown  style={{width:"360px"}} options={options} onChange={(e)=>{this.setState({type:e.value})}} value={this.state.type} placeholder="Select Type" />
+				<Dropdown style={{width:"360px"}} options={options} onChange={(e)=>{this.setState({type:e.value})}} value={this.state.type} placeholder="Select Type" />
 				</div>
 
 				<div className="form-group" style={{marginLeft:"40px"}}>
@@ -162,7 +179,12 @@ export default class Uploader extends Component {
 			 	</Form.Group>
 				 </div>
 			</div>
-	
+				
+				<div className="form-group">
+					<label htmlFor="Class">Enter Class & Section</label>
+					<input type='text' className="b--solid b pa2 ma2 btn-warning" onChange={(e)=>{this.setState({section:e.target.value})}} value={this.state.section} placeholder="Section..." />
+				</div>
+
 
 				<InputGroup onChange={(e)=>{this.setState({description:e.target.value})}} className="ma2 pa3" style={{width:"600px",height:"150px",marginTop:"20px"}}>
 					<InputGroup.Prepend>
@@ -189,9 +211,14 @@ export default class Uploader extends Component {
 		return(
 			<div className="Uploader" >
 			<div >
-			<form className="middleDiv ma2 pa3">
-			<div className="middleDiv loader ma2 pa3"></div>
+
+			<form className="middleDiv ma4 pa3 bgg">
+			
+			<div className="middleDiv2 loader ma2 pa3"></div>
+			<h7 className="btn-primary b--dashed" style={{width:"120px"}}>Your files are safe with me!!!</h7><br/>
+			<h7 className="btn-primary b--dashed" style={{width:"120px"}}>Check your Uploads after few seconds!!</h7>
 			</form>
+			
 			</div>
 		  </div>
 		
@@ -214,7 +241,7 @@ export default class Uploader extends Component {
 			</div>
 		);
 	}
-
+// 
 	renderTest() {
 		return (
 			<div className="test">

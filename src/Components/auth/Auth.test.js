@@ -53,7 +53,7 @@ describe('Blank fields <Login/>', () => {
 
 	it('username blank', async () => {
 
-		 const dummy = document.createElement('username');
+		 const dummy = document.createElement('password');
 	 	 document.getElementById =  jest.fn().mockImplementation(
 			     () => {
 			     	return dummy
@@ -72,7 +72,7 @@ describe('Blank fields <Login/>', () => {
 
 	it('password blank', async () => {
 
-		 const dummy = document.createElement('password');
+		 const dummy = document.createElement('username');
 	 	 document.getElementById =  jest.fn().mockImplementation(
 			     () => {
 			     	return dummy

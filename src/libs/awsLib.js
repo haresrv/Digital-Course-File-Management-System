@@ -2,11 +2,9 @@ import { Storage } from "aws-amplify";
 import config from '../config';
 
 
-export async function s3UploadDigitalRep(file,prefix) {
-
-
+export async function publicUpload(file,prefix) {
 const customPrefix = {
-    public: prefix+'/'
+    public: prefix
 };
 
   Storage.configure({
@@ -29,8 +27,7 @@ const customPrefix = {
 
 
 
-
-export async function s3privateUpload(file) {
+export async function privateUpload(file,prefix) {
 
   Storage.configure({
     AWSS3: {
@@ -39,9 +36,14 @@ export async function s3privateUpload(file) {
     }
   });
 
+    const customPrefix = {
+        private: prefix
+    };
+
   const filename = `${Date.now()}-${file.name}`;
   const stored = await Storage.vault.put(filename, file, {
-    contentType: file.type
+    contentType: file.type,
+    customPrefix: customPrefix,
   });
 
   console.log(stored)
@@ -49,35 +51,20 @@ export async function s3privateUpload(file) {
   return stored.key;
 }
 
-export async function s3publicUpload(file) {
-
+export async function s3getUpload(attachment,prefix) {
+  
   Storage.configure({
     AWSS3: {
         bucket: config.s3.BUCKET,//Your bucket name;
         region: config.s3.REGION,//Specify the region your bucket was created in;
-    }
-  });
-
-  const filename = `${Date.now()}-${file.name}`;
-
-  const stored2 = await Storage.put(filename, file, {
-    contentType: file.type
-  });
-  console.log(stored2)
-
-  return stored2.key;
-}
-
-
-export async function s3getUpload(attachment) {
-
-  Storage.configure({
-    AWSS3: {
-        bucket: config.s3.BUCKET,//Your bucket name;
-        region: config.s3.REGION,//Specify the region your bucket was created in;
-    }
+    },
+     customPrefix:{public:prefix}
   });
   
+    const customPrefix = {
+        public: prefix
+    };
+
   var key=Storage.get(attachment)
     .then(function(result) {return (result)})
     .catch(err => console.log(err));
@@ -86,20 +73,25 @@ export async function s3getUpload(attachment) {
 }
 
 
-export async function s3pgetUpload(attachment) {
+export async function s3pgetUpload(attachment,prefix) {
 
   Storage.configure({
     AWSS3: {
         bucket: config.s3.BUCKET,//Your bucket name;
         region: config.s3.REGION,//Specify the region your bucket was created in;
-    }
+    },
+     customPrefix:{private:prefix}
   });
   
+    const customPrefix = {
+        private: prefix
+    };
+
+
   var key=Storage.get(attachment,{level:'private'})
     .then(function(result) {return (result)})
     .catch(err => console.log(err));
    return (key)
-
 }
 
 // 1578665703460-Plan.txt

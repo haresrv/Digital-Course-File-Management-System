@@ -77,34 +77,34 @@ describe('Renders App Without crashing', () => {
 
 
 	it('<CourseSelect/>', () => {
-	  	const cs = shallow(<CourseSelect expanded={true}/>)
+	  	const cs = shallow(<CourseSelect expanded={true} props={jest.fn()}/>)
 	  	expect(cs.find("#course-select").exists()).toBeTruthy()
 
-	  	const cs1 = shallow(<CourseSelect expanded={true}/>)
+	  	const cs1 = shallow(<CourseSelect expanded={true} props={jest.fn()}/>)
 	  	expect(cs1.find("#page-wrapper").prop('style')).toHaveProperty('marginLeft', 240);
-	  	const cs2 = shallow(<CourseSelect expanded={false}/>)
+	  	const cs2 = shallow(<CourseSelect expanded={false} props={jest.fn()}/>)
 	  	expect(cs2.find("#page-wrapper").prop('style')).toHaveProperty('marginLeft', 64);
 	});
 
 
 
 	it('<ProgressChange/>', () => {
-	  	const cs = shallow(<ProgressChange expanded={true}/>)
+	  	const cs = shallow(<ProgressChange expanded={true} props={jest.fn()}/>)
 	  	expect(cs.find("#progress-change").exists()).toBeTruthy()
 
-	  	const cs1 = shallow(<ProgressChange expanded={true}/>)
+	  	const cs1 = shallow(<ProgressChange expanded={true} props={jest.fn()}/>)
 	  	expect(cs1.find("#page-wrapper").prop('style')).toHaveProperty('marginLeft', 180);
-	  	const cs2 = shallow(<ProgressChange expanded={false}/>)
+	  	const cs2 = shallow(<ProgressChange expanded={false} props={jest.fn()}/>)
 	  	expect(cs2.find("#page-wrapper").prop('style')).toHaveProperty('marginLeft', 64);
 	});
 
 	it('<PersonalSpace/>', () => {
-	  	const cs = shallow(<PersonalSpace expanded={true}/>)
+	  	const cs = shallow(<PersonalSpace expanded={true} props={jest.fn()}/>)
 	  	expect(cs.find("#personal-space").exists()).toBeTruthy()
 
-	  	const cs1 = shallow(<PersonalSpace expanded={true}/>)
+	  	const cs1 = shallow(<PersonalSpace expanded={true} props={jest.fn()}/>)
 	  	expect(cs1.find("#page-wrapper").prop('style')).toHaveProperty('marginLeft', 210);
-	  	const cs2 = shallow(<PersonalSpace expanded={false}/>)
+	  	const cs2 = shallow(<PersonalSpace expanded={false} props={jest.fn()}/>)
 	  	expect(cs2.find("#page-wrapper").prop('style')).toHaveProperty('marginLeft', 64);
 	});
 

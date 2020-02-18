@@ -239,8 +239,10 @@ class App extends Component
         isAuthenticating:true,
         user:null,
         Tempuser:null,
-        Tempusername:''
-
+        Tempusername:'',
+        currentSelectedCourse:'',
+        currentSelectedSemester:'',
+        currentSelectedYear:'',
         };
     }
 
@@ -279,7 +281,7 @@ class App extends Component
     }
 
     comp() {
-        if(!this.state.isAuthenticated&&(!window.location.href.includes("login"))&&(!window.location.href.includes("register"))&&(!window.location.href.includes("password")))
+        if(!this.state.isAuthenticated&&(!window.location.href.includes("login"))&&(!window.location.href.includes("password")))
         if(this.state.role=="")
         {   window.location.href=window.location.origin+"/login"
             // console.log("Manually Redirected to /login")    
@@ -294,6 +296,18 @@ class App extends Component
         this.setState({user:user})
     }
     
+    setSemester=(role)=>{
+        this.setState({currentSelectedSemester:role})
+    }
+
+    setYear=(role)=>{
+        this.setState({currentSelectedYear:role})
+    }
+
+    setCoursename=(role)=>{
+        this.setState({currentSelectedCourse:role})
+    }
+
     setRole=(role)=>{
         this.setState({role:role})
     }
@@ -326,11 +340,17 @@ class App extends Component
             isAuthenticated :this.state.isAuthenticated,
             user: this.state.user,
             role:this.state.role,
+            currentSelectedCourse:this.state.currentSelectedCourse,
+            currentSelectedYear:this.state.currentSelectedYear,
+            currentSelectedSemester:this.state.currentSelectedSemester,
             Tempuser:this.state.Tempuser,
             Tempusername:this.state.Tempusername,
             setAuthStatus:this.setAuthStatus,
             setUser:this.setUser,
             setRole:this.setRole,
+            setSemester:this.setSemester,
+            setYear:this.setYear,
+            setCoursename:this.setCoursename,
             setTUsername:this.setTUsername,
             setTUser:this.setTUser,
             expanded:this.state.expanded

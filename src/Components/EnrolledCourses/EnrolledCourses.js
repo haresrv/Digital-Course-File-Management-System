@@ -23,13 +23,13 @@ constructor() {
                       <h6>Semester: {course.semester}</h6>
                       <h5 className="">{course.name}</h5>
                     </div>          
-                    <input className="bg-black white pointer" type='button' onClick={()=>{this.props.history.push("coursedashboard")}} value='View Course' style={{marginLeft:'10px'}}  />
+                    <input className="bg-black white pointer" type='button' onClick={()=>{this.props.authProps.setYear(course.year);this.props.authProps.setSemester(course.semester);this.props.authProps.setCoursename(course.name); this.props.history.push("coursedashboard")}} value='View Course' style={{marginLeft:'10px'}}  />
                   </div>
 
                   )
                   :
                   
-                  (<div key={index}          className="bg-white b--dashed red dib br3 pa3 ma2 fa fa-fw fa-book" style={{width:'280px',height:'180px'}}>
+                  (<div key={index} className="bg-white b--dashed red dib br3 pa3 ma2 fa fa-fw fa-book" style={{width:'280px',height:'180px'}}>
                     <div>
                       <h5>Year: {course.year}</h5>
                       <h6>Semester: {course.semester}</h6>
