@@ -5,6 +5,8 @@ const express = require('express');
 const REST_TABLE = process.env.TABLE;
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const router = express.Router();
+const REST_TABLE2 = process.env.TABLE2;
+
 
 
 router.post('/adminCreate', (req, res) => {
@@ -55,6 +57,18 @@ router.get('/uploads', (req, res) => {
     });
 });
 
+router.get('/qnuploads', (req, res) => {
+    const params = {
+        TableName: REST_TABLE2
+    };
+    dynamoDb.scan(params, (error, result) => {
+        if (error) {
+            res.status(400).json({ error: 'Error fetching the uploads' });
+        }
+        res.json(result.Items);
+    });
+});
+
 router.post('/getupload', (req, res) => {
     const {uploadid,userid} = req.body;
     console.log(req.body)
@@ -82,11 +96,81 @@ router.post('/getupload', (req, res) => {
     });
 });
 
+router.post('/qnbank', (req, res) => {
+    const {attachment,year,semester,timeofexam,prefix,course} = req.body;
+  
+    const uploadid = uuid.v4();
+    var createdAt = Date.now()
+    
 
+    const params = {
+        TableName: REST_TABLE2,
+        Item: {
+            uploadid,
+            attachment,
+            createdAt,
+            year,
+            semester,
+            prefix,
+            timeofexam,
+            course
+        },
+    };
+       dynamoDb.put(params, (error) => {
+            if(error) 
+                {
+                    res.status(400).json({ error: 'Error adding to uploads' });  
+                }
+             else 
+                {  
+                    res.json("Success");
+                }
+            });
+       
+});
+
+
+
+router.post('/digrep', (req, res) => {
+    const {userid,attachment,description,type,prefix,course} = req.body;
+  
+    const uploadid = uuid.v4();
+    var createdAt = Date.now()
+    var isprivate = null
+    var section = null
+    
+
+    const params = {
+        TableName: REST_TABLE,
+        Item: {
+            userid,
+            uploadid,
+            attachment,
+            createdAt,
+            description,
+            type,
+            isprivate,
+            section,
+            prefix,
+            course
+        },
+    };
+       dynamoDb.put(params, (error) => {
+            if(error) 
+                {
+                    res.status(400).json({ error: 'Error adding to uploads' });  
+                }
+             else 
+                {  
+                    res.json("Success");
+                }
+            });
+       
+});
 
 
 router.post('/uploads', (req, res) => {
-    const {userid,attachment,description,type,isprivate,section,prefix} = req.body;
+    const {userid,attachment,description,type,section,isprivate,prefix,course} = req.body;
   
     const uploadid = uuid.v4();
     var createdAt = Date.now()
@@ -101,7 +185,8 @@ router.post('/uploads', (req, res) => {
             type,
             isprivate,
             section,
-            prefix
+            prefix,
+            course
         },
     };
        dynamoDb.put(params, (error) => {
