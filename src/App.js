@@ -28,6 +28,8 @@ import Uploader from './Components/S3Upload/Uploader';
 import changer from './Components/S3Upload/change';
 import AdminLog from './Components/Admin/AdminLog';
 import digitalRep from './Components/S3Upload/digitalRep';
+import qnbank from './Components/S3Upload/qnbank';
+
 
 Amplify.configure({
     Auth:{
@@ -134,6 +136,11 @@ const routes = [
     {
         path: '/',
         component:Home,
+        fetchInitialData:true
+    },
+    {
+        path: '/qnbank',
+        component:qnbank,
         fetchInitialData:true
     },
     {

@@ -3,7 +3,6 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import config from "../../config";
 import { privateUpload,publicUpload,s3getUpload,s3pgetUpload} from "../../libs/awsLib";
-import './Uploader.css';
 import tachyons from 'tachyons';
 import Dropdown from 'react-dropdown';
 import {Auth} from 'aws-amplify';
@@ -11,7 +10,7 @@ import 'react-dropdown/style.css';
 import "react-toggle/style.css";
 import Toggle from 'react-toggle';
 
-export default class Uploader extends Component {
+export default class qnbank extends Component {
 	constructor(props) {
 		super(props);
 
@@ -19,15 +18,16 @@ export default class Uploader extends Component {
 
 		this.state = {
 			isLoading: null,
-			type:null,
-			isprivate:false,
-		    headers:  [{Id:'',Topic:'',Description:'',Type:'',Download:''}],
+		    headers:  [{Id:'',File:'',CourseCode:'',Year:'',Download:''}],
 		    uploads: [],
 		    uploadss:[],
-		    toggle:false,
+		    toggle:true,
 		    filter:[],
 		    main:'',
 		    vals:'',
+		    semester:null,
+		    year:null,
+		    course:null,
 		    okay:false
 		};
 	}
@@ -58,14 +58,15 @@ export default class Uploader extends Component {
 
 	renderTableData() {
 	  return this.state.uploadss.map((upload, index) => {
-	     const {description,type,attachment,isprivate,prefix} = upload //destructuring
+	     const {year,attachment,prefix,course} = upload //destructuring
+	     
 	     return (
 	        <tr key={index}>
 	           <td>{index+1}</td>
 	           <td>{attachment.split("-")[1]}</td>
-	           <td>{description}</td>
-	           <td>{type}</td>
-	           <td><button onClick={()=>console.log(isprivate?s3pgetUpload(attachment,prefix).then(res=>window.open(res)):s3getUpload(attachment,prefix).then(res=>window.open(res)))} className="btn btn-primary">Download</button>
+	           <td>{course}</td>
+	           <td>{year}</td>
+	           <td><button onClick={()=>console.log(s3getUpload(attachment,prefix).then(res=>window.open(res)))} className="btn btn-primary">Download</button>
 	           
 	           </td>
 	        </tr>
@@ -75,42 +76,48 @@ export default class Uploader extends Component {
 
 	Calculate=()=>
 	{
-		var uniqueTypes = [];
-		var uniqueSections = [];
+		var uniqueYears = [];
+		var uniqueSemesters = [];
 		var data=this.state.uploads
 		for(var i = 0; i< data.length; i++){    
-		    if(uniqueTypes.indexOf(data[i].type) === -1){
-		        uniqueTypes.push(data[i].type);        
+		    if(uniqueYears.indexOf(data[i].year) === -1){
+		        uniqueYears.push(data[i].year);        
 		    }        
 		}
 		var data=this.state.uploads
 		for(var i = 0; i< data.length; i++){    
-		    if(uniqueSections.indexOf(data[i].section) === -1){
-		        uniqueSections.push(data[i].section);        
+		    if(uniqueSemesters.indexOf(data[i].semester) === -1){
+		        uniqueSemesters.push(data[i].semester);        
 		    }        
 		}
-		this.setState({uniqueTypes:(uniqueTypes)})
+		this.setState({uniqueYears:(uniqueYears)})
 		
-		this.setState({uniqueSections:(uniqueSections)})
+		this.setState({uniqueSemesters:(uniqueSemesters)})
+		console.log("-->",uniqueSemesters)
+		console.log("-->",uniqueYears)
+			
 	}
+
 	reducer=()=>{
-		this.setState({uploads:this.state.uploads.filter(function(e){return e['prefix'].includes("report") })},function(){ this.rechange()})
+		this.setState({uploads:this.state.uploads.filter(function(e){return e['prefix'].includes("qnbank") })},function(){ this.rechange()})
 	}
 	fetchRest=()=>{
-	        fetch('https://4y1lmnfnnh.execute-api.us-east-1.amazonaws.com/prod/uploads').then(res=> res.json())
+	        fetch('https://4y1lmnfnnh.execute-api.us-east-1.amazonaws.com/prod/qnuploads').then(res=> res.json())
 	        .then(data=>{this.setState({uploads:data},function(){this.reducer()})})
 	        .then(xy=>console.log("Fetching AGAIN"))
 	        .then(y=>console.log(this.state))
 	        .then(x=>this.Calculate())
 	        .catch((err)=>{console.log(err);})
 	}
+
 	rechange=()=>
 	{
 		console.log(this.state)
 		var m=this.state.main.toLowerCase()
 		var v=this.state.vals
+		// console.log()
 		if(this.state.okay)
-			this.setState({uploadss:this.state.uploads.filter(function(e){return e[m]==v})})
+			this.setState({uploadss:this.state.uploads.filter(function(e){return e[m]==v})},function(){console.log(this.state)})
 		else
 			this.setState({uploadss:this.state.uploads})
 	}
@@ -121,31 +128,36 @@ export default class Uploader extends Component {
 
 	handleSubmit = async event => {
 		event.preventDefault();
-console.log(this.props)
+console.log(this.state)
 	  	if(this.file==null)
 	  	{
-	  		console.log(this.props.authProps.currentSelectedCourse)
 	  		alert("You have to pick a file to continue!!")
 	  		return
 	  	}
 
-	  	if(this.state.type==null)
+	  	if(this.state.year==null)
 	  	{
-	  		alert("Please select type of file to continue!!")
+	  		alert("Please Select Year!!")
 	  		return
 	  	}
-	  	if(this.state.section==null)
+	  	if(this.state.semester==null)
 	  	{
-	  		alert("Please fill all columns to continue!!")
+	  		alert("Please Select Semester!!")
 	  		return
 	  	}
-	  	var k=this.state.isprivate?"private":"public"
+	  	if(this.state.course==null)
+	  	{
+	  		alert("Please fill course details!!")
+	  		return
+	  	}
+		if(this.state.timeofexam==null)
+	  	{
+	  		alert("Please fill all fields!!")
+	  		return
+	  	}
+	  		  	
 
-	  	if(!window.confirm(`Are u sure ,you want to keep this file in ${k} mode`))
-	  	{
-	  		return
-	  	}
-
+	  	
 		if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
 		  alert(`Please pick a file smaller than ${config.MAX_ATTACHMENT_SIZE/1000000} MB.`);
 		  return;
@@ -154,28 +166,27 @@ console.log(this.props)
 		this.setState({ isLoading: true });
 		try {
 			var prefix=""
-		    prefix="reports/"+this.props.authProps.currentSelectedYear+"/"+this.props.authProps.currentSelectedSemester+"/"+this.props.authProps.currentSelectedCourse+"/"
+		    prefix="qnbank/"+this.state.year+"/"+this.state.semester+"/"+this.state.timeofexam+"/"+this.state.course
+
 			this.setState({prefix:prefix})
 		
-				 // console.log(prefix)
-  				 const attachment=this.state.isprivate? await privateUpload(this.file,prefix) :await publicUpload(this.file,prefix)
+				 console.log(prefix)
+  				 const attachment=await publicUpload(this.file,prefix)
 		  		
-		  		 const user = await Auth.currentAuthenticatedUser();
-		  		 console.log(user.attributes.sub)
-		  		 const userid=user.attributes.sub
+		  		 // const user = await Auth.currentAuthenticatedUser();
+		  		 // console.log(user.attributes.sub)
+		  		 // const userid=user.attributes.sub
 				 
-				 fetch('https://4y1lmnfnnh.execute-api.us-east-1.amazonaws.com/prod/uploads',{
+				 fetch('https://4y1lmnfnnh.execute-api.us-east-1.amazonaws.com/prod/qnbank',{
 				  method:'post',
 				  headers:{'Content-Type':'application/json'},
 				  body:JSON.stringify({
-						userid:userid,
 						attachment:attachment,
-						description:this.state.description,
-						type:this.state.type,
-						isprivate:this.state.isprivate,
-						section:this.state.section,
+						year:this.state.year,
+						semester:this.state.semester,
 						prefix:this.state.prefix,
-						course:this.props.authProps.currentSelectedCourse
+						timeofexam:this.state.timeofexam,
+						course:this.state.course
 				  })
 				  }).then(res=> console.log(res))
 				 	.then(data => console.log(data))
@@ -194,21 +205,24 @@ console.log(this.props)
 
 	renderLoggedIn() {
 		const options = [
-			'Assignment','Project','Grade Sheets','Something else'
+			'2015','2016','2017','2018','2019','2020'
 		  ]
 		const options2 = [
-			'CSE-A','CSE-B','CSE-C','CSE-D','CSE-E','CSE-F','Does not apply'
+			'1','2','3','4','5','6','7','8'
+		  ]
+		const options3 = [
+			'P1','P2','P3','EndSem'
 		  ]
 
 		return (
-		  <div className="Uploader" >
+		  <div className="qnbank" >
 			<div >
 			<form className="middleDiv ma2 pa3" onSubmit={this.handleSubmit}>
 			
 			<div style={{display:"flex",width:"700px"}}>
 				<div className="form-group">
-				<label htmlFor="State">Select Type</label>
-				<Dropdown style={{width:"360px"}} options={options} onChange={(e)=>{this.setState({type:e.value})}} value={this.state.type} placeholder="Select Type" />
+				<label htmlFor="State">Select Year</label>
+				<Dropdown style={{width:"360px"}} options={options} onChange={(e)=>{this.setState({year:e.value})}} value={this.state.year} placeholder="Select Year" />
 				</div>
 
 				<div className="form-group" style={{marginLeft:"40px"}}>
@@ -217,58 +231,50 @@ console.log(this.props)
 					<Form.Control onChange={this.handleFileChange} type="file" />
 			 	</Form.Group>
 				 </div>
-			</div>
+				</div>
 				
 				<div className="form-group">
-				<label htmlFor="Class">Enter Class & Section</label>
-				<Dropdown style={{width:"360px"}} options={options2} onChange={(e)=>{this.setState({section:e.value})}}  value={this.state.section} placeholder="Select Section" />
+				<label htmlFor="Class">Enter Semester</label>
+				<Dropdown style={{width:"360px"}} options={options2} onChange={(e)=>{this.setState({semester:e.value})}}  value={this.state.semester} placeholder="Select Semester" />
 				</div>
 
+				<div className="form-group">
+				<label htmlFor="Class">Enter Type</label>
+				<Dropdown style={{width:"360px"}} options={options3} onChange={(e)=>{this.setState({timeofexam:e.value})}}  value={this.state.timeofexam} placeholder="Select Type" />
+				</div>
 
-				<InputGroup onChange={(e)=>{this.setState({description:e.target.value})}} className="ma2 pa3" style={{width:"600px",height:"150px",marginTop:"20px"}}>
-					<InputGroup.Prepend>
-						<InputGroup.Text>Description</InputGroup.Text>
-					</InputGroup.Prepend>
-					<Form.Control as="textarea" aria-label="With textarea"/>
-				</InputGroup>
+				<div className="form-group">
+					<label htmlFor="Class">Enter Course</label>
+					<input type='text' className="b--solid b pa2 ma2 btn-warning" onChange={(e)=>{this.setState({course:e.target.value})}} placeholder="CourseCode..." />
+				</div>
+
 				
-				<label className="b--dashed ma2 pa3">
-				  <Toggle
-				    defaultChecked={this.state.isprivate}
-				    onChange={()=>{this.setState({isprivate:!this.state.isprivate})}} />
-				  <span className="pa3">Store privately</span>
-				</label>
-			  <button type="submit" className="btn btn-primary ma2 pa3" style={{marginLeft:"40%"}}>Upload</button>
+			  	<button type="submit" className="btn btn-primary ma2 pa3" style={{marginLeft:"40%"}}>Upload</button>
 			</form>
 			</div>
 		  </div>
 		);
 	}
 
+
 	renderSpinner()
 	{
 		return(
 			<div className="Uploader" >
 			<div >
-
-			<form className="middleDiv ma4 pa3 bgg">
-			
-			<div className="middleDiv2 loader ma2 pa3"></div>
-			<h7 className="btn-primary b--dashed" style={{width:"120px"}}>Your files are safe with me!!!</h7><br/>
-			<h7 className="btn-primary b--dashed" style={{width:"120px"}}>Check your Uploads after few seconds!!</h7>
+			<form className="middleDiv ma2 pa3">
+			<div className="middleDiv loader ma2 pa3"></div>
 			</form>
-			
 			</div>
 		  </div>
 		
 		)
 	}
 
-
 	renderFilters()
 	{
 		// console.log(this.state.uploads)
-		const options1 =['Type','Section']
+		const options1 =['Year','Semester']
 		
 		return(
 			<div className="" style={{marginLeft:"30px"}}>
@@ -280,13 +286,13 @@ console.log(this.props)
 						<div>
 				<div className="form-group">
 					
-					<Dropdown style={{width:"360px"}} options={options1} onChange={(e)=>{this.setState({main:e.value});this.setState({vals:null}); e.value=="Type"?(this.setState({filter:this.state.uniqueTypes})):(this.setState({filter:this.state.uniqueSections}))}} value={this.state.main} placeholder="Filter by" />
+					<Dropdown style={{width:"360px"}} options={options1} onChange={(e)=>{this.setState({main:e.value});this.setState({vals:null}); e.value=="Year"?(this.setState({filter:this.state.uniqueYears})):(this.setState({filter:this.state.uniqueSemesters}))}} value={this.state.main} placeholder="Filter by" />
 					
 				</div>		
 
 				<div className="form-group">
 					
-					<Dropdown style={{width:"360px"}} options={this.state.filter} onChange={(e)=>{this.setState({vals:e.value},function(){this.rechange()})}} value={this.state.vals} placeholder="Filter Secondary" />
+					<Dropdown style={{width:"360px"}} options={this.state.filter!=null?this.state.filter:['']} onChange={(e)=>{this.setState({vals:e.value},function(){this.rechange()})}} value={this.state.vals} placeholder="Filter Secondary" />
 				</div>	</div>	
 				)}
 			</div>
@@ -322,8 +328,8 @@ console.log(this.props)
 	}
 
 	render() {
-		// return <div className="Uploader">{this.renderTest()}{this.renderButton()}</div>
-			return <div className="Uploader">
+		// return <div className="qnbank">{this.renderTest()}{this.renderButton()}</div>
+			return <div className="qnbank">
 			<button onClick={()=>{this.setState({toggle:!this.state.toggle},function(){this.fetchRest()})}} style={{marginLeft:"50%"}} className="btn btn-primary">{this.state.toggle ? "View Uploads" : "Upload"}</button>
 			{this.state.toggle ? this.renderTest() : this.renderButton()}
  			
