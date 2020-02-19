@@ -23,7 +23,12 @@ export default class Uploader extends Component {
 			isprivate:false,
 		    headers:  [{Id:'',Topic:'',Description:'',Type:'',Download:''}],
 		    uploads: [],
-		    toggle:true
+		    uploadss:[],
+		    toggle:false,
+		    filter:[],
+		    main:'',
+		    vals:'',
+		    okay:false
 		};
 	}
 	
@@ -38,6 +43,8 @@ export default class Uploader extends Component {
 
 
 	  this.fetchRest();
+	  
+
     }
 
     renderTableHeader() {
@@ -50,7 +57,7 @@ export default class Uploader extends Component {
 	           
 
 	renderTableData() {
-	  return this.state.uploads.map((upload, index) => {
+	  return this.state.uploadss.map((upload, index) => {
 	     const {description,type,attachment,isprivate,prefix} = upload //destructuring
 	     return (
 	        <tr key={index}>
@@ -66,15 +73,45 @@ export default class Uploader extends Component {
 	  })
 	}
 
-
-	fetchRest(){
-	        fetch('https://4y1lmnfnnh.execute-api.us-east-1.amazonaws.com/prod/uploads').then(res=> res.json())
-	        .then(data=>{this.setState({uploads:data})})
-	        .then(xy=>console.log("Fetching AGAIN"))
-	        .then(y=>console.log(this.state))
-	        .catch((err)=>{console.log(err);})
+	Calculate=()=>
+	{
+		var uniqueTypes = [];
+		var uniqueSections = [];
+		var data=this.state.uploads
+		for(var i = 0; i< data.length; i++){    
+		    if(uniqueTypes.indexOf(data[i].type) === -1){
+		        uniqueTypes.push(data[i].type);        
+		    }        
+		}
+		var data=this.state.uploads
+		for(var i = 0; i< data.length; i++){    
+		    if(uniqueSections.indexOf(data[i].section) === -1){
+		        uniqueSections.push(data[i].section);        
+		    }        
+		}
+		this.setState({uniqueTypes:(uniqueTypes)})
+		
+		this.setState({uniqueSections:(uniqueSections)})
 	}
 
+	fetchRest=()=>{
+	        fetch('https://4y1lmnfnnh.execute-api.us-east-1.amazonaws.com/prod/uploads').then(res=> res.json())
+	        .then(data=>{this.setState({uploads:data},function(){this.rechange()})})
+	        .then(xy=>console.log("Fetching AGAIN"))
+	        .then(y=>console.log(this.state))
+	        .then(x=>this.Calculate())
+	        .catch((err)=>{console.log(err);})
+	}
+	rechange=()=>
+	{
+		console.log(this.state)
+		var m=this.state.main.toLowerCase()
+		var v=this.state.vals
+		if(this.state.okay)
+			this.setState({uploadss:this.state.uploads.filter(function(e){return e[m]==v})})
+		else
+			this.setState({uploadss:this.state.uploads})
+	}
 
 	handleFileChange = event => {
 		this.file = event.target.files[0];
@@ -114,14 +151,9 @@ console.log(this.props)
 		this.setState({ isLoading: true });
 		try {
 			var prefix=""
-				if(this.state.isprivate)
-				 {prefix="reports/"+this.props.authProps.currentSelectedYear+"/"+this.props.authProps.currentSelectedSemester+"/"+this.props.authProps.currentSelectedCourse+"/"
-					this.setState({prefix:prefix})
-				}
-				else
-				 {prefix="reports/"+this.props.authProps.currentSelectedYear+"/"+this.props.authProps.currentSelectedSemester+"/"+this.props.authProps.currentSelectedCourse+"/"
-					this.setState({prefix:prefix})
-			}
+		    prefix="reports/"+this.props.authProps.currentSelectedYear+"/"+this.props.authProps.currentSelectedSemester+"/"+this.props.authProps.currentSelectedCourse+"/"
+			this.setState({prefix:prefix})
+		
 				 console.log(prefix)
   				 const attachment=this.state.isprivate? await privateUpload(this.file,prefix) :await publicUpload(this.file,prefix)
 		  		
@@ -158,7 +190,10 @@ console.log(this.props)
 
 	renderLoggedIn() {
 		const options = [
-			'Assignment','Project','Something else'
+			'Assignment','Project','Grade Sheets','Something else'
+		  ]
+		const options2 = [
+			'CSE-A','CSE-B','CSE-C','CSE-D','CSE-E','CSE-F','Does not apply'
 		  ]
 
 		return (
@@ -181,8 +216,8 @@ console.log(this.props)
 			</div>
 				
 				<div className="form-group">
-					<label htmlFor="Class">Enter Class & Section</label>
-					<input type='text' className="b--solid b pa2 ma2 btn-warning" onChange={(e)=>{this.setState({section:e.target.value})}} value={this.state.section} placeholder="Section..." />
+				<label htmlFor="Class">Enter Class & Section</label>
+				<Dropdown style={{width:"360px"}} options={options2} onChange={(e)=>{this.setState({section:e.value})}}  value={this.state.section} placeholder="Select Section" />
 				</div>
 
 
@@ -226,12 +261,42 @@ console.log(this.props)
 	}
 
 
+	renderFilters()
+	{
+		// console.log(this.state.uploads)
+		const options1 =['Type','Section']
+		
+		return(
+			<div className="" style={{marginLeft:"30px"}}>
+			<div >
+					<div className="checkbox">
+					  <label><input type="checkbox" onChange={(e)=>{(e.target.checked)?this.setState({okay:true}):this.setState({okay:false},function(){this.rechange()})}} value="1"/>Enable Filters</label>
+					</div>
+					{this.state.okay&&(
+						<div>
+				<div className="form-group">
+					
+					<Dropdown style={{width:"360px"}} options={options1} onChange={(e)=>{this.setState({main:e.value});this.setState({vals:null}); e.value=="Type"?(this.setState({filter:this.state.uniqueTypes})):(this.setState({filter:this.state.uniqueSections}))}} value={this.state.main} placeholder="Filter by" />
+					
+				</div>		
+
+				<div className="form-group">
+					
+					<Dropdown style={{width:"360px"}} options={this.state.filter} onChange={(e)=>{this.setState({vals:e.value},function(){this.rechange()})}} value={this.state.vals} placeholder="Filter Secondary" />
+				</div>	</div>	
+				)}
+			</div>
+		  </div>
+		
+		)
+	}
 	renderButton() {
 		return (
-			<div className="button tc">
-				    <table id='students' style={{marginTop:"200px",marginLeft:"60px"}}>
+			<div className="button" style={{marginLeft: this.props.expanded ? 240 : 64}}>
+						{this.renderFilters()}
+				    <table id='students' >
+				    	
 	                    <tbody>
-	                    
 	                    {this.renderTableHeader()}
 	                    {this.renderTableData()}
 						</tbody>

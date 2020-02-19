@@ -108,7 +108,11 @@ class LogIn extends Component {
 
         this.props.authProps.setAuthStatus(true)
         this.props.authProps.setUser(user)
-      
+        
+        if (user!=null)
+         { if (user.attributes!=null) 
+            {this.props.authProps.setUserID(user.attributes.sub)}
+           } 
            if(session.idToken.payload['cognito:groups']!=null)
             {
                 if(session.idToken.payload['cognito:groups'].includes("Admin"))

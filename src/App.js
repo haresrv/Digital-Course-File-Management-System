@@ -263,10 +263,12 @@ class App extends Component
                     this.setRole("Admin")
                 else
                     this.setRole("Faculty")
+                this.setState({user_id:user.attributes.sub})
             }
             else
             {
                 this.setRole("Faculty")
+                this.setState({user_id:user.attributes.sub})
             }
             // console.log("COMPONENT PERSISTED")
             // console.log(this.state)
@@ -288,12 +290,18 @@ class App extends Component
         }
     }
 
+
+    
     setAuthStatus=(authenticated)=>{
         this.setState({isAuthenticated:authenticated})
     }
 
     setUser=(user)=>{
         this.setState({user:user})
+    }
+    
+    setUserID=(userid)=>{
+        this.setState({user_id:userid})
     }
     
     setSemester=(role)=>{
@@ -353,6 +361,7 @@ class App extends Component
             setCoursename:this.setCoursename,
             setTUsername:this.setTUsername,
             setTUser:this.setTUser,
+            setUserID:this.setUserID,
             expanded:this.state.expanded
         }
 
