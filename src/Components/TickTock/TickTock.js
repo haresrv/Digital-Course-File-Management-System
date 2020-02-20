@@ -13,6 +13,14 @@ constructor() {
     };
   }
 
+  componentDidMount()
+{
+  
+    if(this.props.authProps.role=="Admin")
+        this.props.history.push("/admin")
+
+}
+
 handleSubTopicChange = (event,i,index) => {
       var ep=this.state.epics
       const {name,value} = event.target;

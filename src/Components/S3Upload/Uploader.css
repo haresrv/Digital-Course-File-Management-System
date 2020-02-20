@@ -15,9 +15,8 @@
 .Uploader div form {
     padding-bottom: 15px;
     border-radius: 2px 2px;
-    
     width: 650px;
-    height: 400px;
+    height: 440px;
     border:1px solid black;
     
 }
@@ -30,6 +29,18 @@
     top      : 50%;
     margin-left : -20%; /* half of the width  */
     margin-top  : -10%; /* half of the height */
+}
+
+.bgg{
+    background:black url("flash.gif") no-repeat fixed center;
+    background-size: 500px 500px;
+}
+.middleDiv2 {
+    position : absolute;    
+    width    : 260px;
+    height   : 200px;
+    left     : 50%;
+    top      : 50%;
     
 }
 
@@ -37,8 +48,8 @@
     width:200px;
 }
 .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
+    border: 16px solid #f3f3f3; 
+    border-top: 16px solid #3498db; 
     border-radius: 50%;
     width: 120px;
     height: 120px;

@@ -18,10 +18,13 @@ class LogIn extends Component {
 
   componentDidMount()
   {
+    console.log("HERE1")
     if(this.props.authProps.isAuthenticated)
     {
+      console.log("HERE2")
       this.props.history.push("/")
     }
+    console.log("HERE3")
   }
 
   clearErrorState = () => {
@@ -35,14 +38,18 @@ class LogIn extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-    
     // Form validation
+    console.log(this.state)
     this.clearErrorState();
     const error = Validate(event, this.state);
+    
     if (error) {
+      
       this.setState({
         errors: { ...this.state.errors, ...error }
       });
+    
+      return
     }
 
     // AWS Cognito integration here
@@ -60,6 +67,7 @@ class LogIn extends Component {
     // }
 
     try {
+      
       const user = await Auth.signIn(username, password);
       if (user.challengeName === 'SMS_MFA' ||
           user.challengeName === 'SOFTWARE_TOKEN_MFA') {
@@ -79,15 +87,12 @@ class LogIn extends Component {
           // and then trigger the following function with a button click
           // For example, the email and phone_number are required attributes
           // const {username, email, phone_number} = getInfoFromUserInput();
-          const newPassword = prompt("Enter new password:")
-          const loggedUser = await Auth.completeNewPassword(
-              user,              // the Cognito User Object
-              newPassword,       // the new password
-              // OPTIONAL, the required attributes
-              {
-                  email,
-              }
-          );
+          // console.log(user)
+          this.props.authProps.setTUser(user)
+          this.props.authProps.setTUsername(username)
+          
+          this.props.history.push('/setpass')
+          return
       } else if (user.challengeName === 'MFA_SETUP') {
           // This happens when the MFA method is TOTP
           // The user needs to setup the TOTP before using it
@@ -98,24 +103,41 @@ class LogIn extends Component {
           console.log(user);
       }
       
+        const session = await Auth.currentSession();
+        console.log(session)
+
         this.props.authProps.setAuthStatus(true)
         this.props.authProps.setUser(user)
-        const session = await Auth.currentSession();
-       console.log(session)
-        if(session.idToken.payload['cognito:groups'].includes("Admin"))
-        {
-            this.props.authProps.setRole("Admin")
-        }
+        
+        if (user!=null)
+         { if (user.attributes!=null) 
+            {this.props.authProps.setUserID(user.attributes.sub)}
+           } 
+           if(session.idToken.payload['cognito:groups']!=null)
+            {
+                if(session.idToken.payload['cognito:groups'].includes("Admin"))
+                    { 
+                      this.props.authProps.setRole("Admin")
+                      this.props.history.push("/admin")  
+                    }
+                else
+                    {
+                      this.props.authProps.setRole("Faculty")
+                      this.props.history.push("/")
+                    }
+            }
+        
         else
         {
             this.props.authProps.setRole("Faculty")
+            this.props.history.push("/")
         }
-       
-        this.props.history.push("/")
+
   }
 
     catch(error)
     {
+      console.log("ERROR131")
         let err= null;
         !error.message? err={"message":error} : err = error
         this.setState({
@@ -124,11 +146,13 @@ class LogIn extends Component {
             cognito:err
           }
         })
+
     }
 
   };
 
   onInputChange = event => {
+    console.log(event.target.id)
     this.setState({
       [event.target.id]: event.target.value
     });
@@ -138,7 +162,7 @@ class LogIn extends Component {
   render() {
     return (
       <section className="section auth">
-        <div className="container">
+        <div id="login" className="container">
           <h1>Log in</h1>
 
           <div className="row">
@@ -146,8 +170,8 @@ class LogIn extends Component {
             <img className="pull-right" src="https://cms.cb.amrita.edu/images/amrita_round_2019.png" style={{width:"44%", marginTop:"40px",pointerEvents: "none"}} alt="Amrita Vishwa Vidyapeetham Logo"/>
           </div>
           <div className="col-md-4 col-md-push-1">
-           <h3><span className="weight-700">Digital Course File</span> | <span className="weight-300"> Login</span></h3>
-           <FormErrors className="red blink" formerrors={this.state.errors} />
+           <h3><span id="mainappname" className="weight-700">Digital Course File</span> | <span className="weight-300"> Login</span></h3>
+           <FormErrors id="loginerror" className="red blink" formerrors={this.state.errors} />
              <form  onSubmit={this.handleSubmit} style={{marginTop:"20px",padding:"40px"}} className="pa3 ma2" autoComplete="new-password">
                 
                 <div className="form-group">
@@ -157,10 +181,10 @@ class LogIn extends Component {
                     <input type="password" id="password"  value={this.state.password} onChange={this.onInputChange} className="form-control" name="password" placeholder="Enter your password" autoComplete="new-password" />
                 </div>
                 <div className="form-group">
-                    <a href="/forgotpassword" className="text-muted" >Having trouble logging in ?</a>
+                    <a href="/forgotpassword" id="forgotpasswordlink" className="text-muted" >Having trouble logging in ?</a>
                 </div>
                 <div>
-                    <button type="submit" id="submitbutton" className="btn btn-primary">Login</button>
+                    <button type="submit" onClick={this.handleSubmit} id="submitbutton" className="btn btn-primary">Login</button>
                     <button type="reset" id="resetbutton" className="btn btn-default" onClick={()=>{this.setState({username:"",password:""});this.clearErrorState()}}>Reset</button>
                 </div>
             </form>

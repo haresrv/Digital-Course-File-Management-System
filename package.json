@@ -11,6 +11,7 @@
     "aws-amplify": "^2.2.1",
     "aws-amplify-react": "^3.1.2",
     "aws-sdk": "^2.596.0",
+    "mock-amplify-auth": "^2.1.0",
     "moment": "^2.24.0",
     "primeicons": "^2.0.0",
     "primereact": "^3.3.3",
@@ -39,9 +40,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "test:update": "jest --verbose --coverage --updateSnapshot",
-    "test:watch": "jest --verbose --watch",
-    "coverage": "jest --verbose --coverage",
+    "coverage": "react-scripts test --coverage --env=jsdom --watchAll",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

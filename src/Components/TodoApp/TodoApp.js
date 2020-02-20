@@ -58,7 +58,7 @@ class TodoListItem extends React.Component {
         	<div className="list-item delete-button ma2 pa1" style={{float:"right",cursor:"pointer"}} onClick={this.onClickClose}>✕</div>
         	<div className="bg-gold white ma2 pa1" style={{float:"right"}}>{y}</div>
         		<div className={todoClass+" noselect"+" glyphicon fa fa-check icon list-item"} onClick={this.onClickDone}>
-        			<h7 id={this.props.index} style={{marginLeft:"10px"}}>{this.props.item.value}</h7>
+        			<h6 id={this.props.index} style={{marginLeft:"10px"}}>{this.props.item.value}</h6>
         		</div>
         		<br/>
         			{!this.state.done && <em>To be done {moment(new Date(this.props.item.date)).fromNow()}</em>}
@@ -76,22 +76,27 @@ class TodoForm extends React.Component {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
 
-    let today = new Date();
-    let month = today.getMonth();
-    let year = today.getFullYear();
-    let prevMonth = month === 0 ? 11 : month - 1;
-    let prevYear = prevMonth === 11 ? year - 1 : year;
-
-    let minDate = new Date();
-    minDate.setMonth(prevMonth+1);
-    minDate.setFullYear(prevYear);
-        
     this.state={
-       minDate:minDate,
-       sdate:minDate,
+       minDate:this.getToday(new Date()),
        errorMessage:''
     }
   }
+
+  // GetminDate=(date)=>{
+
+  //   let today = date//new Date();
+  //   let month = today.getMonth();
+  //   let year = today.getFullYear();
+  //   // console.log(month)
+
+  //   let prevMonth = month === 0 ? 11 : month - 1;
+  //   let prevYear = prevMonth === 11 ? year - 1 : year;
+
+  //   let minDate = new Date();
+  //   minDate.setMonth(prevMonth+1);
+  //   minDate.setFullYear(prevYear);
+  //       return minDate
+  // }
   componentDidMount() {
     // this.refs.itemName.focus();
   }
@@ -99,7 +104,8 @@ class TodoForm extends React.Component {
     event.preventDefault();
     var newItemValue = this.refs.itemName.value;
     var dates= this.refs.itemDue.value; 
-
+    // console.log(newItemValue)
+    // console.log(dates)
     if(newItemValue&&dates) {
       this.props.addItem({newItemValue,dates});
       this.refs.form.reset();
@@ -113,9 +119,10 @@ class TodoForm extends React.Component {
       return this.setState({errorMessage:"Fill all columns"})
     }
   }
-  render () {
-  	let today = new Date();
-  	today.setDate(today.getDate()+1)
+
+  getToday=(date)=>{
+    let today = date;
+    today.setDate(today.getDate()+1)
     var day = today.getDate()
     var month = today.getMonth()+1
     var year = today.getFullYear();
@@ -126,6 +133,11 @@ class TodoForm extends React.Component {
             month='0'+month
         }
         today = year+'-'+month+'-'+day;
+        return today
+  }
+
+  render () {
+        
     return (
       <form ref="form" onSubmit={this.onSubmit} className="">
 		<div className="form-inline reminder-form">
@@ -142,7 +154,7 @@ class TodoForm extends React.Component {
 		              ref="itemDue" 
                   id="newDue"
 		              type="date"
-		           	  min={today}
+		           	  min={this.state.minDate}
 		            />
 		          </div>
 		          <button
@@ -171,10 +183,10 @@ class TodoForm extends React.Component {
   
 const TodoHeader =(header)=> {
     return (
-          <div class="sandbox sandbox-correct-pronounciation">
-              <h6 class="heading heading-correct-pronounciation">
+          <div className="sandbox sandbox-correct-pronounciation">
+              <h5 className="heading heading-correct-pronounciation">
                   <var>Todo List</var>
-              </h6>
+              </h5>
           </div>
           )
 }
@@ -186,14 +198,17 @@ class TodoApp extends React.Component {
     this.removeItem = this.removeItem.bind(this);
     this.markTodoDone = this.markTodoDone.bind(this);
     this.state = {
-      // todoItems: this.props.fetchInitialData,
-      todoItems: [{index: "1",value: "Schedule a new quiz",date: "2020-01-24",done: false}],
+      todoItems: [],
+      // todoItems: [{index: "1",value: "Schedule a new quiz",date: "2020-01-24",done: false}],
     };
   }
 
   componentDidMount()
   {
-      // this.setState({todoItems:this.props.fetchInitialData})
+    if(this.props.authProps.role=="Admin")
+        this.props.history.push("/admin")
+
+      this.setState({todoItems:this.props.fetchInitialData})
   }
 
   addItem(todoItem) {
@@ -218,7 +233,7 @@ class TodoApp extends React.Component {
     var todo = todoItems[itemIndex];
     todoItems.splice(itemIndex, 1);
     todo.done = !todo.done;
-    todo.done ? todoItems.push(todo) : todoItems.push(todo);
+    todoItems.push(todo)
     this.setState({todoItems: todoItems});  
   }
   render() {

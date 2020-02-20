@@ -6,7 +6,8 @@ export default function Welcome() {
       <div className="container">
         <h1>Welcome!</h1>
         <p>You have successfully registered a new account.</p>
-        <p>Please verify your email. Link has been sent via email</p>
+        <p>Please ask the faculty to verify email. Link has been sent via email.</p>
+        <p>Faculty should change their temporary password before proceeding</p>
         
       </div>
     </section>

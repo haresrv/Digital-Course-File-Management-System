@@ -6,6 +6,13 @@ import FileBrowser, {Icons} from 'react-keyed-file-browser'
 var mount = document.querySelectorAll('div.browser-mount');
 class FileExplore extends React.Component
 {
+    componentDidMount()
+{
+    
+    if(props.authProps.role=="Admin")
+        props.history.push("/admin")
+
+}
     render()
     {
         return(

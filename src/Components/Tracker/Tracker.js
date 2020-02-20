@@ -36,13 +36,13 @@ constructor() {
 
  pageTitle = {
         'home': 'Home',
-        'devices': ['Devices'],
-        'reports': ['Reports']            
+        // // 'devices': ['Devices'],
+        // 'reports': ['Reports']            
     };
 
   navigate = (pathname) => () => {
         this.onSelect(pathname)
-        this.props.changeRoute(pathname)
+        // this.props.changeRoute(pathname)
     };
 
 handleLogOut = async event => {
@@ -66,18 +66,18 @@ render(){
   return (   
              <div className="App outer-container"  style={{width:"1200px",marginLeft: expanded ? 240 : 64,padding: '15px 20px 0 20px',display:"flex"}}>
                     
-                    <ButtonGroup style={{width:"500px"}}>
+                    {this.props.authProps.role!="Admin"&&<ButtonGroup style={{width:"500px"}}>
                         <Button btnStyle="flat" onClick={this.navigate('home')}>
                             Home
-                        </Button>
-                        <Button btnStyle="flat" onClick={this.navigate('devices')}>
+                        </Button></ButtonGroup>}
+                      {/*  <Button btnStyle="flat" onClick={this.navigate('devices')}>
                             Devices
                         </Button>
                         <Button btnStyle="flat" onClick={this.navigate('reports')}>
                             Reports
-                        </Button>
+                        </Button>  */}
 
-                    </ButtonGroup>
+                    
                     
                             
                     {!this.props.authProps.isAuthenticated?
@@ -90,9 +90,6 @@ render(){
                             :
                             <div className="ma2" style={{position:"absolute",right:"0"}}>
                                 
-                                <Button btnStyle="flat" id="register" className="ma2 pa3 link" onClick={this.navigate("register")}>
-                                    <strong>Register</strong>
-                                 </Button>
                                 <Button onClick={this.handleLogOut} id="signout" className="ma2 pa3 link" btnStyle="flat">
                                 <h4>{this.props.authProps.user==null?"":this.props.authProps.user.username}</h4>
                                 <strong> Sign Out</strong>
@@ -103,6 +100,7 @@ render(){
                         }
     <SideNav className="bg-gold" onSelect={this.onSelect} onToggle={this.onToggle}>
                     <SideNav.Toggle />
+                   {(this.props.authProps.role!="Admin"&&!this.props.isAuthenticated) &&
                     <SideNav.Nav selected={selected}>
                         <NavItem eventKey="home">
                             <NavIcon>
@@ -122,7 +120,7 @@ render(){
                         </NavItem>
                         <NavItem eventKey="notifications">
                             <NavIcon>
-                                <i className="fa fa-fw fa-bell-o" style={{ fontSize: '1.75em', verticalAlign: 'middle' }} />
+                                <i className="fa fa-fw fa-star" style={{ fontSize: '1.75em', verticalAlign: 'middle' }} />
                             </NavIcon>
                             <NavText style={{ paddingRight: 32 }} title="notifications" >
                                  Notifications
@@ -163,6 +161,7 @@ render(){
                             </NavItem>
                         </NavItem>
                     </SideNav.Nav>
+                }
                 </SideNav>
              
         </div>

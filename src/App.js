@@ -3,7 +3,6 @@ import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
 import './App.css';
 import './Card.css';
 import tachyons from 'tachyons';
-import Navbar from './Components/Navbar';
 import CourseDashboard from './Components/CourseDashboard/CourseDashboard';
 // import TickTock from './Components/TickTock/TickTock';
 import Tracker from './Components/Tracker/Tracker';
@@ -19,13 +18,18 @@ import config from './config';
 import ForgotPassword from './Components/auth/ForgotPassword';
 import ForgotPasswordVerification from './Components/auth/ForgotPasswordVerification';
 import ChangePassword from './Components/auth/ChangePassword';
+import SetPass from './Components/auth/setpass';
 import ChangePasswordConfirm from './Components/auth/ChangePasswordConfirm';
 import Welcome from './Components/auth/Welcome';
 import Footer from './Components/Footer';
 import LogIn from './Components/auth/LogIn';
 import Register from './Components/auth/Register';
 import Uploader from './Components/S3Upload/Uploader';
+import changer from './Components/S3Upload/change';
+import AdminLog from './Components/Admin/AdminLog';
 import digitalRep from './Components/S3Upload/digitalRep';
+import qnbank from './Components/S3Upload/qnbank';
+
 
 Amplify.configure({
     Auth:{
@@ -41,25 +45,46 @@ Amplify.configure({
 	}
 })
 
-const Home =(props) =>
+const Admin =(props) =>
 {
     if(!props.authProps.isAuthenticated)
         props.history.push("/login")
     
         return (
-            <div className="App outer-container">
+            <div id="home" className="App outer-container">
+                    <div>         
+                        <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 240 : 64}}>
+                            <AdminLog {...props}/>
+                        </main>
+                    </div>
+            </div>)
+}
+
+const Home =(props) =>
+{
+    if(props.authProps.role=="Admin")
+        props.history.push("/admin")
+
+    if(!props.authProps.isAuthenticated)
+        props.history.push("/login")
+    
+        return (
+            <div id="home" className="App outer-container">
                     <div>         
                         <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 240 : 64}}>
                             <EnrolledCourses {...props}/>
                         </main>
                     </div>
-            </div>
-                )
+            </div>)
 }
 
 const CourseSelect =(props) =>{
+
+    if(props.authProps.role=="Admin")
+        props.history.push("/admin")
+
         return(
-            <div className="App outer-container">
+            <div id="course-select" className="App outer-container">
                     <div>         
                         <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 240 : 64}}>
                             <CourseDashboard {...props}/>
@@ -71,9 +96,13 @@ const CourseSelect =(props) =>{
 
 const ProgressChange = (props) =>
 {
+
+    if(props.authProps.role=="Admin")
+        props.history.push("/admin")
+
     return(
             
-            <div className="App outer-container">
+            <div id='progress-change' className="App outer-container">
                     <div>         
                         <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 180 : 64}}>
                             <ProgressAdder  {...props}/>
@@ -85,9 +114,13 @@ const ProgressChange = (props) =>
 
 const PersonalSpace = (props) =>
 {
+
+    if(props.authProps.role=="Admin")
+        props.history.push("/admin")
+
         return(
             
-            <div className="App outer-container">
+            <div id="personal-space" className="App outer-container">
                     <div>         
                         <main id={"page-wrapper"} style={{marginLeft: props.expanded ? 210 : 64}}>
                             <Notes/>
@@ -106,8 +139,24 @@ const routes = [
         fetchInitialData:true
     },
     {
+        path: '/qnbank',
+        component:qnbank,
+        fetchInitialData:true
+    },
+    {
+        path:'/pathupload',
+        component:changer,
+        fetchInitialData:true
+    
+    },
+    {
         path: '/home',
         component:Home,
+        fetchInitialData:true
+    },
+    {
+        path: '/admin',
+        component:Admin,
         fetchInitialData:true
     },
     {
@@ -175,6 +224,11 @@ const routes = [
         path:'/digrep',
         component:digitalRep,
         fetchInitialData:true
+    },
+    {
+        path:'/setpass',
+        component:SetPass,
+        fetchInitialData:true    
     }
 ]
 
@@ -190,10 +244,13 @@ class App extends Component
         selected:"home",
         isAuthenticated:false,
         isAuthenticating:true,
-        user:null
-
+        user:null,
+        Tempuser:null,
+        Tempusername:'',
+        currentSelectedCourse:'',
+        currentSelectedSemester:'',
+        currentSelectedYear:'',
         };
-        this.handleClick = this.handleClick.bind(this);
     }
 
     async componentDidMount()
@@ -205,33 +262,43 @@ class App extends Component
             const user = await Auth.currentAuthenticatedUser();
             this.setAuthStatus(true)
             this.setUser(user);
-            console.log(session)
-            if(session.idToken.payload['cognito:groups'].includes("Admin"))
+            console.log(session.idToken.payload['cognito:groups'])
+            // console.log(user)
+            if(session.idToken.payload['cognito:groups']!=null)
             {
-                this.setRole("Admin")
+                if(session.idToken.payload['cognito:groups'].includes("Admin"))
+                    this.setRole("Admin")
+                else
+                    this.setRole("Faculty")
+                this.setState({user_id:user.attributes.sub})
             }
             else
             {
                 this.setRole("Faculty")
+                this.setState({user_id:user.attributes.sub})
             }
-            console.log("COMPONENT PERSISTED")
-            console.log(this.state)
+            // console.log("COMPONENT PERSISTED")
+            // console.log(this.state)
         }   
         catch(error)
-        {   console.log("COMPONENT PERSIST ERROR")
-            console.log(error)
+        {   
+            // console.log("COMPONENT PERSIST ERROR")
+            // console.log(error)
             this.setRole("");
         }
         this.setState({isAuthenticating:false})
     }
 
     comp() {
-        if(!this.state.isAuthenticated&&(!window.location.href.includes("login"))&&(!window.location.href.includes("register"))&&(!window.location.href.includes("password")))
+        if(!this.state.isAuthenticated&&(!window.location.href.includes("login"))&&(!window.location.href.includes("password")))
         if(this.state.role=="")
         {   window.location.href=window.location.origin+"/login"
-            console.log("Manually Redirected to /login")    
+            // console.log("Manually Redirected to /login")    
         }
     }
+
+
+    
     setAuthStatus=(authenticated)=>{
         this.setState({isAuthenticated:authenticated})
     }
@@ -240,36 +307,44 @@ class App extends Component
         this.setState({user:user})
     }
     
+    setUserID=(userid)=>{
+        this.setState({user_id:userid})
+    }
+    
+    setSemester=(role)=>{
+        this.setState({currentSelectedSemester:role})
+    }
+
+    setYear=(role)=>{
+        this.setState({currentSelectedYear:role})
+    }
+
+    setCoursename=(role)=>{
+        this.setState({currentSelectedCourse:role})
+    }
+
     setRole=(role)=>{
         this.setState({role:role})
     }
-    
-    handleClick(e) {
-        e.preventDefault();
-        this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
 
+
+    setTUser=(role)=>{
+        this.setState({Tempuser:role})
     }
 
-    showSettings (event) {
-        event.preventDefault();
-    }
 
+    setTUsername=(role)=>{
+        this.setState({Tempusername:role})
+    }
 
     change=(ex,i)=>{
         if(i==1)
         this.setState({expanded:ex})
         else
         this.setState({selected:ex})
-        console.log(this.state)
+        // console.log(this.state)
     }
     
-    changeRoute=(ex)=>{
-        this.setState({route:ex},function(){
-            console.log("CHANGED Route to "+this.state.route)
-        })
-        
-    }
-
     render()
     {  
         //  {
@@ -280,16 +355,28 @@ class App extends Component
             isAuthenticated :this.state.isAuthenticated,
             user: this.state.user,
             role:this.state.role,
+            currentSelectedCourse:this.state.currentSelectedCourse,
+            currentSelectedYear:this.state.currentSelectedYear,
+            currentSelectedSemester:this.state.currentSelectedSemester,
+            Tempuser:this.state.Tempuser,
+            Tempusername:this.state.Tempusername,
             setAuthStatus:this.setAuthStatus,
             setUser:this.setUser,
-            setRole:this.setRole
+            setRole:this.setRole,
+            setSemester:this.setSemester,
+            setYear:this.setYear,
+            setCoursename:this.setCoursename,
+            setTUsername:this.setTUsername,
+            setTUser:this.setTUser,
+            setUserID:this.setUserID,
+            expanded:this.state.expanded
         }
 
         return ( !this.state.isAuthenticating &&
             <Router>
                 <div>
-                <Tracker {...this.props} authProps={authProps} change={this.change} changeRoute={this.changeRoute}/>
-                    
+                        {<Tracker {...this.props} authProps={authProps} change={this.change} changeRoute={this.changeRoute}/>}
+            
                     <React.Suspense fallback={<Loading />} >
                         <Switch>
                             {
@@ -312,4 +399,4 @@ class App extends Component
     }
 }
 
-export default App;
+export {App,Home,CourseSelect,ProgressChange,PersonalSpace};

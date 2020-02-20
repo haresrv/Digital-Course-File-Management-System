@@ -11,14 +11,14 @@ function validateForm(event, state) {
     document.getElementById("username").classList.add("is-danger");
     return { blankfield: true };
   }
-  if (state.hasOwnProperty("firstname") && state.firstname === "") {
-    document.getElementById("firstname").classList.add("is-danger");
-    return { blankfield: true };
-  }
-  if (state.hasOwnProperty("lastname") && state.lastname === "") {
-    document.getElementById("lastname").classList.add("is-danger");
-    return { blankfield: true };
-  }
+  // if (state.hasOwnProperty("firstname") && state.firstname === "") {
+  //   document.getElementById("firstname").classList.add("is-danger");
+  //   return { blankfield: true };
+  // }
+  // if (state.hasOwnProperty("lastname") && state.lastname === "") {
+  //   document.getElementById("lastname").classList.add("is-danger");
+  //   return { blankfield: true };
+  // }
   if (state.hasOwnProperty("email") && state.email === "") {
     document.getElementById("email").classList.add("is-danger");
     return { blankfield: true };
@@ -38,10 +38,10 @@ function validateForm(event, state) {
     document.getElementById("oldpassword").classList.add("is-danger");
     return { blankfield: true };
   }
-  if (state.hasOwnProperty("newpassword") && state.newpassword === "") {
-    document.getElementById("newpassword").classList.add("is-danger");
-    return { blankfield: true };
-  }
+  // if (state.hasOwnProperty("newpassword") && state.newpassword === "") {
+  //   document.getElementById("newpassword").classList.add("is-danger");
+  //   return { blankfield: true };
+  // }
   if (state.hasOwnProperty("confirmpassword") && state.confirmpassword === "") {
     document.getElementById("confirmpassword").classList.add("is-danger");
     return { blankfield: true };

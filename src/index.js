@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import {App} from './App';
 // import TickTock from './Components/TickTock/TickTock';
 import Tracker from './Components/Tracker/Tracker';
 import ProgressMentor from './Components/Progress4Mentor/ProgressMentor';

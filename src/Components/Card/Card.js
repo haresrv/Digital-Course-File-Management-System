@@ -17,7 +17,7 @@ render(){
 
 
 return (
-	<div className="main-wrap dib" >
+	<div className="mainwrap dib" >
 	
 		<div className="shop-list-item-container-wrap" >
 		 
