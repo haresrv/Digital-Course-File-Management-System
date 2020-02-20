@@ -20,7 +20,7 @@ componentDidMount()
     
   var name=this.props.authProps.user.username
 
-  fetch('https://harshdependentsequences--five-nine.repl.co/detbyname/'+String(name))
+  fetch('http://tachyonnation.herokuapp.com/detbyname/'+String(name))
   .then(res=> res.json())
   .then(data=>{this.setState({courses:data},function(){console.log(this.state)})})
 
