@@ -42,12 +42,11 @@ var::after {
 .bottom {
   font-size: 1.5em;
   letter-spacing: 0.07em;
-  font-size: 1em;
   display: block;
 }
 
 .reminder-form {
-  padding: 5;
+  padding: 5px;
 }
 .delete-button {
   float: right;
