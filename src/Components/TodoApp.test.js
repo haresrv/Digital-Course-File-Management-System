@@ -4,12 +4,26 @@ import {shallow,mount} from 'enzyme';
 
 describe('---TodoApp---',()=>{
 	
+
 	test('Mark as Done is working', () => {
-		var item=[{index: "0",value: "Schedule a new quiz",date:new Date(),done: false}]
-		var item2=[{index: "0",value: "Schedule a new quiz",date:new Date(),done: true}]
-	    const wrapper = mount(<TodoApp fetchInitialData={item}/>);
+		const mockProps = {
+            isAuthenticated :true,
+            user: "Faculty1",
+            role:"faculty",
+            setAuthStatus:jest.fn(),
+            setUser:jest.fn(),
+            setRole:jest.fn()
+        }
+	     const history={
+        	push:jest.fn()
+        }
+
+		var item=[{index: "1",value: "Schedule a new quiz",date:new Date(),done: false}]
+		var item2=[{index: "1",value: "Schedule a new quiz",date:new Date(),done: true}]
+	    const wrapper = mount(<TodoApp fetchInitialData={item} authProps={mockProps}/>);
 	    wrapper.instance().markTodoDone(0)
-        expect(wrapper.state('todoItems')).toEqual(item2)
+	    console.log(wrapper.state('todoItems'))
+        expect(wrapper.state('todoItems')[0].done).toEqual(true)
 
 	
 	})
@@ -17,8 +31,18 @@ describe('---TodoApp---',()=>{
 
 	test('On Click remove mark as done', () => {
 		var item=[{index: "0",value: "Schedule a new quiz",date:new Date(),done: false}]
-		
-	    const wrapper = mount(<TodoListItem item={item} markTodoDone={jest.fn()} onClickClose={jest.fn()}/>);
+		const mockProps = {
+            isAuthenticated :true,
+            user: "Faculty1",
+            role:"faculty",
+            setAuthStatus:jest.fn(),
+            setUser:jest.fn(),
+            setRole:jest.fn()
+        }
+        const history={
+        	push:jest.fn()
+        }
+	    const wrapper = mount(<TodoListItem item={item}  authProps={mockProps} markTodoDone={jest.fn()} onClickClose={jest.fn()}/>);
 	    wrapper.instance().onClickDone()
         expect(wrapper.state('done')).toEqual(true)
         wrapper.instance().onClickDone()
@@ -31,12 +55,34 @@ describe('---TodoApp---',()=>{
 
 	test('Todo list group renders properly', () => {
 		var item=[{index: "1",value: "Schedule a new quiz",date:new Date(),done: false}]
-		const todo = shallow(<TodoList items={[item]} removeItem={jest.fn()} markTodoDone={jest.fn()}/>)
+		const mockProps = {
+            isAuthenticated :true,
+            user: "Faculty1",
+            role:"faculty",
+            setAuthStatus:jest.fn(),
+            setUser:jest.fn(),
+            setRole:jest.fn()
+        }
+        const history={
+        	push:jest.fn()
+        }
+		const todo = shallow(<TodoList items={[item]} removeItem={jest.fn()}  authProps={mockProps} markTodoDone={jest.fn()}/>)
 		expect(todo.find('.list-group').exists()).toBeTruthy()
 	})
 
 	test('Todo app updates as per updated todoitems', () => {
-		const component = shallow(<TodoApp fetchInitialData={[]}/>);
+const mockProps = {
+            isAuthenticated :true,
+            user: "Faculty1",
+            role:"faculty",
+            setAuthStatus:jest.fn(),
+            setUser:jest.fn(),
+            setRole:jest.fn()
+        }
+        const history={
+        	push:jest.fn()
+        }
+		const component = shallow(<TodoApp  authProps={mockProps} fetchInitialData={[]}/>);
 	    // var todoItems =[{index: "1",value: "Schedule a new quiz",date: "2020-01-24",done: false}]
 	    var todoItems =[]
 	    expect(component.state('todoItems')).toEqual(todoItems)
@@ -44,20 +90,53 @@ describe('---TodoApp---',()=>{
 
 
   	test("Now no todo's provided", () => {
-        const wrapper = shallow(<TodoApp fetchInitialData={[]}/>);
+  		const mockProps = {
+            isAuthenticated :true,
+            user: "Faculty1",
+            role:"faculty",
+            setAuthStatus:jest.fn(),
+            setUser:jest.fn(),
+            setRole:jest.fn()
+        }
+        const history={
+        	push:jest.fn()
+        }
+        const wrapper = shallow(<TodoApp  authProps={mockProps} fetchInitialData={[]}/>);
         wrapper.setState({ todoItems: [] });
         // expect(wrapper).toMatchSnapshot();
     })
 
     it("adds new notes to state", () => {
-        const wrapper = shallow(<TodoApp fetchInitialData={[]}/>);
+    	const mockProps = {
+            isAuthenticated :true,
+            user: "Faculty1",
+            role:"faculty",
+            setAuthStatus:jest.fn(),
+            setUser:jest.fn(),
+            setRole:jest.fn()
+        }
+        const history={
+        	push:jest.fn()
+        }
+        const wrapper = shallow(<TodoApp  authProps={mockProps} fetchInitialData={[]}/>);
         var item=[{newItemValue: "Upload quiz qn",dates: "2020-01-25"}]
         wrapper.instance().addItem(item);
         expect(wrapper.state("todoItems")).toHaveLength(1);
     });
 
     it("deletes notes from state", () => {
-        const wrapper = shallow(<TodoApp fetchInitialData={[]}/>);
+    	const mockProps = {
+            isAuthenticated :true,
+            user: "Faculty1",
+            role:"faculty",
+            setAuthStatus:jest.fn(),
+            setUser:jest.fn(),
+            setRole:jest.fn()
+        }
+        const history={
+        	push:jest.fn()
+        }
+        const wrapper = shallow(<TodoApp  authProps={mockProps} fetchInitialData={[]}/>);
         var todoItems =[{index: "0",value: "Schedule a new quiz",date: "2020-01-24",done: false}]
         wrapper.setState({ todoItems: todoItems });
         wrapper.instance().removeItem(0);
@@ -72,8 +151,19 @@ describe("Notes creation", () => {
 	describe("TodoApp New Note Empty Error Checking", () => {
 
 	it("Correct submission", () => {
+		const mockProps = {
+            isAuthenticated :true,
+            user: "Faculty1",
+            role:"faculty",
+            setAuthStatus:jest.fn(),
+            setUser:jest.fn(),
+            setRole:jest.fn()
+        }
+        const history={
+        	push:jest.fn()
+        }
 	     const jsdomAlert = window.alert;  
-	    const wrapper = mount(<TodoForm addItem={jest.fn()} />);
+	    const wrapper = mount(<TodoForm  authProps={mockProps} addItem={jest.fn()} />);
 	    window.alert = () => {}; 
 	    // console.log(wrapper.html())
 	    wrapper.find("#newItem").instance().value = "Example Body";
@@ -86,8 +176,19 @@ describe("Notes creation", () => {
 	});
 
 	it("Minimum Date is set correctly", () => {
+		const mockProps = {
+            isAuthenticated :true,
+            user: "Faculty1",
+            role:"faculty",
+            setAuthStatus:jest.fn(),
+            setUser:jest.fn(),
+            setRole:jest.fn()
+        }
+        const history={
+        	push:jest.fn()
+        }
 	     const jsdomAlert = window.alert;  
-	    const wrapper = mount(<TodoForm addItem={jest.fn()} />);
+	    const wrapper = mount(<TodoForm  authProps={mockProps} addItem={jest.fn()} />);
 	    window.alert = () => {}; 
 
 	    expect(wrapper.instance().getToday(new Date('2000-1-20'))).toEqual('2000-01-21');
@@ -98,8 +199,19 @@ describe("Notes creation", () => {
 	});
 
 	it("displays error message on no description", () => {
+		const mockProps = {
+            isAuthenticated :true,
+            user: "Faculty1",
+            role:"faculty",
+            setAuthStatus:jest.fn(),
+            setUser:jest.fn(),
+            setRole:jest.fn()
+        }
+        const history={
+        	push:jest.fn()
+        }
 	     const jsdomAlert = window.alert;  
-	    const wrapper = mount(<TodoForm addItem={jest.fn()} />);
+	    const wrapper = mount(<TodoForm addItem={jest.fn()}  authProps={mockProps}/>);
 	    window.alert = () => {}; 
 	    // console.log(wrapper.html())
 	    wrapper.find("#newDue").instance().value = (new Date()).toISOString().split('T')[0];
@@ -110,8 +222,19 @@ describe("Notes creation", () => {
 	});
 
 	it("displays error message on no date", () => {
+		const mockProps = {
+            isAuthenticated :true,
+            user: "Faculty1",
+            role:"faculty",
+            setAuthStatus:jest.fn(),
+            setUser:jest.fn(),
+            setRole:jest.fn()
+        }
+        const history={
+        	push:jest.fn()
+        }
      const jsdomAlert = window.alert;  
-    const wrapper = mount(<TodoForm addItem={jest.fn()} />);
+    const wrapper = mount(<TodoForm addItem={jest.fn()}  authProps={mockProps}/>);
     window.alert = () => {}; 
     wrapper.find("#newDue").value = (new Date()).toISOString().split('T')[0];
     wrapper.find("#remindersubmit").simulate("click");
@@ -125,9 +248,19 @@ describe("Checklist function", () => {
 
 	describe("TodoApp Checklist updates correctly", () => {
 		it("removes on clicking close", () => {
-
+const mockProps = {
+            isAuthenticated :true,
+            user: "Faculty1",
+            role:"faculty",
+            setAuthStatus:jest.fn(),
+            setUser:jest.fn(),
+            setRole:jest.fn()
+        }
+        const history={
+        	push:jest.fn()
+        }
 			var item=[{index: "1",value: "Schedule a new quiz",date:new Date(),done: false}]
-		    const wrapper = mount(<TodoApp fetchInitialData={item} markTodoDone={jest.fn()}/>);
+		    const wrapper = mount(<TodoApp  authProps={mockProps} fetchInitialData={item} markTodoDone={jest.fn()}/>);
 		    
 		    expect(wrapper.find('h6').exists()).toBeTruthy()
 		    wrapper.find(".delete-button").simulate("click");

@@ -6,8 +6,8 @@ const REST_TABLE = process.env.TABLE;
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const router = express.Router();
 const REST_TABLE2 = process.env.TABLE2;
-
-
+const REST_TABLE3 =process.env.TABLE3;
+const REST_TABLE4 =process.env.TABLE4;
 
 router.post('/adminCreate', (req, res) => {
 var {UserPoolId,username,email}=req.body
@@ -57,9 +57,22 @@ router.get('/uploads', (req, res) => {
     });
 });
 
+router.get('/todos', (req, res) => {
+    const params = {
+        TableName: REST_TABLE3
+    };
+    dynamoDb.scan(params, (error, result) => {
+        if (error) {
+            res.status(400).json({ error: 'Error fetching the uploads' });
+        }
+        res.json(result.Items);
+    });
+});
+
+
 router.get('/qnuploads', (req, res) => {
     const params = {
-        TableName: REST_TABLE2
+        TableName: REST_TABLE4
     };
     dynamoDb.scan(params, (error, result) => {
         if (error) {
@@ -96,30 +109,71 @@ router.post('/getupload', (req, res) => {
     });
 });
 
+
+router.post('/todoupdate', (req, res) => {
+    const {index,value,date,createdat,completedat,done,facultyid,year,semester,course} = req.body;
+    // todos=[{"index": "1","value": "Schedule a new quiz","date": "2020-01-24","createdat":"2020-02-20","completedat":"","done": false}]
+
+    const params = {
+        TableName: REST_TABLE3,
+        Item: {
+            facultyid,
+            createdat,
+            completedat,
+            semester,
+            year,
+            index,
+            course,
+            value,
+            date,
+            done
+        },
+    };
+       dynamoDb.put(params, (error) => {
+            if(error) 
+                {
+                    res.status(400).json({ error: error ,params:params});  
+                    return
+                }
+             else
+             {
+                res.json("Success");
+             }   
+
+    });
+    
+});
+
+
+
+
+
 router.post('/qnbank', (req, res) => {
-    const {attachment,year,semester,timeofexam,prefix,course} = req.body;
+    const {attachment,description,year,semester,type,prefix,course,userid} = req.body;
   
     const uploadid = uuid.v4();
     var createdAt = Date.now()
     
 
     const params = {
-        TableName: REST_TABLE2,
+        TableName: REST_TABLE4,
         Item: {
             uploadid,
+            userid,
             attachment,
             createdAt,
             year,
+            description,
             semester,
             prefix,
-            timeofexam,
+            type,
             course
         },
     };
        dynamoDb.put(params, (error) => {
             if(error) 
                 {
-                    res.status(400).json({ error: 'Error adding to uploads' });  
+                    res.status(400).json({ error: error,params:params });  
                 }
              else 
                 {  

@@ -18,9 +18,15 @@
     width: 650px;
     height: 440px;
     border:1px solid black;
-    
 }
 
+.Uploader2 div form {
+    padding-bottom: 15px;
+    border-radius: 2px 2px;
+    width: 650px;
+    height: 360px;
+    border:1px solid black;
+}
 .middleDiv {
     position : absolute;    
     width    : 260px;

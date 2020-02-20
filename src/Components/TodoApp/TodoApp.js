@@ -7,6 +7,7 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import moment from 'moment';
+import {Auth} from 'aws-amplify';
 
 class TodoList extends React.Component {
   render () {
@@ -136,6 +137,8 @@ class TodoForm extends React.Component {
         return today
   }
 
+
+
   render () {
         
     return (
@@ -199,8 +202,24 @@ class TodoApp extends React.Component {
     this.markTodoDone = this.markTodoDone.bind(this);
     this.state = {
       todoItems: [],
-      // todoItems: [{index: "1",value: "Schedule a new quiz",date: "2020-01-24",done: false}],
+      // todoItems: [{index: "1",value: "Schedule a new quiz",date: "2020-01-24",createdat:this.getDATE(new Date()),completedat:'',done: false}],
     };
+  }
+
+  getDATE=(date)=>{
+    let today = date;
+    today.setDate(today.getDate())
+    var day = today.getDate()
+    var month = today.getMonth()
+    var year = today.getFullYear();
+         if(day<10){
+                day='0'+day
+            } 
+        if(month<10){
+            month='0'+month
+        }
+        today = year+'-'+month+'-'+day;
+        return today
   }
 
   componentDidMount()
@@ -218,24 +237,57 @@ class TodoApp extends React.Component {
       index: todoItems.length+1, 
       value: todoItem.newItemValue, 
       date:  todoItem.dates,
+      createdat:this.getDATE(new Date()),
+      completedat:'-',
       done: false
     });
     this.setState({todoItems: todoItems});
-    // console.log(this.state)
+    console.log(this.state)
   }
   removeItem (itemIndex) {
     var {todoItems} = this.state
     todoItems.splice(itemIndex, 1);
     this.setState({todoItems: todoItems});
+    console.log(this.state)
   }
   markTodoDone(itemIndex) {
     var {todoItems} = this.state
     var todo = todoItems[itemIndex];
     todoItems.splice(itemIndex, 1);
     todo.done = !todo.done;
+    todo.completedat=todo.done?this.getDATE(new Date()):''
     todoItems.push(todo)
     this.setState({todoItems: todoItems});  
+    console.log(this.state)
   }
+// https://4y1lmnfnnh.execute-api.us-east-1.amazonaws.com/prod/   
+  handlePublish= async event => {
+          const user = await Auth.currentAuthenticatedUser();
+           console.log(user.attributes.sub)
+           const userid=user.attributes.sub
+    for(var i=0;i<this.state.todoItems.length;i++)
+    {
+         fetch('https://4y1lmnfnnh.execute-api.us-east-1.amazonaws.com/prod/todoupdate',{
+          method:'post',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({
+            facultyid:userid,
+            year:String(this.props.authProps.currentSelectedYear),
+            index:String(this.state.todoItems[i].index),
+            value:String(this.state.todoItems[i].value),
+            date:String(this.state.todoItems[i].date),
+            createdat:String(this.state.todoItems[i].createdat),
+            completedat:String(this.state.todoItems[i].completedat),
+            done:String(this.state.todoItems[i].done),
+            semester:String(this.props.authProps.currentSelectedSemester),
+            course:String(this.props.authProps.currentSelectedCourse)
+          })
+          }).then(res=> (res.json()))
+          .then(data => console.log(data))
+
+  }
+}
+
   render() {
       // console.log(this.state)
     return (
@@ -244,7 +296,7 @@ class TodoApp extends React.Component {
         <TodoList items={this.state.todoItems} removeItem={this.removeItem} markTodoDone={this.markTodoDone}/>
         <TodoForm addItem={this.addItem} />
 
-        <button className="btn btn-default">Publish</button> 
+        <button className="btn btn-default" onClick={this.handlePublish}>Publish</button> 
       </div>
     );
   }

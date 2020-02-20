@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import LogIn from './LogIn';
-import Register from './Register';
-import Uploader from '../S3Upload/Uploader';
+import LogIn from './auth/LogIn';
+import Register from './auth/Register';
+import Uploader from './S3Upload/Uploader';
 import {shallow,mount} from 'enzyme';
 import {Auth} from 'aws-amplify';
 

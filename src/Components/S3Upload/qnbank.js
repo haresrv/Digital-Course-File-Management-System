@@ -66,7 +66,7 @@ export default class qnbank extends Component {
 	           <td>{attachment.split("-")[1]}</td>
 	           <td>{course}</td>
 	           <td>{year}</td>
-	           <td><button onClick={()=>console.log(s3getUpload(attachment,prefix).then(res=>window.open(res)))} className="btn btn-primary">Download</button>
+	           <td><button onClick={()=>console.log(s3getUpload(attachment,prefix).then(res=>window.open(res)))} className="btn btn-primary">Download/View</button>
 	           
 	           </td>
 	        </tr>
@@ -99,7 +99,8 @@ export default class qnbank extends Component {
 	}
 
 	reducer=()=>{
-		this.setState({uploads:this.state.uploads.filter(function(e){return e['prefix'].includes("qnbank") })},function(){ this.rechange()})
+		var c= this.props.authProps.currentSelectedCourse
+		this.setState({uploads:this.state.uploads.filter(function(e){return e['course'].includes(c) })},function(){ this.rechange()})
 	}
 	fetchRest=()=>{
 	        fetch('https://4y1lmnfnnh.execute-api.us-east-1.amazonaws.com/prod/qnuploads').then(res=> res.json())
@@ -108,6 +109,8 @@ export default class qnbank extends Component {
 	        .then(y=>console.log(this.state))
 	        .then(x=>this.Calculate())
 	        .catch((err)=>{console.log(err);})
+	        this.setState({course:this.props.authProps.currentSelectedCourse})
+	        
 	}
 
 	rechange=()=>
@@ -145,11 +148,7 @@ console.log(this.state)
 	  		alert("Please Select Semester!!")
 	  		return
 	  	}
-	  	if(this.state.course==null)
-	  	{
-	  		alert("Please fill course details!!")
-	  		return
-	  	}
+	
 		if(this.state.timeofexam==null)
 	  	{
 	  		alert("Please fill all fields!!")
@@ -166,7 +165,7 @@ console.log(this.state)
 		this.setState({ isLoading: true });
 		try {
 			var prefix=""
-		    prefix="qnbank/"+this.state.year+"/"+this.state.semester+"/"+this.state.timeofexam+"/"+this.state.course
+		    prefix="qnbank/"+this.state.year+"/"+this.state.semester+"/"+this.state.timeofexam+"/"+this.props.authProps.currentSelectedCourse
 
 			this.setState({prefix:prefix})
 		
@@ -241,11 +240,6 @@ console.log(this.state)
 				<div className="form-group">
 				<label htmlFor="Class">Enter Type</label>
 				<Dropdown style={{width:"360px"}} options={options3} onChange={(e)=>{this.setState({timeofexam:e.value})}}  value={this.state.timeofexam} placeholder="Select Type" />
-				</div>
-
-				<div className="form-group">
-					<label htmlFor="Class">Enter Course</label>
-					<input type='text' className="b--solid b pa2 ma2 btn-warning" onChange={(e)=>{this.setState({course:e.target.value})}} placeholder="CourseCode..." />
 				</div>
 
 				

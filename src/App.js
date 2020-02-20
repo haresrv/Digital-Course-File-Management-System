@@ -4,6 +4,7 @@ import './App.css';
 import './Card.css';
 import tachyons from 'tachyons';
 import CourseDashboard from './Components/CourseDashboard/CourseDashboard';
+import MentorDashboard from './Components/CourseDashboard/MentorDashboard';
 // import TickTock from './Components/TickTock/TickTock';
 import Tracker from './Components/Tracker/Tracker';
 import EnrolledCourses from './Components/EnrolledCourses/EnrolledCourses';
@@ -157,6 +158,11 @@ const routes = [
     {
         path: '/admin',
         component:Admin,
+        fetchInitialData:true
+    },
+    {
+        path: '/mentordashboard',
+        component:MentorDashboard,
         fetchInitialData:true
     },
     {

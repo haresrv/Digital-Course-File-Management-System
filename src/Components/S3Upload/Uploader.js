@@ -65,7 +65,7 @@ export default class Uploader extends Component {
 	           <td>{attachment.split("-")[1]}</td>
 	           <td>{description}</td>
 	           <td>{type}</td>
-	           <td><button onClick={()=>console.log(isprivate?s3pgetUpload(attachment,prefix).then(res=>window.open(res)):s3getUpload(attachment,prefix).then(res=>window.open(res)))} className="btn btn-primary">Download</button>
+	           <td><button onClick={()=>console.log(isprivate?s3pgetUpload(attachment,prefix).then(res=>window.open(res)):s3getUpload(attachment,prefix).then(res=>window.open(res)))} className="btn btn-primary">Download/View</button>
 	           
 	           </td>
 	        </tr>
@@ -253,7 +253,7 @@ console.log(this.props)
 
 			<form className="middleDiv ma4 pa3 bgg">
 			
-			<div className="middleDiv2 loader ma2 pa3"></div>
+			<div className="middleDiv2 ma2 pa3"></div>
 			<h7 className="btn-primary b--dashed" style={{width:"120px"}}>Your files are safe with me!!!</h7><br/>
 			<h7 className="btn-primary b--dashed" style={{width:"120px"}}>Check your Uploads after few seconds!!</h7>
 			</form>

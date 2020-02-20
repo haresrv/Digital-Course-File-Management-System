@@ -20,7 +20,7 @@ componentDidMount()
     
   var name=this.props.authProps.user.username
 
-  fetch('https://harshdependentsequences--five-nine.repl.co/detbyname/'+String(name))
+  fetch('https://tachyonnation.herokuapp.com/detbyname/'+String(name))
   .then(res=> res.json())
   .then(data=>{this.setState({courses:data},function(){console.log(this.state)})})
 
@@ -45,7 +45,9 @@ changex = (name) => {
                       <h5 className="">{this.changex(course.Name)}</h5>
                     </div>          
                     <input className="bg-black white pointer" type='button' onClick={()=>{this.props.authProps.setYear(course.yeartaken);this.props.authProps.setSemester(course.semtaken);this.props.authProps.setCoursename(course.Name); this.props.history.push("coursedashboard")}} value='View Course' style={{marginLeft:'10px'}}  />
+               {  course.role=="Mentor" &&(<input className="bg-black white pointer" type='button' onClick={()=>{this.props.authProps.setYear(course.yeartaken);this.props.authProps.setSemester(course.semtaken);this.props.authProps.setCoursename(course.Name); this.props.history.push("mentordashboard")}} value='Mentor View' style={{marginLeft:'10px'}}  />)}
                   </div>
+
 
                   )
                   :
