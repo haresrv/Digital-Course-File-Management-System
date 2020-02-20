@@ -3,9 +3,11 @@ var express = require("express");
 var app = express();
 var mysql = require("mysql");
 var bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+var cors = require("cors");
 
+
+app.use(cors())
+app.use(bodyParser.json());
 
 
 var mysqlConnection = mysql.createConnection({
@@ -21,6 +23,8 @@ mysqlConnection.connect(err => {
     console.log("Unsuccessful \n Error : " + JSON.stringify(err, undefined, 2));
 });
 
+app.get('/',function(req,res){res.json("HI")})
+app.get('/det',function(req,res){res.json("HID")})
 
 app.get("/detbyname/:name" ,function(req,res){
   // res.writeHead(200, { "content-type": "text/html" });
@@ -34,6 +38,12 @@ app.get("/detbyname/:name" ,function(req,res){
       // console.log(string);
       // json = JSON.parse(string);
       // idf = json[0].faculty_id;
+      if(rows.length==0)
+      {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.json(rows)
+        return
+      }
       let idf=rows[0].fid;
       //console.log(typeof(idf));
       console.log("ID : " + idf); 
@@ -43,9 +53,10 @@ app.get("/detbyname/:name" ,function(req,res){
         function(cerr,crows,cfields){
          cout=crows[0].count;
          mysqlConnection.query(
-          "select course_id,yeartaken,semtaken from FACTY_COURSE_RELATION where faculty_id=?",
+          "select course_id,Name,yeartaken,semtaken,role from FACULTY_COURSE_RELATION NATURAL JOIN C0URSE_ENTITY where faculty_id=?",
           [idf],
           function(cerr,crows,cfields){
+            res.setHeader('Access-Control-Allow-Origin', '*');
             res.json(crows)
           }
          )
@@ -54,6 +65,19 @@ app.get("/detbyname/:name" ,function(req,res){
     
     });
 });
+
+app.post('/d',function(req,res)
+{
+  // Facultyid  TODO_Description Deadline done 
+
+  var {todos} = req.body
+   for(var i=0;i<todos.length;i++)
+{
+      index=todos[i].index
+      value=(todos[i].value)
+      date=todos[i].date
+}}
+)
 
 
 app.get("/detbyyear/:name/:year",function(req,res)
