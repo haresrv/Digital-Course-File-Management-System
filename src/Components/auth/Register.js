@@ -108,7 +108,7 @@ try{
      //      }).then(res=> res.json())
      //      .then(data => console.log(data))
 
-     if username =="Faculty1" || username =="Faculty2" || username =="Faculty3"
+     if(username =="Faculty1" || username =="Faculty2" || username =="Faculty3")
      {
         throw "Username already exists"
      }
