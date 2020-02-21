@@ -108,6 +108,11 @@ try{
      //      }).then(res=> res.json())
      //      .then(data => console.log(data))
 
+     if username =="Faculty1" or username =="Faculty2" or username =="Faculty3"
+     {
+        throw new Error("Username already exists")              
+     }
+
     var params = {
       UserPoolId: config.cognito.USER_POOL_ID, /* required */
       Username: username, /* required */
