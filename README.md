@@ -1,7 +1,7 @@
 15CSE313 Software Engineering
 
+![Let's Dance!](http://33.media.tumblr.com/3d223954ad0a77f4e98a7b87136aa395/tumblr_nlct5lFVbF1qhu7oio1_500.gif)
 
-![alt text](https://robohash.org/1?200x200)
 
 <<<<<<--  Digital Course File -->>>>>>>
 

@@ -108,7 +108,6 @@ try{
      //      }).then(res=> res.json())
      //      .then(data => console.log(data))
 
-
     var params = {
       UserPoolId: config.cognito.USER_POOL_ID, /* required */
       Username: username, /* required */

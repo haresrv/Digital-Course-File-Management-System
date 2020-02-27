@@ -2,7 +2,6 @@
     text-decoration: none;
     transition: color .1s linear;
 }
-<style>
 .pencil {
     color: #fff;
 }
@@ -24,7 +23,7 @@
 }
 
 .topcorner{
-   marginTop:20px;
+   margin-top:20px;
    position:absolute;
    top:0;
    right:0;
@@ -50,7 +49,7 @@ li.empty {
 }
 
 li p { 
-  margin: 5;
+  margin: 5px;
   background: black;
   position: relative;
   top: 0.5em; 

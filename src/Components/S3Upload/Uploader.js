@@ -208,7 +208,7 @@ console.log(this.props)
 			<div style={{display:"flex",width:"700px"}}>
 				<div className="form-group">
 				<label htmlFor="State">Select Type</label>
-				<Dropdown style={{width:"360px"}} options={options} onChange={(e)=>{this.setState({type:e.value})}} value={this.state.type} placeholder="Select Type" />
+				<Dropdown id="dropcategory" style={{width:"360px"}} options={options} onChange={(e)=>{this.setState({type:e.value})}} value={this.state.type} placeholder="Select Type" />
 				</div>
 
 				<div className="form-group" style={{marginLeft:"40px"}}>
@@ -221,7 +221,7 @@ console.log(this.props)
 				
 				<div className="form-group">
 				<label htmlFor="Class">Enter Class & Section</label>
-				<Dropdown style={{width:"360px"}} options={options2} onChange={(e)=>{this.setState({section:e.value})}}  value={this.state.section} placeholder="Select Section" />
+				<Dropdown id="dropclass" style={{width:"360px"}} options={options2} onChange={(e)=>{this.setState({section:e.value})}}  value={this.state.section} placeholder="Select Section" />
 				</div>
 
 
