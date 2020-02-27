@@ -64,6 +64,9 @@ jobs:
           name: Install netlify-cli
           command: sudo npm install -g --silent netlify-cli
       - run:
+          name: Build
+          command: CI=false npm run build    
+      - run:
           name: Deploy to Netlify
           command: netlify deploy --dir=./build -p          
 workflows:
