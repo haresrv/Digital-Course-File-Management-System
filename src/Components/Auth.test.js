@@ -83,7 +83,7 @@ describe('Blank fields <Login/>', () => {
 	 wrapper.setState({username:"ak",password:""})
 	 wrapper.find('#submitbutton').simulate("click")
 	 // console.log(wrapper.html())
-	 var r= {cognito: null,blankfield: false}
+	 var r= {cognito: null,blankfield: true}
 	 expect(wrapper.state('errors')).toEqual(r)
 	 
 	});
