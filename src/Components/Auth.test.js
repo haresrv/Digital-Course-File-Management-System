@@ -21,7 +21,7 @@ let mockProps ,mockProps2 , history
 
 		mockProps2 = {
             isAuthenticated :false,
-            user: "Faculty1",
+            user: "Faculty2",
             role:"faculty",
             setAuthStatus:jest.fn(),
             setUser:jest.fn(),
@@ -82,7 +82,7 @@ describe('Blank fields <Login/>', () => {
 	 wrapper.setState({username:"ak",password:""})
 	 wrapper.find('#submitbutton').simulate("click")
 	 // console.log(wrapper.html())
-	 var r= {cognito: null,blankfield: true}
+	 var r= {cognito: null,blankfield: false}
 	 expect(wrapper.state('errors')).toEqual(r)
 	 
 	});
@@ -104,7 +104,7 @@ describe('Blank fields <Register/>', () => {
 			     	return dummy
 			    });
 
-	 const wrapper = mount(<Register authProps={mockProps} history={history}/>);
+	 const wrapper = mount(<Register authProps={mockProps2} history={history}/>);
 	 wrapper.setState({username:"",email:"Admin@gmail.com"})
 	 wrapper.find('#registerbutton').simulate("click")
 	 // console.log(wrapper.html())
@@ -119,8 +119,8 @@ expect(wrapper.state('errors')).toEqual(rblank)
 	it('email blank', async () => {
      Auth.currentSession = jest.fn().mockImplementation(
 	     	() => 
-	     	{return {"idToken":{"payload":{"cognito:groups":"Admin"}}
-	     	}});
+	     	{return {"idToken":"None"}
+	     	});
 	
 		 const dummy = document.createElement('email');
 	 	 document.getElementById =  jest.fn().mockImplementation(

@@ -108,6 +108,7 @@ try{
      //      }).then(res=> res.json())
      //      .then(data => console.log(data))
 
+
     var params = {
       UserPoolId: config.cognito.USER_POOL_ID, /* required */
       Username: username, /* required */
@@ -132,7 +133,7 @@ try{
       if (err) console.log(err, err.stack); // an error occurred
       else     {
       console.log(data);       
-      this.props.history.push('/welcome')
+          this.props.history.push('/welcome')
       }          // successful response
 
 });

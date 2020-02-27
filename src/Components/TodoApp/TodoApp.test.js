@@ -1,5 +1,5 @@
 import React from 'react';
-import {TodoApp,TodoForm,TodoList,TodoListItem} from './TodoApp/TodoApp';
+import {TodoApp,TodoForm,TodoList,TodoListItem} from './TodoApp';
 import {shallow,mount} from 'enzyme';
 
 describe('---TodoApp---',()=>{
@@ -101,9 +101,9 @@ const mockProps = {
         const history={
         	push:jest.fn()
         }
-        const wrapper = shallow(<TodoApp  authProps={mockProps} fetchInitialData={[]}/>);
+        const wrapper = mount(<TodoApp  authProps={mockProps} fetchInitialData={[]}/>);
         wrapper.setState({ todoItems: [] });
-        // expect(wrapper).toMatchSnapshot();
+        expect(wrapper).toMatchSnapshot();
     })
 
     it("adds new notes to state", () => {
