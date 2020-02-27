@@ -1,6 +1,27 @@
+executors:
+  node:
+    docker:
+      - image: circleci/node:8
+
+aliases:
+  restore_cache: &restore_cache
+    restore_cache:
+      name: Restore Npm Package Cache
+      keys:
+        - yarn-cache-netlify-{{ checksum "yarn.lock" }}
+  install_node_modules: &install_node_modules
+      run:
+        name: Install dependencies
+        command: yarn
+  save_cache: &save_cache
+      save_cache:
+        name: Save NPM package cache
+        key: yarn-cache-netlify-{{ checksum "yarn.lock" }}
+        paths:
+          - ./node_modules
+
 version: 2.1
-orbs:
-  node: circleci/node@1.1.6
+
 jobs:
   build:
     executor: node
@@ -43,23 +64,6 @@ jobs:
       - run:
           name: Deploy to Netlify
           command: netlify deploy --dir=./public -p          
-  aliases:
-    restore_cache: &restore_cache
-      restore_cache:
-        name: Restore Npm Package Cache
-        keys:
-          - yarn-cache-netlify-{{ checksum "yarn.lock" }}
-  install_node_modules: &install_node_modules
-      run:
-        name: Install dependencies
-        command: yarn
-  save_cache: &save_cache
-      save_cache:
-        name: Save NPM package cache
-        key: yarn-cache-netlify-{{ checksum "yarn.lock" }}
-        paths:
-          - ./node_modules
-
 workflows:
   version: 2.1
   build_and_deploy:
