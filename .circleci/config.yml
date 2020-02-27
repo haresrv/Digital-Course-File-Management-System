@@ -65,7 +65,7 @@ jobs:
           command: sudo npm install -g --silent netlify-cli
       - run:
           name: Deploy to Netlify
-          command: netlify deploy --dir=./public/build -p          
+          command: netlify deploy --dir=./build -p          
 workflows:
   version: 2.1
   build_and_deploy:
