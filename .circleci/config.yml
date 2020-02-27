@@ -11,7 +11,7 @@ jobs:
           steps:
             - run: echo "Running npm install"
             - run: npm install
-            - run: CI=true npm run build
+            - run: CI=false npm run build
   test:
     executor:
       name: node/default
