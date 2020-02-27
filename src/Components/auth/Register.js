@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import {Auth} from 'aws-amplify';
-import '@fortawesome/fontawesome-free/css/all.css';
 import config from '../../config';
 import AWS from 'aws-sdk';
 

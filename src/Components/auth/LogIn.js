@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import {Auth} from 'aws-amplify';
-import '@fortawesome/fontawesome-free/css/all.css';
 import './Login.css';
 import tachyons from 'tachyons';
 
