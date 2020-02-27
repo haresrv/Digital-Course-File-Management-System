@@ -3,27 +3,74 @@ orbs:
   node: circleci/node@1.1.6
 jobs:
   build:
-    executor:
-      name: node/default
+    executor: node
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: echo "Running npm install"
-            - run: npm install
-            - run: CI=false npm run build
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - run:
+          name: Build
+          command: yarn build
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - public
   test:
-    executor:
-      name: node/default
+    executor: node
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: echo "Unit Testing"
-            - run: npm install
-            - run: npm test          
+      # Restore cache at second time
+      - <<: *restore_cache
+      # Install for first time
+      - <<: *install_node_modules
+      # Cache the ./node_modules before test.
+      - <<: *save_cache
+      - run:
+          name: Test
+          command: yarn test
+  deploy:
+    executor: node
+    steps:
+      - checkout
+      # Attach the pesisted built files.
+      - attach_workspace:
+          at: ./
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - run:
+          name: Install netlify-cli
+          command: sudo npm install -g --silent netlify-cli
+      - run:
+          name: Deploy to Netlify
+          command: netlify deploy --dir=./public -p          
+  aliases:
+    restore_cache: &restore_cache
+      restore_cache:
+        name: Restore Npm Package Cache
+        keys:
+          - yarn-cache-netlify-{{ checksum "yarn.lock" }}
+  install_node_modules: &install_node_modules
+      run:
+        name: Install dependencies
+        command: yarn
+  save_cache: &save_cache
+      save_cache:
+        name: Save NPM package cache
+        key: yarn-cache-netlify-{{ checksum "yarn.lock" }}
+        paths:
+          - ./node_modules
+
 workflows:
-    build_test_and_lint:
-      jobs:
-        - build
-        - test
+  version: 2.1
+  build_and_deploy:
+    jobs:
+      - test
+      - build:
+          requires:
+            - test
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
