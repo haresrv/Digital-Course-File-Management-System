@@ -4,6 +4,7 @@ import Validate from "../utility/FormValidation";
 import {Auth} from 'aws-amplify';
 import config from '../../config';
 import AWS from 'aws-sdk';
+import i from '../../Images/amrita_round_2019.jpg';
 
 class Register extends Component {
   state = {
@@ -165,7 +166,7 @@ try{
 
           <div className="row">
           <div className="col-md-push-1 col-md-4 hidden-sm hidden-xs">
-            <img className="pull-right" src="https://cms.cb.amrita.edu/images/amrita_round_2019.png" style={{width:"44%", marginTop:"40px",pointerEvents: "none"}} alt="Amrita Vishwa Vidyapeetham Logo"/>
+            <img className="pull-right" src={i} style={{width:"44%", marginTop:"40px",pointerEvents: "none"}} alt="Amrita Vishwa Vidyapeetham Logo"/>
           </div>
           <div className="col-md-4 col-md-push-1">
            <h3><span className="weight-700">Digital Course File</span> | <span className="weight-300"> Register</span></h3>
