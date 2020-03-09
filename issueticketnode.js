@@ -24,6 +24,30 @@ mysqlConnection.connect(err => {
 });
 
 app.get('/',function(req,res){res.json("HI")})
+
+
+app.get("/all",function(req,res)
+{
+    mysqlConnection.query(
+        "select * from FACULTY_ENTITY",
+        function(rerr,rrows,rfields){
+          res.json(rrows);
+        }
+      )
+    
+})
+
+app.get("/allcourses",function(req,res)
+{
+    mysqlConnection.query(
+        "select * from C0URSE_ENTITY",
+        function(rerr,rrows,rfields){
+          res.json(rrows);
+        }
+      )
+    
+})
+
 app.get('/det',function(req,res){res.json("HID")})
 
 app.get("/detbyname/:name" ,function(req,res){
@@ -101,6 +125,19 @@ app.get("/detbyyear/:name/:year",function(req,res)
       )
     })
 })
+
+
+app.get("/id/:name",function(req,res){
+  var name=req.params.name;
+  var year=req.params.year;
+  var sem=req.params.sem;
+  mysqlConnection.query(
+    "select faculty_id as fid from FACULTY_ENTITY where Name=?",
+     [name],
+     function(err,rows,fields){
+       res.json(rows)
+     })})
+
 
 app.get("/detbysem/:name/:year/:sem",function(req,res){
   var name=req.params.name;
