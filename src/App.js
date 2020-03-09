@@ -1,36 +1,37 @@
-import React,{Component} from 'react';
+import React,{Component,Suspense, lazy} from 'react';
 import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
-import './App.css';
-import './Card.css';
-import tachyons from 'tachyons';
-import CourseDashboard from './Components/CourseDashboard/CourseDashboard';
-import MentorDashboard from './Components/CourseDashboard/MentorDashboard';
-// import TickTock from './Components/TickTock/TickTock';
+import Amplify from '@aws-amplify/core';
+import Auth, { AuthClass } from '@aws-amplify/auth';
+import Storage, { StorageClass } from '@aws-amplify/storage';
+import Cache from '@aws-amplify/cache';
 import Tracker from './Components/Tracker/Tracker';
-import EnrolledCourses from './Components/EnrolledCourses/EnrolledCourses';
-import Notes from './Components/Notes/Notes';
-import CheckboxTrees from './Components/CheckboxTrees/CheckboxTrees';
-import ProgressAdder from './Components/Progress4Mentor/ProgressAdder';
-import Loading from './Components/Loading';
 import {TodoApp} from './Components/TodoApp/TodoApp';
-import Amplify from 'aws-amplify';
-import {Auth} from 'aws-amplify';
+import FadeIn from "react-fade-in";
+import Lottie from "react-lottie";
+import * as legoData from "./legoloading.json";
+import * as doneData from "./doneLoading.json";
+import tachyons from 'tachyons';
+import './App.css';
 import config from './config';
-import ForgotPassword from './Components/auth/ForgotPassword';
-import ForgotPasswordVerification from './Components/auth/ForgotPasswordVerification';
-import ChangePassword from './Components/auth/ChangePassword';
-import SetPass from './Components/auth/setpass';
-import ChangePasswordConfirm from './Components/auth/ChangePasswordConfirm';
-import Welcome from './Components/auth/Welcome';
-import Footer from './Components/Footer';
-import LogIn from './Components/auth/LogIn';
-import Register from './Components/auth/Register';
-import Uploader from './Components/S3Upload/Uploader';
-import changer from './Components/S3Upload/change';
-import AdminLog from './Components/Admin/AdminLog';
-import digitalRep from './Components/S3Upload/digitalRep';
-import qnbank from './Components/S3Upload/qnbank';
 
+const CourseDashboard = lazy(() => import('./Components/CourseDashboard/CourseDashboard'))
+const MentorDashboard = lazy(() => import('./Components/CourseDashboard/MentorDashboard'))
+const EnrolledCourses = lazy(() => import('./Components/EnrolledCourses/EnrolledCourses'))
+const  Notes= lazy(() => import('./Components/Notes/Notes'))
+const  ProgressAdder= lazy(() => import('./Components/Progress4Mentor/ProgressAdder'))
+const  ForgotPassword= lazy(() => import('./Components/auth/ForgotPassword'))
+const  ForgotPasswordVerification= lazy(() => import('./Components/auth/ForgotPasswordVerification'))
+const  ChangePassword= lazy(() => import('./Components/auth/ChangePassword'))
+const  SetPass= lazy(() => import('./Components/auth/setpass'))
+const  ChangePasswordConfirm= lazy(() => import('./Components/auth/ChangePasswordConfirm'))
+const  Welcome= lazy(() => import('./Components/auth/Welcome'))
+const  LogIn= lazy(() => import('./Components/auth/LogIn'))
+const  Register= lazy(() => import('./Components/auth/Register'))
+const  Uploader= lazy(() => import('./Components/S3Upload/Uploader'))
+const  changer= lazy(() => import('./Components/S3Upload/change'))
+const  AdminLog= lazy(() => import('./Components/Admin/AdminLog'))
+const  digitalRep= lazy(() => import('./Components/S3Upload/digitalRep'))
+const  qnbank= lazy(() => import('./Components/S3Upload/qnbank'))
 
 Amplify.configure({
     Auth:{
@@ -45,6 +46,23 @@ Amplify.configure({
 		
 	}
 })
+
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: legoData.default,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice"
+  }
+};
+const defaultOptions2 = {
+  loop: false,
+  autoplay: true,
+  animationData: doneData.default,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice"
+  }
+};
 
 const Admin =(props) =>
 {
@@ -140,6 +158,11 @@ const routes = [
         fetchInitialData:true
     },
     {
+        path: '/home',
+        component:Home,
+        fetchInitialData:true
+    },
+    {
         path: '/qnbank',
         component:qnbank,
         fetchInitialData:true
@@ -149,11 +172,6 @@ const routes = [
         component:changer,
         fetchInitialData:true
     
-    },
-    {
-        path: '/home',
-        component:Home,
-        fetchInitialData:true
     },
     {
         path: '/admin',
@@ -249,7 +267,7 @@ class App extends Component
         expanded:false,
         selected:"home",
         isAuthenticated:false,
-        isAuthenticating:true,
+        isAuthenticating:false,
         user:null,
         Tempuser:null,
         Tempusername:'',
@@ -261,7 +279,7 @@ class App extends Component
 
     async componentDidMount()
     {
-        // window.LOG_LEVEL='DEBUG'
+        window.LOG_LEVEL='DEBUG'
         try
         {
             const session = await Auth.currentSession();
@@ -269,7 +287,7 @@ class App extends Component
             this.setAuthStatus(true)
             this.setUser(user);
             console.log(session.idToken.payload['cognito:groups'])
-            // console.log(user)
+            console.log(user)
             if(session.idToken.payload['cognito:groups']!=null)
             {
                 if(session.idToken.payload['cognito:groups'].includes("Admin"))
@@ -283,13 +301,15 @@ class App extends Component
                 this.setRole("Faculty")
                 this.setState({user_id:user.attributes.sub})
             }
-            // console.log("COMPONENT PERSISTED")
-            // console.log(this.state)
+            console.log("COMPONENT PERSISTED")
+            console.log(this.state)
         }   
         catch(error)
         {   
-            // console.log("COMPONENT PERSIST ERROR")
-            // console.log(error)
+            console.log("COMPONENT PERSIST ERROR")
+            console.log(error)
+            this.setAuthStatus(false)
+            this.setUser("");
             this.setRole("");
         }
         this.setState({isAuthenticating:false})
@@ -307,6 +327,11 @@ class App extends Component
     
     setAuthStatus=(authenticated)=>{
         this.setState({isAuthenticated:authenticated})
+    }
+
+
+    setAuthStatus2=(authenticated)=>{
+        this.setState({isAuthenticating:authenticated})
     }
 
     setUser=(user)=>{
@@ -353,10 +378,10 @@ class App extends Component
     
     render()
     {  
-        //  {
-        //  if(!this.state.isAuthenticating)
-        // this.comp()
-        // }
+         {
+         if(!this.state.isAuthenticating)
+        this.comp()
+        }
         const authProps = {
             isAuthenticated :this.state.isAuthenticated,
             user: this.state.user,
@@ -367,6 +392,7 @@ class App extends Component
             Tempuser:this.state.Tempuser,
             Tempusername:this.state.Tempusername,
             setAuthStatus:this.setAuthStatus,
+            setAuthStatus2:this.setAuthStatus2,
             setUser:this.setUser,
             setRole:this.setRole,
             setSemester:this.setSemester,
@@ -378,15 +404,30 @@ class App extends Component
             expanded:this.state.expanded
         }
 
-        return ( !this.state.isAuthenticating &&
-            <Router>
-                <div>
-                        {<Tracker {...this.props} authProps={authProps} change={this.change} changeRoute={this.changeRoute}/>}
+            //            
             
-                    <React.Suspense fallback={<Loading />} >
+        return (
+              <div>  
+        <Router>
+                <div>
+                    {<Tracker {...this.props} authProps={authProps} change={this.change} changeRoute={this.changeRoute}/>}
+                    {           this.state.isAuthenticating &&( <FadeIn className="bg-black white">
+                            <div >
+                              
+                              {!this.state.loading ? (
+
+                                <Lottie options={defaultOptions} height={120} width={120} />
+                              ) : (
+                                <Lottie options={defaultOptions2} height={120} width={120} />
+                              )}
+                            </div>
+                            <h6 className="tc">Authenticating....</h6>
+                          </FadeIn>)
+                      }
+
+                    <React.Suspense fallback={<div>Loading...</div>}>
                         <Switch>
                             {
-                                  
                                 routes.map(({path,component:C, fetchInitialData})=>(
                                     <Route 
                                         key={path}
@@ -401,6 +442,8 @@ class App extends Component
                     </React.Suspense>
                 </div>
             </Router>
+
+        </div>
         )
     }
 }

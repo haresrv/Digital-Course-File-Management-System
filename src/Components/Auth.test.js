@@ -4,7 +4,7 @@ import LogIn from './auth/LogIn';
 import Register from './auth/Register';
 import Uploader from './S3Upload/Uploader';
 import {shallow,mount} from 'enzyme';
-import {Auth} from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 import AWS from 'aws-sdk';
 
 

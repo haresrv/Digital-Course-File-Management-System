@@ -1,15 +1,9 @@
 import React,{Component} from 'react';
 import tachyons from 'tachyons';
-import './Tracker.css';
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
-import { Button, ButtonGroup } from '@trendmicro/react-buttons';
-import Dropdown, { MenuItem } from '@trendmicro/react-dropdown';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import '@trendmicro/react-buttons/dist/react-buttons.css';
-import '@trendmicro/react-dropdown/dist/react-dropdown.css';
 import { withRouter } from 'react-router-dom';
-import {Auth} from 'aws-amplify';
-
+import { Auth } from 'aws-amplify';
 
 class Tracker extends Component {
 
@@ -48,10 +42,11 @@ constructor() {
 handleLogOut = async event => {
     event.preventDefault();
     try{
-        Auth.signOut()
-        this.props.authProps.setAuthStatus(false)
-        this.props.authProps.setUser(null)
-        this.props.history.push("/login")
+        console.log(this.props)
+        console.log("HERE")
+        await Auth.signOut().then(data => console.log(data))
+                    .then(xu=>{this.herewego()})
+        
     }
     catch(error)
     {
@@ -59,43 +54,33 @@ handleLogOut = async event => {
     }
 }
 
+herewego = () =>{
+    this.props.authProps.setAuthStatus(false)
+    this.props.authProps.setUser(null)
+    this.props.history.push("/login")
+}
 
 render(){
     const { expanded, selected } = this.state;
-    console.log(this.props)
   return (   
              <div className="App outer-container"  style={{width:"1200px",marginLeft: expanded ? 240 : 64,padding: '15px 20px 0 20px',display:"flex"}}>
                     
-                    {this.props.authProps.role!="Admin"&&<ButtonGroup style={{width:"500px"}}>
-                        <Button btnStyle="flat" onClick={this.navigate('home')}>
-                            Home
-                        </Button></ButtonGroup>}
-                      {/*  <Button btnStyle="flat" onClick={this.navigate('devices')}>
-                            Devices
-                        </Button>
-                        <Button btnStyle="flat" onClick={this.navigate('reports')}>
-                            Reports
-                        </Button>  */}
-
-                    
-                    
-                            
                     {!this.props.authProps.isAuthenticated?
                             <div className="ma2 link" style={{position:"absolute",right:"0"}}>
                             
-                            <Button btnStyle="flat" id="signin" onClick={this.navigate("login")}>
+                            <button id="signin" onClick={this.navigate("login")}>
                               <strong>  Sign In</strong>
-                            </Button>
+                            </button>
                             </div>
                             :
                             <div className="ma2" style={{position:"absolute",right:"0"}}>
                                 
-                                <Button onClick={this.handleLogOut} id="signout" className="ma2 pa3 link" btnStyle="flat">
+                                <button onClick={this.handleLogOut} id="signout" className="ma2 pa3 link">
                                 <h4>{this.props.authProps.user==null?"":this.props.authProps.user.username}</h4>
                                 <strong> Sign Out</strong>
                                  
                            
-                                </Button>
+                                </button>
                             </div>
                         }
     <SideNav className="bg-gold" onSelect={this.onSelect} onToggle={this.onToggle}>

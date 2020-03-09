@@ -1,8 +1,6 @@
 import React,{Component} from 'react';
 import tachyons from 'tachyons';
 import {courses} from '../../courses';
-import ReactCardFlip from 'react-card-flip';
-
 
 class EnrolledCourses extends Component {
 
@@ -73,16 +71,10 @@ render(){
 					<span className="bg-green fa fa-fw fa-star-o"></span>- Current* Semester
 
 					</div>
-					<ReactCardFlip isFlipped={this.state.isFlipped} flipDirection="vertical">
+					
 					<div >
 					{this.renderCourses()}
 					</div>
-
-					<div>
-					This is the back of the card.
-					<button className="bg-black white pointer" onClick={this.handleClick}>Click to flip</button>
-					</div>
-					</ReactCardFlip>
 
              </div>
              

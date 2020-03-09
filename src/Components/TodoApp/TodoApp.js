@@ -1,13 +1,12 @@
 import React,{Component} from 'react';
 import './TodoApp.css';
 import tachyons from 'tachyons';
-// import {CollapsibleComponent, CollapsibleHead,CollapsibleContent } from "react-collapsible-component";
-import {Calendar} from 'primereact/calendar';
-import 'primereact/resources/themes/nova-light/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
-import moment from 'moment';
-import {Auth} from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+
 
 class TodoList extends React.Component {
   render () {
@@ -45,7 +44,9 @@ class TodoListItem extends React.Component {
 
 
   render () {
-  	var x=moment(this.props.item.date, 'YYYY-MM-DD');
+  	dayjs.extend(customParseFormat);
+	var x = dayjs(this.props.item.date, 'YYYY-MM-DD');
+  	
   	var y=x.format('DD-MM-YYYY'); 
     
     var todoClass = this.props.item.done ? 
@@ -62,7 +63,7 @@ class TodoListItem extends React.Component {
         			<h6 id={this.props.index} style={{marginLeft:"10px"}}>{this.props.item.value}</h6>
         		</div>
         		<br/>
-        			{!this.state.done && <em>To be done {moment(new Date(this.props.item.date)).fromNow()}</em>}
+        			{!this.state.done && <em>To be done {dayjs(new Date(this.props.item.date)).fromNow()}</em>}
         			{this.state.done && <em>Done</em>}
 			</li>
 		</div>
@@ -302,4 +303,4 @@ class TodoApp extends React.Component {
   }
 }
 
-export {TodoApp,TodoForm,TodoList,TodoListItem,TodoHeader};
+export {TodoApp,TodoHeader,TodoForm,TodoList,TodoListItem};

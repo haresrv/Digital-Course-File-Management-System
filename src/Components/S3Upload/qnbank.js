@@ -5,7 +5,7 @@ import config from "../../config";
 import { privateUpload,publicUpload,s3getUpload,s3pgetUpload} from "../../libs/awsLib";
 import tachyons from 'tachyons';
 import Dropdown from 'react-dropdown';
-import {Auth} from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 import 'react-dropdown/style.css';
 import "react-toggle/style.css";
 import Toggle from 'react-toggle';

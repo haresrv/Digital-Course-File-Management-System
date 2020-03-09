@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
-import config from "../../config";
 import { privateUpload,publicUpload,s3getUpload,s3pgetUpload} from "../../libs/awsLib";
-import './Uploader.css';
 import tachyons from 'tachyons';
 import Dropdown from 'react-dropdown';
-import {Auth} from 'aws-amplify';
-import 'react-dropdown/style.css';
-import "react-toggle/style.css";
+import Auth from '@aws-amplify/auth';
 import Toggle from 'react-toggle';
+import config from "../../config";
+import "react-toggle/style.css";
+import './Uploader.css';
 
 export default class digitalRep extends Component {
 	constructor(props) {
@@ -195,9 +194,9 @@ console.log(this.props)
 
 				<div className="form-group" style={{marginLeft:"40px"}}>
 				<label htmlFor="State" >Select Files</label>
-				<Form.Group controlId="file" style={{marginLeft:"30px"}}>
-					<Form.Control onChange={this.handleFileChange} type="file" />
-			 	</Form.Group>
+				<span controlId="file" style={{marginLeft:"30px"}}>
+					<input onChange={this.handleFileChange} type="file" />
+			 	</span>
 				 </div>
 			</div>
 				

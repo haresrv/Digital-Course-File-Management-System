@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
-import {Auth} from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 import config from '../../config';
-import AWS from 'aws-sdk';
 import i from '../../Images/amrita_round_2019.jpg';
 
 class Register extends Component {
@@ -33,13 +32,15 @@ class Register extends Component {
     const session = await Auth.currentSession();
     
     console.log(session)
-    
-    if(!session.idToken.payload['cognito:groups'].includes("Admin"))
-      {
-        alert("You don't have permission to create user")
-        this.props.history.push("/login")
-      console.log("ERORO1")
-      }
+     if(session.idToken.payload['cognito:groups']!=null)
+            {
+                if(session.idToken.payload['cognito:groups'].includes("Admin"))
+                    { 
+                      alert("You don't have permission to create user")
+                      this.props.history.push("/login")
+                    console.log("ERORO1")
+                    }
+            }
     }
     catch(error)
     {
@@ -55,8 +56,6 @@ class Register extends Component {
   handleSubmit = async event => {
     event.preventDefault();
     this.props.history.push('/welcome')
-
-    // Form validation
     this.clearErrorState();
     const error = Validate(event, this.state);
     if (error) {
@@ -66,76 +65,12 @@ class Register extends Component {
       console.log(this.state)
       return
     }
-    // AWS Cognito integration here
-
     const {username,email,password} = this.state
-    // try
-    // {
-    //     const signUpResponse = await Auth.signUp({
-    //       username,
-    //       password,
-    //       attributes:{
-    //         email:email,
-    //         preferred_username:"nick",
-    //         phone_number:"+91020929292"
-    //       }
-    //     })
-    //     console.log(signUpResponse)
-    //     this.props.history.push("/welcome")
-    // }
-    // catch(error)
-    // {
-    //     let err= null;
-    //     !error.message? err={"message":error} : err = error
-    //     this.setState({
-    //       errors:{
-    //         ...this.state.errors,
-    //         cognito:err
-    //       }
-
-    //     })
-    // }
+    
 try{
   console.log(username)
-     // fetch('https://4y1lmnfnnh.execute-api.us-east-1.amazonaws.com/prod/adminCreate',{
-     //      method:'post',
-     //      headers:{'Content-Type':'application/json'},
-     //      body:JSON.stringify({
-     //        UserPoolId:config.cognito.USER_POOL_ID,
-     //        username:username,
-     //        email:email
-     //      })
-     //      }).then(res=> res.json())
-     //      .then(data => console.log(data))
+   
 
-    var params = {
-      UserPoolId: config.cognito.USER_POOL_ID, /* required */
-      Username: username, /* required */
-
-      DesiredDeliveryMediums: ["EMAIL"],
-      ForceAliasCreation: false,
-      TemporaryPassword: 'Faculty@amrita2000',
-      UserAttributes: [
-          { Name: "email", Value: email },
-      ] 
-    };
-    var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider(
-                                                                               {region: config.cognito.REGION,
-                                                                                accessKeyId: config.ACCESS_KEY,
-                                                                                secretAccessKey:config.SECRET_KEY,
-                                                                                sessionToken:config.SESSION_TOKEN
-                                                                              });
-  console.log(cognitoidentityserviceprovider)
-
-
-    cognitoidentityserviceprovider.adminCreateUser(params, (err, data)=> {
-      if (err) console.log(err, err.stack); // an error occurred
-      else     {
-      console.log(data);       
-          this.props.history.push('/welcome')
-      }          // successful response
-
-});
   }
   catch(error)
   {

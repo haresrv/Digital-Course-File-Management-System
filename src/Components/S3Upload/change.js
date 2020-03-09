@@ -1,23 +1,8 @@
 import React from 'react';
-import {Auth} from 'aws-amplify';
-var StyleDiv =
-{
-    border: '2px solid grey',
-    padding: '30px',
-    marginLeft: '300px',
-    marginRight: '300px',
-};
-var styleDiv1 =
-{
-    border: '2px solid white',
-    padding: '30px',
-    marginLeft: '300px',
-    marginRight: '300px',
-    paddingLeft: '400px',
-    backgroundColor: 'grey',
-    align: 'center',
-};
+import Auth from '@aws-amplify/auth';
+
 class changer extends React.Component {
+
 componentDidMount()
 {
     
@@ -26,7 +11,7 @@ componentDidMount()
 
 }
     render() {
-        const btnStyle = {
+        const btnstyle = {
             backgroundColor: '#0e8675',
             color: 'white',
             width: '150px'
@@ -55,7 +40,7 @@ componentDidMount()
             <input type="text" value="u" name="type" hidden></input>
             <input type="text" name="usrname" placeholder="Enter Comments"></input>
              <br />
-            <center><button type="submit" class="btn" style={btnStyle}>Submit</button></center>
+            <center><button type="submit" class="btn" style={btnstyle}>Submit</button></center>
             </form>
             </div>
 

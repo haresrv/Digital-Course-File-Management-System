@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {App,Home,CourseSelect,ProgressChange,PersonalSpace} from './App';
 import {shallow,mount} from 'enzyme';
 import EnrolledCourses from './Components/EnrolledCourses/EnrolledCourses';
-import {Auth} from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 
 describe('Renders App Without crashing', () => {
 

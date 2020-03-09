@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
-import FormErrors from "../FormErrors";
-import Validate from "../utility/FormValidation";
-import {Auth} from 'aws-amplify';
-import './Login.css';
-import tachyons from 'tachyons';
+import React, { Component ,Suspense, lazy} from 'react';
+import Auth, { AuthClass } from '@aws-amplify/auth';
+import Storage, { StorageClass } from '@aws-amplify/storage';
+import Cache from '@aws-amplify/cache';
+import FormErrors from '../FormErrors';
+import Validate from '../utility/FormValidation';
 import i from '../../Images/amrita_round_2019.jpg';
+
+const tachyons = lazy(() => import('tachyons'))
 
 class LogIn extends Component {
   state = {
@@ -52,54 +54,21 @@ class LogIn extends Component {
       return
     }
 
-    // AWS Cognito integration here
-    
     const {username,email,password} = this.state
-    // try
-    // {
-    //     const user = await Auth.signIn(this.state.username,this.state.password)
-    //     console.log(user)
-    //     console.log(this.props)
-     
-    //     this.props.authProps.setAuthStatus(true)
-    //     this.props.authProps.setUser(user)
-    //     this.props.history.push("/")
-    // }
-
     try {
-      
+      this.props.authProps.setAuthStatus2(true)
       const user = await Auth.signIn(username, password);
-      if (user.challengeName === 'SMS_MFA' ||
-          user.challengeName === 'SOFTWARE_TOKEN_MFA') {
-          // You need to get the code from the UI inputs
-          // and then trigger the following function with a button click
-          const code = eval(prompt("Enter OTP sent via SMS"))
-          const mfaType = user.challengeName
-          // If MFA is enabled, sign-in should be confirmed with the confirmation code
-          const loggedUser = await Auth.confirmSignIn(
-              user,   // Return object from Auth.signIn()
-              code,   // Confirmation code  
-              mfaType // MFA Type e.g. SMS_MFA, SOFTWARE_TOKEN_MFA
-          );
-      } else if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
-          const {requiredAttributes} = user.challengeParam; // the array of required attributes, e.g ['email', 'phone_number']
-          // You need to get the new password and required attributes from the UI inputs
-          // and then trigger the following function with a button click
-          // For example, the email and phone_number are required attributes
-          // const {username, email, phone_number} = getInfoFromUserInput();
-          // console.log(user)
+      this.props.authProps.setAuthStatus2(false)
+      if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+          
+          const {requiredAttributes} = user.challengeParam;
           this.props.authProps.setTUser(user)
           this.props.authProps.setTUsername(username)
           
           this.props.history.push('/setpass')
+
           return
-      } else if (user.challengeName === 'MFA_SETUP') {
-          // This happens when the MFA method is TOTP
-          // The user needs to setup the TOTP before using it
-          // More info please check the Enabling MFA part
-          Auth.setupTOTP(user);
       } else {
-          // The user directly signs in
           console.log(user);
       }
       
@@ -138,6 +107,7 @@ class LogIn extends Component {
     catch(error)
     {
       console.log("ERROR131")
+      this.props.authProps.setAuthStatus2(false)
         let err= null;
         !error.message? err={"message":error} : err = error
         this.setState({
@@ -171,7 +141,9 @@ class LogIn extends Component {
           </div>
           <div className="col-md-4 col-md-push-1">
            <h3><span id="mainappname" className="weight-700">Digital Course File</span> | <span className="weight-300"> Login</span></h3>
+          <Suspense>
            <FormErrors id="loginerror" className="red blink" formerrors={this.state.errors} />
+          </Suspense>
              <form  onSubmit={this.handleSubmit} style={{marginTop:"20px",padding:"40px"}} className="pa3 ma2" autoComplete="new-password">
                 
                 <div className="form-group">

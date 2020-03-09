@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
-import {Auth} from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 
 
 class SetPass extends Component {
@@ -54,29 +54,6 @@ class SetPass extends Component {
           );
 
         this.props.history.push("/changepasswordconfirm")
-
-        const session = await Auth.currentSession();
-        console.log(session)
-
-  setTimeout(function() { //Start the timer
-      
-
-        this.props.authProps.setAuthStatus(true)
-        this.props.authProps.setUser(this.state.username)
-      
-        if(session.idToken.payload&&session.idToken.payload['cognito:groups'].includes("Admin"))
-        {
-            this.props.authProps.setRole("Admin")
-            this.props.history.push("/admin")
-        }
-        else
-        {
-            this.props.authProps.setRole("Faculty")
-            this.props.history.push("/")
-        }
-
-  }.bind(this), 10000)
-
       
   }
   catch(error)

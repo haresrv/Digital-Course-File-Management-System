@@ -107,8 +107,8 @@ renderInsertTableData() {
            <td><input type="text" name="open" style={{width:"250px",height:"50px"}} onChange={(e)=>{this.setState({newOpen:e.target.value})}} /></td>
            <td><input type="text" name="dist" style={{width:"250px",height:"50px"}} onChange={(e)=>{this.setState({newDist:e.target.value})}} /></td>
            <td>
-            <input type="image" src={tick} style={{width:"30px",marginRight:"2px",height:"40px"}} onClick={this.onTick}/>
-            <input type="image" src={cross} style={{width:"30px",height:"auto"}} onClick={()=>{this.setState({mode:"home"})}}/>
+            <input type="image" alt="tick" src={tick} style={{width:"30px",marginRight:"2px",height:"40px"}} onClick={this.onTick}/>
+            <input type="image" alt="cross" src={cross} style={{width:"30px",height:"auto"}} onClick={()=>{this.setState({mode:"home"})}}/>
            </td>
         </tr>
     
@@ -381,17 +381,3 @@ render(){
 }
 
 export default ProgressAdder;
-
-
-
-
-
-
-                                                // <div className="tc ma2 pa3 bg-black">
-                                                // <input style={{width:"300px"}} onChange={(e)=>{this.setState({updatedId:e.target.value})}} type="text" name="updateid" placeholder="Enter ID"/><br/>
-                                                // <input style={{width:"300px"}} onChange={(e)=>{this.setState({updatedName:e.target.value})}} type="text" name="updatename" placeholder="Enter Name"/><br/>
-                                                // <input style={{width:"300px"}} onChange={(e)=>{this.setState({updatedAddress:e.target.value})}} type="text" name="updateaddr" placeholder="Enter Address"/><br/>
-                                                // <input style={{width:"300px"}} onChange={(e)=>{this.setState({updatedOpen:e.target.value})}} type="text" name="updateopen" placeholder="Open Now?"/><br/>
-                                                // <input style={{width:"300px"}} onChange={(e)=>{this.setState({updatedDist:e.target.value})}} type="text" name="updatedist" placeholder="Dist"/><br/>
-                                                // <input type="button" name="btn" value="Confirm Update" onClick={this.handlePut}/><br/>
-                                                // </div>
