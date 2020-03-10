@@ -1,0 +1,69 @@
+{
+  "name": "vigilantes",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@trendmicro/react-buttons": "^1.3.1",
+    "@trendmicro/react-dropdown": "^1.3.0",
+    "@trendmicro/react-sidenav": "^0.4.5",
+    "aws-amplify": "^2.2.6",
+    "aws-amplify-react": "^3.1.2",
+    "aws-sdk": "^2.596.0",
+    "dayjs": "^1.8.21",
+    "husky": "^4.2.3",
+    "jest-canvas-mock": "^2.2.0",
+    "mock-amplify-auth": "^2.1.0",
+    "pretty-quick": "^2.0.1",
+    "primeicons": "^2.0.0",
+    "primereact": "^3.3.3",
+    "prop-types": "^15.7.2",
+    "rc-progress": "^2.5.2",
+    "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.17",
+    "react-dom": "^16.12.0",
+    "react-dropdown": "^1.6.4",
+    "react-expandable": "^1.0.2",
+    "react-fade-in": "^0.1.8",
+    "react-iframe": "^1.8.0",
+    "react-lottie": "^1.2.3",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.3.0",
+    "react-sortable-tree": "^2.7.1",
+    "react-stickies": "0.0.16",
+    "react-toggle": "^4.1.1",
+    "styled-components": "^4.4.1",
+    "tachyons": "^4.11.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "coverage": "react-scripts test --coverage --env=jsdom --watchAll",
+    "eject": "react-scripts eject",
+    "precommit": "pretty-quick --staged",
+    "analyze": "npx source-map-explorer 'build/static/js/*.js'"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-react-16-adapter-setup": "^0.1.0",
+    "jest-enzyme": "^7.1.2",
+    "prettier": "1.19.1",
+    "webpack-cli": "^3.3.11"
+  }
+}

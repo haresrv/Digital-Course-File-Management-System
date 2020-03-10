@@ -1,0 +1,19 @@
+{
+  "api": { 
+    "invokeUrl": "https://5bltcq602h.execute-api.us-west-2.amazonaws.com/prod"
+  },
+  "cognito":{
+    "REGION":"us-east-1",
+    "USER_POOL_ID":"us-east-1_2KUwW6T46",
+    "APP_CLIENT_ID":"1qmb8bq9m49o6a4q5c0n212q2e",
+    "IDENTITY_POOL_ID": "us-east-1:85f5dda0-ac0a-47b2-b676-461163b97332"
+  },
+  "MAX_ATTACHMENT_SIZE": 5000000,
+	"s3": {
+		"REGION": "us-east-1",
+		"BUCKET": "vigilantes-csedcf-20191230121309-deployment"
+	},
+  "ACCESS_KEY":"ASIAX62GXFY3UOWGEX5W",
+  "SECRET_KEY":"",
+  "SESSION_TOKEN":"FwoGZXIvYXdzEGwaDGqvO4b/B4RuIB6qoSLWARShNdDJdkmuOvIyqC1RYi8xhFRouixFDSjYbu/V7e/7QyglH3jACG1QfYihooH0jmjSzd2b2kvyhXh/KKfCv+HJxWOernuSXxWeafnhwQvDZp5PhD1+pOeGnrp6AY8CtQm1/OWGfztZs/cCWVlE6ajIV6hMvu/BBg3v4ht8L+56t67Zlpd4PW3/J19TYasTSu2y3mZ7iMEpAH2px9TaRK9LPXHxVoVuPMMavoRc+e+MDpH+zf3KIFY4RykBjzsCeWuZjF4ehPwMriCxenj0/4B1FQyOXmconoC98gUyLXPY+8EqJ1VEDTL0sKS9mvUUCkRSfuu8Nr5tEz+EmgRk8fPvzQT7oTNrLT+HzQ=="
+}
