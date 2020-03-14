@@ -31,11 +31,12 @@ version: 2.1
 jobs:
   build:
     executor: node
+    working_directory: ~/project/FrontEnd/
     steps:
       - checkout:
-          path: ~/project/FrontEnd/
+          path: ~/project/
       - run:
-          name: curr dir
+          name: curr
           command: ls
       - <<: *restore_cache
       - <<: *install_node_modules
@@ -48,9 +49,10 @@ jobs:
             - public
   test:
     executor: node
+    working_directory: ~/project/FrontEnd/
     steps:
       - checkout:
-          path: ~/project/FrontEnd/
+          path: ~/project/
       # Restore cache at second time
       - run:
           name: Curr Dir
@@ -65,6 +67,7 @@ jobs:
           command: npm test
   deploy:
     executor: node
+    working_directory: ~/project/FrontEnd/
     steps:
       - checkout:
           path: ~/project/FrontEnd/
@@ -72,9 +75,6 @@ jobs:
           at: ~/project/FrontEnd/
       - <<: *restore_cache
       - <<: *install_node_modules
-      - run:
-          name: curr dir
-          command: ls
       - run:
           name: Install netlify-cli
           command: sudo npm install -g --silent netlify-cli
