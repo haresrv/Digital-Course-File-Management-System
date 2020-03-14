@@ -44,7 +44,7 @@ jobs:
             - public
   test:
     executor: node
-
+    working_directory: FrontEnd
     steps:
       - checkout
       # Restore cache at second time
@@ -78,8 +78,7 @@ workflows:
   version: 2.1
   build_and_deploy:
     jobs:
-      - test:
-          working_directory: FrontEnd
+      - test
       - build:
           requires:
             - test
