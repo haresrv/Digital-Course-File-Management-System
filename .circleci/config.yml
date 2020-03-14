@@ -33,20 +33,25 @@ jobs:
     executor: node
     steps:
       - checkout
+      - run:
+          name: Change Dir
+          command: cd FrontEnd/
       - <<: *restore_cache
       - <<: *install_node_modules
       - run:
           name: Build
           command: CI=false npm run build
       - persist_to_workspace:
-          root: ./FrontEnd
+          root: ./
           paths:
             - public
   test:
     executor: node
-    working_directory: FrontEnd
     steps:
       - checkout
+      - run:
+          name: Change Dir
+          command: cd FrontEnd/
       # Restore cache at second time
       - <<: *restore_cache
       # Install for first time
@@ -62,7 +67,10 @@ jobs:
       - checkout
       # Attach the pesisted built files.
       - attach_workspace:
-          at: ./FrontEnd
+          at: ./
+      - run:
+          name: Install netlify-cli
+          command: cd FrontEnd/
       - <<: *restore_cache
       - <<: *install_node_modules
       - run:
@@ -73,7 +81,7 @@ jobs:
           command: CI=false npm run build    
       - run:
           name: Deploy to Netlify
-          command: netlify deploy --dir=./FrontEnd/build -p          
+          command: netlify deploy --dir=./build -p          
 workflows:
   version: 2.1
   build_and_deploy:
