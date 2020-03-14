@@ -2,7 +2,9 @@ executors:
   node:
     docker:
       - image: circleci/node:8
-      - image: selenium/standalone-chrome:3.11.0
+      - image: circleci/node:6-browsers
+          environment:
+              CHROME_BIN: "/usr/bin/google-chrome"
 
 aliases:
   restore_cache: &restore_cache
