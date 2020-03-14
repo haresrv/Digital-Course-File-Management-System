@@ -32,10 +32,8 @@ jobs:
   build:
     executor: node
     steps:
-      - checkout
-      - run:
-          name: Change Dir
-          command: cd FrontEnd/
+      - checkout:
+          path: ./FrontEnd/
       - <<: *restore_cache
       - <<: *install_node_modules
       - run:
@@ -48,10 +46,8 @@ jobs:
   test:
     executor: node
     steps:
-      - checkout
-      - run:
-          name: Change Dir
-          command: cd FrontEnd/
+      - checkout:
+          path: ./FrontEnd/
       # Restore cache at second time
       - <<: *restore_cache
       # Install for first time
@@ -64,8 +60,8 @@ jobs:
   deploy:
     executor: node
     steps:
-      - checkout
-      # Attach the pesisted built files.
+      - checkout:
+          path: ./FrontEnd/
       - attach_workspace:
           at: ./
       - run:
