@@ -14,7 +14,7 @@ aliases:
         - v2-dependencies-{{ checksum "./FrontEnd/package.json" }}
         - v2-dependencies-
       paths:
-        - ~/project/FrontEnd/
+        - ./node_modules
   install_node_modules: &install_node_modules
       run:
         name: Install dependencies
@@ -24,7 +24,7 @@ aliases:
         name: Save NPM package cache
         key: v2-dependencies-{{ checksum "./FrontEnd/package.json" }}
         paths:
-          - ~/project/FrontEnd/
+          - ./node_modules
 
 version: 2.1
 
@@ -70,7 +70,7 @@ jobs:
     working_directory: ~/project/FrontEnd/
     steps:
       - checkout:
-          path: ~/project/FrontEnd/
+          path: ~/project/
       - attach_workspace:
           at: ~/project/FrontEnd/
       - <<: *restore_cache
