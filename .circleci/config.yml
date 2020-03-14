@@ -11,7 +11,7 @@ aliases:
     restore_cache:
       name: Restore Npm Package Cache
       keys:
-        - v2-dependencies-{{ checksum "package.json" }}
+        - v2-dependencies-{{ checksum "./FrontEnd/package.json" }}
         - v2-dependencies-
       paths:
         - ~/project/FrontEnd/
@@ -22,7 +22,7 @@ aliases:
   save_cache: &save_cache
       save_cache:
         name: Save NPM package cache
-        key: v2-dependencies-{{ checksum "package.json" }}
+        key: v2-dependencies-{{ checksum "./FrontEnd/package.json" }}
         paths:
           - ~/project/FrontEnd/
 
@@ -34,13 +34,16 @@ jobs:
     steps:
       - checkout:
           path: ~/project/FrontEnd/
+      - run:
+          name: curr dir
+          command: ls
       - <<: *restore_cache
       - <<: *install_node_modules
       - run:
           name: Build
           command: CI=false npm run build
       - persist_to_workspace:
-          root: ./
+          root: ~/project/FrontEnd/
           paths:
             - public
   test:
@@ -49,6 +52,9 @@ jobs:
       - checkout:
           path: ~/project/FrontEnd/
       # Restore cache at second time
+      - run:
+          name: Curr Dir
+          command: ls
       - <<: *restore_cache
       # Install for first time
       - <<: *install_node_modules
@@ -64,11 +70,11 @@ jobs:
           path: ~/project/FrontEnd/
       - attach_workspace:
           at: ~/project/FrontEnd/
-      - run:
-          name: Install netlify-cli
-          command: cd FrontEnd/
       - <<: *restore_cache
       - <<: *install_node_modules
+      - run:
+          name: curr dir
+          command: ls
       - run:
           name: Install netlify-cli
           command: sudo npm install -g --silent netlify-cli
