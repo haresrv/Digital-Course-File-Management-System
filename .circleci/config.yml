@@ -11,8 +11,8 @@ aliases:
     restore_cache:
       name: Restore Npm Package Cache
       keys:
-        - v1-dependencies-{{ checksum "package.json" }}
-        - v1-dependencies-
+        - v2-dependencies-{{ checksum "package.json" }}
+        - v2-dependencies-
       paths:
         - ./node_modules
   install_node_modules: &install_node_modules
@@ -22,7 +22,7 @@ aliases:
   save_cache: &save_cache
       save_cache:
         name: Save NPM package cache
-        key: v1-dependencies-{{ checksum "package.json" }}
+        key: v2-dependencies-{{ checksum "package.json" }}
         paths:
           - ./node_modules
 
