@@ -39,7 +39,7 @@ jobs:
           name: Build
           command: CI=false npm run build
       - persist_to_workspace:
-          root: ./
+          root: ./FrontEnd
           paths:
             - public
   test:
