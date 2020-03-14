@@ -3,7 +3,7 @@ executors:
     docker:
       - image: circleci/node:8
       - image: circleci/node:6-browsers
-          environment:
+        environment:
               CHROME_BIN: "/usr/bin/google-chrome"
 
 aliases:
