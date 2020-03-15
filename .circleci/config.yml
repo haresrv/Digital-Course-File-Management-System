@@ -27,7 +27,6 @@ aliases:
 
 version: 2.1
 
-
 jobs:
   build:
     executor: node
@@ -53,11 +52,6 @@ jobs:
     steps:
       - checkout:
           path: ~/project/
-      - install-firefox:
-          alpine-version: <<parameters.firefox-alpine-version>>
-          debug: <<parameters.debug>>
-          install-dir: <<parameters.firefox-install-dir>>
-          version: <<parameters.firefox-version>>    
       - <<: *restore_cache
       - <<: *install_node_modules
       - run:
