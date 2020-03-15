@@ -41,7 +41,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom ./src/App.test.js ./src/Components/Auth.test.js ./src/Components/TodoApp/TodoApp.test.js",
     "coverage": "react-scripts test --coverage --env=jsdom --watchAll",
     "eject": "react-scripts eject",
     "precommit": "pretty-quick --staged",
