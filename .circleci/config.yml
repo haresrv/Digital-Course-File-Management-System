@@ -111,6 +111,3 @@ workflows:
       - deploy:
           requires:
             - uitest
-          filters:
-            branches:
-              only: master
