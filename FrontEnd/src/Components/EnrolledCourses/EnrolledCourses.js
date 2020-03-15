@@ -38,6 +38,7 @@ changex = (name) => {
             return  this.state.courses.map((course, index) => {
               return  (course.yeartaken==((new Date()).getFullYear()))? 
                   (<div key={index} className="bg-white b--dashed green dib br3 pa3 ma2 fa fa-fw fa-book" style={{width:'280px',height:'180px'}}>
+                    <button className="bg-black b--  gold pointer" onClick={()=>{ this.props.history.push("courseFAQ")}}>FAQ</button>
                     <div>
                       <h5>Year: {course.yeartaken}</h5>
                       <h6>Semester: {course.semtaken}</h6>
@@ -51,6 +52,7 @@ changex = (name) => {
                   )
                   :
                   (<div key={index} className="bg-white b--dashed red dib br3 pa3 ma2 fa fa-fw fa-book" style={{width:'280px',height:'180px'}}>
+                    <button className="bg-white b--dashed red pointer" onClick={()=>{ this.props.history.push("courseFAQ")}}>FAQ</button>
                     <div>
                       <h5>Year: {course.yeartaken}</h5>
                       <h6>Semester: {course.semtaken}</h6>

@@ -117,7 +117,7 @@ export default class digitalRep extends Component {
 
 	handleSubmit = async event => {
 		event.preventDefault();
-console.log(this.props)
+		console.log(this.props)
 	  	if(this.file==null)
 	  	{
 	  		console.log(this.props.authProps.currentSelectedCourse)
@@ -178,7 +178,7 @@ console.log(this.props)
 
 	renderLoggedIn() {
 		const options = [
-			'Study Materials','Videos','Other'
+			'Study Materials','Videos','CO and PO','Lecture Plan','Other'
 		  ]
 
 		return (
@@ -236,7 +236,7 @@ console.log(this.props)
 	{
 		// console.log(this.state.uploads)
 		const options1 = [
-			'Study Materials','Videos','Other'
+			'Study Materials','Videos','CO and PO','Lecture Plan','Other'
 		  ]
 		return(
 			<div className="" style={{marginLeft:"30px"}}>

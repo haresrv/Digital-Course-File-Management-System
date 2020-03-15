@@ -39,8 +39,8 @@ render(){
 
             <div className="dash-landing-icon-wrap bg-white b--solid b--green">
 
-      			<Card img={i5} words="Coming Soon....."  {...this.props} alt='todo'/>
-      			
+      			<Card id="4" img={i5} words="Todo List"  {...this.props} alt='todo'/>
+	          <Card id="3" img={i3} words="Upload" {...this.props} alt='digrep'/>
             </div>
 
     </div>
