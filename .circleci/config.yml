@@ -24,89 +24,7 @@ aliases:
         key: v2-dependencies-{{ checksum "./package.json" }}
         paths:
           - ./node_modules
-parameters:
-  chromedriver-install-dir:
-    default: /usr/local/bin
-    description: |
-      Directory in which to install Chromedriver
-    type: string
-  debug:
-    default: false
-    description: |
-      Extra output for orb developers
-    type: boolean
-  firefox-alpine-version:
-    default: stable
-    description: >
-      For Alpine Linux users, select a Firefox version: either the latest stable
-      release, or the latest Extended Support Release. For more information, see
-      https://mozilla.org/firefox/organizations and
-      https://pkgs.alpinelinux.org/packages?name=firefox*
-    enum:
-      - stable
-      - esr
-    type: enum
-  firefox-install-dir:
-    default: /usr/local/bin
-    description: |
-      Directory in which to install Firefox
-    type: string
-  firefox-version:
-    default: latest
-    description: >
-      Version of Firefox to install, defaults to the latest stable release. To
-      install an older release, specify a full semantic version number, e.g.,
-      66.0.3, 53.0, etc. Note: version-selection is not supported for Alpine
-      Linux-based execution environments, as Mozilla's Firefox binaries are not
-      compiled to run on Alpine. Use the `alpine-version` parameter to select
-      from a limited number of Alpine-based Firefox packages. Otherwise, for a
-      full list of releases, see the following:
-      https://archive.mozilla.org/pub/firefox/releases/
-    type: string
-  geckodriver-install-dir:
-    default: /usr/local/bin
-    description: |
-      Directory in which to install Geckodriver
-    type: string
-  geckodriver-version:
-    default: latest
-    description: >
-      Version of Geckodriver to install, defaults to latest release. To install
-      an older release, specify a full semantic version tag, e.g., `v0.23.0`.
-      For a list of releases, and a Firefox/Geckodriver version compatibility
-      table, see the following links:
-      https://github.com/mozilla/geckodriver/releases
-      https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
-    type: string
-  install-chrome:
-    default: true
-    description: >
-      Install Google Chrome? Note: only the latest stable release can be
-      installed, as Google does not maintain a public archive of previous
-      releases.
-    type: boolean
-  install-chromedriver:
-    default: true
-    description: >
-      Install Chromedriver? Note: requires Google Chrome. A Chromedriver version
-      will be dynamically selected based on the installed version of Chrome; for
-      details, see the following information:
-      https://sites.google.com/a/chromium.org/chromedriver/downloads/version-selection
-    type: boolean
-  install-firefox:
-    default: true
-    description: Install Firefox?
-    type: boolean
-  install-geckodriver:
-    default: true
-    description: Install Geckodriver?
-    type: boolean
-  replace-existing-chrome:
-    default: false
-    description: >
-      If there is an existing installation of Google Chrome, replace it with the
-      latest stable release
-    type: boolean
+
 version: 2.1
 
 jobs:
@@ -131,6 +49,89 @@ jobs:
   uitest:
     executor: node
     working_directory: ~/project/FrontEnd/
+    parameters:
+      chromedriver-install-dir:
+        default: /usr/local/bin
+        description: |
+          Directory in which to install Chromedriver
+        type: string
+      debug:
+        default: false
+        description: |
+          Extra output for orb developers
+        type: boolean
+      firefox-alpine-version:
+        default: stable
+        description: >
+          For Alpine Linux users, select a Firefox version: either the latest stable
+          release, or the latest Extended Support Release. For more information, see
+          https://mozilla.org/firefox/organizations and
+          https://pkgs.alpinelinux.org/packages?name=firefox*
+        enum:
+          - stable
+          - esr
+        type: enum
+      firefox-install-dir:
+        default: /usr/local/bin
+        description: |
+          Directory in which to install Firefox
+        type: string
+      firefox-version:
+        default: latest
+        description: >
+          Version of Firefox to install, defaults to the latest stable release. To
+          install an older release, specify a full semantic version number, e.g.,
+          66.0.3, 53.0, etc. Note: version-selection is not supported for Alpine
+          Linux-based execution environments, as Mozilla's Firefox binaries are not
+          compiled to run on Alpine. Use the `alpine-version` parameter to select
+          from a limited number of Alpine-based Firefox packages. Otherwise, for a
+          full list of releases, see the following:
+          https://archive.mozilla.org/pub/firefox/releases/
+        type: string
+      geckodriver-install-dir:
+        default: /usr/local/bin
+        description: |
+          Directory in which to install Geckodriver
+        type: string
+      geckodriver-version:
+        default: latest
+        description: >
+          Version of Geckodriver to install, defaults to latest release. To install
+          an older release, specify a full semantic version tag, e.g., `v0.23.0`.
+          For a list of releases, and a Firefox/Geckodriver version compatibility
+          table, see the following links:
+          https://github.com/mozilla/geckodriver/releases
+          https://firefox-source-docs.mozilla.org/testing/geckodriver/Support.html
+        type: string
+      install-chrome:
+        default: true
+        description: >
+          Install Google Chrome? Note: only the latest stable release can be
+          installed, as Google does not maintain a public archive of previous
+          releases.
+        type: boolean
+      install-chromedriver:
+        default: true
+        description: >
+          Install Chromedriver? Note: requires Google Chrome. A Chromedriver version
+          will be dynamically selected based on the installed version of Chrome; for
+          details, see the following information:
+          https://sites.google.com/a/chromium.org/chromedriver/downloads/version-selection
+        type: boolean
+      install-firefox:
+        default: true
+        description: Install Firefox?
+        type: boolean
+      install-geckodriver:
+        default: true
+        description: Install Geckodriver?
+        type: boolean
+      replace-existing-chrome:
+        default: false
+        description: >
+          If there is an existing installation of Google Chrome, replace it with the
+          latest stable release
+        type: boolean
     steps:
       - checkout:
           path: ~/project/
