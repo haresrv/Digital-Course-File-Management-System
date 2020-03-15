@@ -3,13 +3,13 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import config from "../../config";
 import { privateUpload,publicUpload,s3getUpload,s3pgetUpload} from "../../libs/awsLib";
-import './Uploader.css';
 import tachyons from 'tachyons';
 import Dropdown from 'react-dropdown';
 import Auth from '@aws-amplify/auth';
-import 'react-dropdown/style.css';
 import Toggle from 'react-toggle';
-
+import 'react-dropdown/style.css';
+import "react-toggle/style.css";
+import './Uploader.css';
 export default class Uploader extends Component {
 	constructor(props) {
 		super(props);
@@ -294,8 +294,8 @@ console.log(this.props)
 		)
 	}
 	renderButton() {
-		return (
-			<div className="button" style={{marginLeft: this.props.expanded ? 240 : 64}}>
+			return (
+			<div className="button" style={{"position":"relative","top":"50px",marginLeft: this.props.expanded ? 240 : 64}}>
 						{this.renderFilters()}
 				    <table id='students' >
 				    	
@@ -322,7 +322,7 @@ console.log(this.props)
 
 	render() {
 		// return <div className="Uploader">{this.renderTest()}{this.renderButton()}</div>
-			return <div className="Uploader">
+			return <div className="Uploader" >
 			<button onClick={()=>{this.setState({toggle:!this.state.toggle},function(){this.fetchRest()})}} style={{marginLeft:"50%"}} className="btn btn-primary">{this.state.toggle ? "View Uploads" : "Upload"}</button>
 			{this.state.toggle ? this.renderTest() : this.renderButton()}
  			

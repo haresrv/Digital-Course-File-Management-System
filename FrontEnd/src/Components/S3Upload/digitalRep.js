@@ -9,6 +9,7 @@ import Toggle from 'react-toggle';
 import config from "../../config";
 import "react-toggle/style.css";
 import './Uploader.css';
+import 'react-dropdown/style.css';
 
 export default class digitalRep extends Component {
 	constructor(props) {
@@ -253,7 +254,7 @@ console.log(this.props)
 	}
 	renderButton() {
 		return (
-			<div className="button" style={{marginLeft: this.props.expanded ? 240 : 64}}>
+			<div className="button" style={{"position":"relative","top":"50px",marginLeft: this.props.expanded ? 240 : 64}}>
 						{this.renderFilters()}
 				    <table id='students' >
 				    	
@@ -280,7 +281,7 @@ console.log(this.props)
 
 	render() {
 		// return <div className="Uploader">{this.renderTest()}{this.renderButton()}</div>
-			return <div className="Uploader">
+			return <div className="Uploader" >
 			<button onClick={()=>{this.setState({toggle:!this.state.toggle},function(){this.fetchRest()})}} style={{marginLeft:"50%"}} className="btn btn-primary">{this.state.toggle ? "View Uploads" : "Upload"}</button>
 			{this.state.toggle ? this.renderTest() : this.renderButton()}
  			

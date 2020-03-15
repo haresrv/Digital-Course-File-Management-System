@@ -11,7 +11,7 @@ aliases:
     restore_cache:
       name: Restore Npm Package Cache
       keys:
-        - v2-dependencies-{{ checksum "./FrontEnd/package.json" }}
+        - v2-dependencies-{{ checksum "./package.json" }}
         - v2-dependencies-
       paths:
         - ./node_modules
@@ -22,7 +22,7 @@ aliases:
   save_cache: &save_cache
       save_cache:
         name: Save NPM package cache
-        key: v2-dependencies-{{ checksum "./FrontEnd/package.json" }}
+        key: v2-dependencies-{{ checksum "./package.json" }}
         paths:
           - ./node_modules
 
@@ -47,7 +47,21 @@ jobs:
           root: ~/project/FrontEnd/
           paths:
             - public
-  test:
+  uitest:
+    executor: node
+    working_directory: ~/project/FrontEnd/
+    steps:
+      - checkout:
+          path: ~/project/
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - run:
+          name: Build
+          command: CI=false npm run build
+      - run:
+          name: curr
+          command: npm run mocha
+  unittest:
     executor: node
     working_directory: ~/project/FrontEnd/
     steps:
@@ -83,18 +97,21 @@ jobs:
           command: CI=false npm run build    
       - run:
           name: Deploy to Netlify
-          command: netlify deploy --dir=~/project/FrontEnd/build -p          
+          command: netlify deploy --dir=./build -p          
 workflows:
   version: 2.1
   build_and_deploy:
     jobs:
-      - test
+      - unittest
       - build:
           requires:
-            - test
-      - deploy:
+            - unittest
+      -uitest:
           requires:
             - build
+      - deploy:
+          requires:
+            - uitest
           filters:
             branches:
               only: master

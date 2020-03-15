@@ -73,17 +73,15 @@ render(){
                             </button>
                             </div>
                             :
-                            <div className="ma2" style={{position:"absolute",right:"0"}}>
+                            <div id="signout" onClick={this.handleLogOut} className="ma2" style={{position:"absolute",right:"0"}}>
                                 
-                                <button onClick={this.handleLogOut} id="signout" className="ma2 pa3 link">
+                                <button onClick={this.handleLogOut}  id="signout" className="ma2 pa3 link">
                                 <h4>{this.props.authProps.user==null?"":this.props.authProps.user.username}</h4>
                                 <strong> Sign Out</strong>
-                                 
-                           
                                 </button>
                             </div>
                         }
-    <SideNav className="bg-gold" onSelect={this.onSelect} onToggle={this.onToggle}>
+    <SideNav className="bg-gold" style={{height:"1000px"}} onSelect={this.onSelect} onToggle={this.onToggle}>
                     <SideNav.Toggle />
                    {(this.props.authProps.role!="Admin"&&!this.props.isAuthenticated) &&
                     <SideNav.Nav selected={selected}>

@@ -15,7 +15,7 @@ render(){
 			<div >
 			<nav className="bg-black tc white">Reports Dashboard</nav>
 			 <div className="flex" style={{marginTop:"200px"}}>
-  			<div className="dib tc" style={{marginLeft: this.props.expanded ? 80 : 80}}>  			
+  			<div className="dib tc" style={{marginLeft:"80px"}}>  			
 				<div className="grow" >
 					<div id='1' className="tc shop-list-item-container bg-black ma2 pa3" >
 					   <a onClick={()=>{this.props.history.push(this.props.alt)}}>
@@ -111,7 +111,7 @@ render(){
 			<div >
 			<nav className="bg-black tc white">Reports Dashboard</nav>
 			 <div className="flex" style={{marginTop:"200px"}}>
-  			<div className="dib tc" style={{marginLeft: this.props.expanded ? 300 : 300}}>  			
+  			<div className="dib tc" style={{marginLeft:"300px"}}>  			
 				<div className="grow" >
 					<div id='1' className="tc shop-list-item-container bg-black ma2 pa3" >
 					   <a onClick={()=>{this.props.history.push(this.props.alt)}}>

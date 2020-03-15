@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import tachyons from 'tachyons';
 import {courses} from '../../courses';
+import '../../App.css';
 
 class EnrolledCourses extends Component {
 

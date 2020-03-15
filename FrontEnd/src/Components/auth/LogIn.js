@@ -18,16 +18,32 @@ class LogIn extends Component {
     }
   };
 
-  componentDidMount()
+  async componentDidMount()
   {
+    try
+    {
+    const session = await Auth.currentSession();
+    const user = await Auth.currentAuthenticatedUser();
+
     console.log("HERE1")
+
+    this.props.authProps.setUser(user)
+    this.props.authProps.setAuthStatus(true)
+
     if(this.props.authProps.isAuthenticated)
     {
       console.log("HERE2")
-      this.props.history.push("/")
+       if(this.props.authProps.role=="Admin")
+        this.props.history.push("/admin")
+       else
+        this.props.history.push("/")
     }
+     }
+     catch
+     { 
     console.log("HERE3")
-  }
+      }
+   }
 
   clearErrorState = () => {
     this.setState({

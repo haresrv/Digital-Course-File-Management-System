@@ -31,7 +31,7 @@ handleClick=()=>{
 render(){
   return (   
 
- <div className="Appx container">
+ <div className="Appx container" style={{"position":"relative","top":"50px"}}>
                               
       <div className="dashboard-container ma2" >
 

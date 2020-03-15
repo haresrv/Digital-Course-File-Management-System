@@ -34,7 +34,7 @@ class Register extends Component {
     console.log(session)
      if(session.idToken.payload['cognito:groups']!=null)
             {
-                if(session.idToken.payload['cognito:groups'].includes("Admin"))
+                if(!session.idToken.payload['cognito:groups'].includes("Admin"))
                     { 
                       alert("You don't have permission to create user")
                       this.props.history.push("/login")

@@ -14,6 +14,8 @@ import tachyons from 'tachyons';
 import './App.css';
 import config from './config';
 import {ReportStats,Faculty} from './Components/ReportStats/ReportStats';
+import LogIn from './Components/auth/LogIn';
+import CourseFAQ from './Components/CourseFAQ';
 const CourseDashboard = lazy(() => import('./Components/CourseDashboard/CourseDashboard'))
 const MentorDashboard = lazy(() => import('./Components/CourseDashboard/MentorDashboard'))
 const EnrolledCourses = lazy(() => import('./Components/EnrolledCourses/EnrolledCourses'))
@@ -25,7 +27,6 @@ const  ChangePassword= lazy(() => import('./Components/auth/ChangePassword'))
 const  SetPass= lazy(() => import('./Components/auth/setpass'))
 const  ChangePasswordConfirm= lazy(() => import('./Components/auth/ChangePasswordConfirm'))
 const  Welcome= lazy(() => import('./Components/auth/Welcome'))
-const  LogIn= lazy(() => import('./Components/auth/LogIn'))
 const  Register= lazy(() => import('./Components/auth/Register'))
 const  Uploader= lazy(() => import('./Components/S3Upload/Uploader'))
 const  changer= lazy(() => import('./Components/S3Upload/change'))
@@ -81,6 +82,7 @@ const Admin =(props) =>
 
 const Home =(props) =>
 {
+   console.log(props)
     if(props.authProps.role=="Admin")
         props.history.push("/admin")
 
@@ -160,6 +162,11 @@ const routes = [
     {
         path: '/home',
         component:Home,
+        fetchInitialData:true
+    },
+    {
+        path: '/coursefaq',
+        component:CourseFAQ,
         fetchInitialData:true
     },
     {
@@ -316,11 +323,6 @@ class App extends Component
     }
 
     comp() {
-        if(!this.state.isAuthenticated&&(!window.location.href.includes("login"))&&(!window.location.href.includes("password")))
-        if(this.state.role=="")
-        {   window.location.href=window.location.origin+"/login"
-            // console.log("Manually Redirected to /login")    
-        }
     }
 
 
@@ -410,7 +412,7 @@ class App extends Component
               <div>  
         <Router>
                 <div>
-                    {<Tracker {...this.props} authProps={authProps} change={this.change} changeRoute={this.changeRoute}/>}
+                    {<Tracker {...this.props} authProps={authProps} change={this.change}  changeRoute={this.changeRoute}/>}
                     {           this.state.isAuthenticating &&( <FadeIn className="bg-black white">
                             <div >
                               

@@ -6,9 +6,10 @@ import { privateUpload,publicUpload,s3getUpload,s3pgetUpload} from "../../libs/a
 import tachyons from 'tachyons';
 import Dropdown from 'react-dropdown';
 import Auth from '@aws-amplify/auth';
+import Toggle from 'react-toggle';
+import './Uploader.css';
 import 'react-dropdown/style.css';
 import "react-toggle/style.css";
-import Toggle from 'react-toggle';
 
 export default class qnbank extends Component {
 	constructor(props) {
@@ -296,7 +297,7 @@ console.log(this.state)
 	}
 	renderButton() {
 		return (
-			<div className="button" style={{marginLeft: this.props.expanded ? 240 : 64}}>
+			<div className="button" style={{"position":"relative","top":"50px",marginLeft: this.props.expanded ? 240 : 64}}>
 						{this.renderFilters()}
 				    <table id='students' >
 				    	
@@ -323,7 +324,7 @@ console.log(this.state)
 
 	render() {
 		// return <div className="qnbank">{this.renderTest()}{this.renderButton()}</div>
-			return <div className="qnbank">
+			return <div className="qnbank" >
 			<button onClick={()=>{this.setState({toggle:!this.state.toggle},function(){this.fetchRest()})}} style={{marginLeft:"50%"}} className="btn btn-primary">{this.state.toggle ? "View Uploads" : "Upload"}</button>
 			{this.state.toggle ? this.renderTest() : this.renderButton()}
  			

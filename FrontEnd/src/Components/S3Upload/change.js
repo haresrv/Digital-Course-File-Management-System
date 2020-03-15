@@ -17,7 +17,7 @@ componentDidMount()
             width: '150px'
         };
         return (
-            <div className="container" style={{marginLeft: this.props.expanded ? 180 : 64}}>
+            <div className="container" style={{"position":"relative","top":"50px",marginLeft: this.props.expanded ? 180 : 64}}>
                 <h1><center>Uploading Student gradesheet</center></h1>
                 <form action=" https://ays0znz8z3.execute-api.us-east-1.amazonaws.com/navya/navya" method="get" encType="multipart/form-data">
                     <div className="Semester">
