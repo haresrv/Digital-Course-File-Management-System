@@ -14,8 +14,8 @@ describe('Login Module', function() {
   beforeEach(async function() {
     this.timeout(500000)
     var options = new firefox.Options();
-    // options.addArguments("-headless");
-    options.setBinary("C:/Program Files/Mozilla Firefox/firefox.exe")
+    options.addArguments("-headless");
+    // options.setBinary("C:/Program Files/Mozilla Firefox/firefox.exe")
     driver = new Builder().forBrowser('firefox').setFirefoxOptions(options).build();
     await driver.get(url);  
   })
