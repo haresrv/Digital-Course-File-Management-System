@@ -16,6 +16,7 @@ import config from './config';
 import {ReportStats,Faculty} from './Components/ReportStats/ReportStats';
 import LogIn from './Components/auth/LogIn';
 import CourseFAQ from './Components/CourseFAQ';
+import Poll from './Components/Poll';
 const CourseDashboard = lazy(() => import('./Components/CourseDashboard/CourseDashboard'))
 const MentorDashboard = lazy(() => import('./Components/CourseDashboard/MentorDashboard'))
 const EnrolledCourses = lazy(() => import('./Components/EnrolledCourses/EnrolledCourses'))
@@ -157,6 +158,16 @@ const routes = [
     {
         path: '/',
         component:Home,
+        fetchInitialData:true
+    },
+    {
+        path: '/poll',
+        component:Poll,
+        fetchInitialData:true
+    },
+    {
+        path: '/ReportStats',
+        component:Faculty,
         fetchInitialData:true
     },
     {

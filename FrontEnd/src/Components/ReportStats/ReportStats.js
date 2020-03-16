@@ -23,9 +23,9 @@ render(){
 					      <h6 className="tc ma2 pa3" style={{width:"160px"}}>Ganesh Iyer N</h6>
 					      </div>
 					   </a>
-					<h6 className="tc white" style={{width:"160px"}}>Assignment</h6>
-					<h6 className="tc white" style={{width:"160px"}}>Project Reports</h6>
-					<h6 className="tc white" style={{width:"160px"}}>GradeSheets</h6>
+					<h6 className="tc white" style={{width:"160px"}}>Assignment-2</h6>
+					<h6 className="tc white" style={{width:"160px"}}>Project Reports-1</h6>
+					<h6 className="tc white" style={{width:"160px"}}>GradeSheets-1</h6>
 					</div>
 
 				</div>
@@ -39,9 +39,9 @@ render(){
 					      <h6 className="tc ma2 pa3" style={{width:"160px"}}>Arun Kumar C</h6>
 					      </div>
 					   </a>
-					<h6 className="tc white" style={{width:"160px"}}>Assignment</h6>
-					<h6 className="tc white" style={{width:"160px"}}>Project Reports</h6>
-					<h6 className="tc white" style={{width:"160px"}}>GradeSheets</h6>
+					<h6 className="tc white" style={{width:"160px"}}>Assignment-1</h6>
+					<h6 className="tc white" style={{width:"160px"}}>Project Reports-0</h6>
+					<h6 className="tc white" style={{width:"160px"}}>GradeSheets-1</h6>
 					</div>
 				
 				</div>
@@ -54,9 +54,9 @@ render(){
 					      <h6 className="tc ma2 pa3" style={{width:"160px"}}>Senthilkumar T</h6>
 					      </div>
 					   </a>
-				    <h6 className="tc white" style={{width:"160px"}}>Assignment</h6>
-					<h6 className="tc white" style={{width:"160px"}}>Project Reports</h6>
-					<h6 className="tc white" style={{width:"160px"}}>GradeSheets</h6>
+				    <h6 className="tc white" style={{width:"160px"}}>Assignment-0</h6>
+					<h6 className="tc white" style={{width:"160px"}}>Project Reports-2</h6>
+					<h6 className="tc white" style={{width:"160px"}}>GradeSheets-0</h6>
 					</div>
 				
 				</div>
@@ -69,9 +69,9 @@ render(){
 					      <h6 className="tc ma2 pa3" style={{width:"160px"}}>Priyanka Kumar</h6>
 					      </div>
 					   </a>
-				    <h6 className="tc white" style={{width:"160px"}}>Assignment</h6>
-					<h6 className="tc white" style={{width:"160px"}}>Project Reports</h6>
-					<h6 className="tc white" style={{width:"160px"}}>GradeSheets</h6> 
+				    <h6 className="tc white" style={{width:"160px"}}>Assignment-0</h6>
+					<h6 className="tc white" style={{width:"160px"}}>Project Reports-0</h6>
+					<h6 className="tc white" style={{width:"160px"}}>GradeSheets-0</h6> 
 					</div>
 			</div>
 				
@@ -82,9 +82,9 @@ render(){
 					      <h6 className="tc ma2 pa3" style={{width:"160px"}}>Sabarish BA</h6>
 					      </div>
 					   </a>
-					<h6 className="tc white" style={{width:"160px"}}>Assignment</h6>
-					<h6 className="tc white" style={{width:"160px"}}>Project Reports</h6>
-					<h6 className="tc white" style={{width:"160px"}}>GradeSheets</h6>
+					<h6 className="tc white" style={{width:"160px"}}>Assignment-0</h6>
+					<h6 className="tc white" style={{width:"160px"}}>Project Reports-0</h6>
+					<h6 className="tc white" style={{width:"160px"}}>GradeSheets-0</h6>
 					</div>
 				
 				</div>
