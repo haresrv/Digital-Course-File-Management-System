@@ -25,6 +25,7 @@ o Selenium – Automation & UI Testing (Python)
 o SonarQube – For potential bugs and code smells
 
 Additional Implementation Details:
+
  Pre-commit hook: Before new commit even takes place, Prettify and Husky modules will beautify the code.
 
  We used Lambda triggers for API calls, thereby reducing server usage time.
@@ -38,6 +39,11 @@ Additional Implementation Details:
 Architecture Diagram:
 
 ![photo-2020-03-12-18-43-41.jpg](https://i.postimg.cc/N008jbTC/photo-2020-03-12-18-43-41.jpg)
+
+![SS](https://i.postimg.cc/2jQj9YLm/cognito.png)
+![SS](https://i.postimg.cc/Kj2GcqVd/dynamodb.png)
+![SS](https://i.postimg.cc/CLwhW2b8/lambda.png)
+![SS](https://i.postimg.cc/gjHYxybr/s3.png)
 
 
 Screenshots:
