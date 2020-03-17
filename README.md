@@ -9,18 +9,28 @@
 Tools used:
 
 o Framework: ReactJS, NodeJS
+
 o Database: MySQL via AWS-RDS , DynamoDB
+
 o AWS Services: Lambda, API Gateway, Cognito, S3, Amplify
+
 o Hosting: Netlify and Heroku
+
 o Github – Version Control System
+
 o Editor - Sublime Text & VS Code
+
 o Selenium – Automation & UI Testing (Python)
+
 o SonarQube – For potential bugs and code smells
 
 Additional Implementation Details:
  Pre-commit hook: Before new commit even takes place, Prettify and Husky modules will beautify the code.
+
  We used Lambda triggers for API calls, thereby reducing server usage time.
+
  Cookies support is enabled. Logged-in users will be remembered.
+
  Code-splitting and Lazy Loading has been implemented to optimise performance.
 
 
