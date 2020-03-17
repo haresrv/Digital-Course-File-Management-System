@@ -5,6 +5,23 @@
 
 <<<<<<--  Digital Course File -->>>>>>>
 
+------------------------------------Team Vigilante------------------------------------
+
+                  VEJAY KARTHY S  - Scrum Master / Test Engineer / DevOps
+                
+                  HARE SANKARAN RV - Developer / Unit Tester / DevOps
+                  
+                  VISHAL VINOD K - Developer / Unit Tester
+                  
+                  G MARY SANJANA - Developer / Static code analysis
+                  
+                  MALAVIKA M - Test Engineer
+                  
+                  INJAM NAVEYAH - Developer / Static code analysis
+
+---------------------------------------------------------------------------------------
+
+Youtube link --> https://youtu.be/GEnQHL1_yfA
 
 Tools used:
 
@@ -16,13 +33,17 @@ o AWS Services: Lambda, API Gateway, Cognito, S3, Amplify
 
 o Hosting: Netlify and Heroku
 
+o CICD – CircleCI
+
+o Unit Testing – Jest with Enzyme
+
+o Automation & UI Testing – Selenium with Mocha
+
+o Static code Analysis - SonarQube 
+
 o Github – Version Control System
 
 o Editor - Sublime Text & VS Code
-
-o Selenium – Automation & UI Testing (Python)
-
-o SonarQube – For potential bugs and code smells
 
 Additional Implementation Details:
 
@@ -72,3 +93,14 @@ Screenshots:
 
 ![Screenshot](https://i.postimg.cc/vT98LFRq/13.png)
 
+
+If u explore long enough, you might run into this man, our special friend who helps in uploading files.(Wink Wink)
+
+
+![Upload Barry Upload](https://github.com/haresrv/Vigilante/blob/master/FrontEnd/src/Components/S3Upload/flash.gif)
+
+
+
+
+To replicate this project,
+* Make sure to replace credentials in config.json with your own. By the time, you are seeing this, current credentials would no longer be valid
