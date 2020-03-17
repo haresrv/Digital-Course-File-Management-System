@@ -156,7 +156,7 @@ class LogIn extends Component {
             <img className="pull-right" src={i} style={{width:"44%", marginTop:"40px",pointerEvents: "none"}} alt="Amrita Vishwa Vidyapeetham Logo"/>
           </div>
           <div className="col-md-4 col-md-push-1">
-           <h3><span id="mainappname" className="weight-700">DCF</span> | <span className="weight-300"> Login</span></h3>
+           <h3><span id="mainappname" className="weight-700">Digital Course File</span> | <span className="weight-300"> Login</span></h3>
           <Suspense>
            <FormErrors id="loginerror" className="red blink" formerrors={this.state.errors} />
           </Suspense>
