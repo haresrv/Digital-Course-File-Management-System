@@ -5,18 +5,54 @@
 
 <<<<<<--  Digital Course File -->>>>>>>
 
-Packages Used till now
-1. tachyons - Styling
-2. react-stickies - Notes
-3. react-card-flip - Flippable Card View
-4. @trendmicro/react-sidenav --> Navigation Bar
-   @trendmicro/react-buttons --> Buttons 
-   @trendmicro/react-dropdown --> Dropdown
+
+Tools used:
+
+o Framework: ReactJS, NodeJS
+o Database: MySQL via AWS-RDS , DynamoDB
+o AWS Services: Lambda, API Gateway, Cognito, S3, Amplify
+o Hosting: Netlify and Heroku
+o Github – Version Control System
+o Editor - Sublime Text & VS Code
+o Selenium – Automation & UI Testing (Python)
+o SonarQube – For potential bugs and code smells
+
+Additional Implementation Details:
+ Pre-commit hook: Before new commit even takes place, Prettify and Husky modules will beautify the code.
+ We used Lambda triggers for API calls, thereby reducing server usage time.
+ Cookies support is enabled. Logged-in users will be remembered.
+ Code-splitting and Lazy Loading has been implemented to optimise performance.
 
 
 
------Comments----
+Architecture Diagram:
 
-* Components/CheckboxTrees/epics.js & src/courses.js are just used as a local database.
+![photo-2020-03-12-18-43-41.jpg](https://i.postimg.cc/N008jbTC/photo-2020-03-12-18-43-41.jpg)
 
-* src/Template.js --> Template for a new React Component.
+
+Screenshots:
+
+![Screenshot](https://i.postimg.cc/L5ZFKzNn/1.png)
+
+![Screenshot](https://i.postimg.cc/mhffbt5V/2.png)
+
+![Screenshot](https://i.postimg.cc/L6Lhjf29/3.png)
+
+![Screenshot](https://i.postimg.cc/7PC5YdRT/4.png)
+
+![Screenshot](https://i.postimg.cc/Dft8W5Vp/5.png)
+
+![Screenshot](https://i.postimg.cc/mgSD5sPK/6.png)
+
+![Screenshot](https://i.postimg.cc/ZYyqh398/7.png)
+
+![Screenshot](https://i.postimg.cc/pdGdPJYZ/8.png)
+
+![Screenshot](https://i.postimg.cc/dVF361V8/9.png)
+
+![Screenshot](https://i.postimg.cc/857zcfZV/10.png)
+
+![Screenshot](https://i.postimg.cc/QtvxTNzK/12.png)
+
+![Screenshot](https://i.postimg.cc/vT98LFRq/13.png)
+
