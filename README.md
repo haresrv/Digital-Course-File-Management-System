@@ -1,59 +1,30 @@
-15CSE313 Software Engineering
-
-![Let's Dance!](http://33.media.tumblr.com/3d223954ad0a77f4e98a7b87136aa395/tumblr_nlct5lFVbF1qhu7oio1_500.gif)
-
-
-<<<<<<--  Digital Course File -->>>>>>>
-
-------------------------------------Team Vigilante------------------------------------
-
-                  VEJAY KARTHY S  - Scrum Master / Test Engineer / DevOps
-                
-                  HARE SANKARAN RV - Developer / Unit Tester / DevOps
-                  
-                  VISHAL VINOD K - Developer / Unit Tester
-                  
-                  G MARY SANJANA - Developer / Static code analysis
-                  
-                  MALAVIKA M - Test Engineer
-                  
-                  INJAM NAVEYAH - Developer / Static code analysis
-
----------------------------------------------------------------------------------------
-
 Youtube link --> https://youtu.be/GEnQHL1_yfA
 
 Tools used:
 
-o Framework: ReactJS, NodeJS
+- Framework: ReactJS, NodeJS
 
-o Database: MySQL via AWS-RDS , DynamoDB
+- Database: MySQL via AWS-RDS , DynamoDB
 
-o AWS Services: Lambda, API Gateway, Cognito, S3, Amplify
+- AWS Services: Lambda, API Gateway, Cognito, S3, Amplify
 
-o Hosting: Netlify and Heroku
+- Hosting: Netlify and Heroku
 
-o CICD – CircleCI
+- CICD – CircleCI
 
-o Unit Testing – Jest with Enzyme
+- Unit Testing – Jest with Enzyme
 
-o Automation & UI Testing – Selenium with Mocha
-
-o Static code Analysis - SonarQube 
-
-o Github – Version Control System
-
-o Editor - Sublime Text & VS Code
+- Automation & UI Testing – Selenium with Mocha
 
 Additional Implementation Details:
 
- Pre-commit hook: Before new commit even takes place, Prettify and Husky modules will beautify the code.
+- Pre-commit hook: Before new commit even takes place, Prettify and Husky modules will beautify the code.
 
- We used Lambda triggers for API calls, thereby reducing server usage time.
+- We used Lambda triggers for API calls, thereby reducing server usage time.
 
- Cookies support is enabled. Logged-in users will be remembered.
+- Cookies support is enabled. Logged-in users will be remembered.
 
- Code-splitting and Lazy Loading has been implemented to optimise performance.
+- Code-splitting and Lazy Loading has been implemented to optimise performance.
 
 
 
